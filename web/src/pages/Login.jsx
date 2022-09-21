@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PageContainer } from '../styles/style'
-import { Button, TextField } from '@mui/material'
-import logo from '../assets/images/logoLarge.png'
+import { Box, Button, TextField } from '@mui/material'
+import logo from '../assets/images/logoLarge.svg'
 import background from '../assets/images/background.jpg'
+import LoginService from '../services/loginService'
+import { Email, Password } from '@mui/icons-material'
+import { logIn, isLogin } from '../utils/auth'
 
 /***** Component style *****/
 const PageLoginContainer = styled(PageContainer)`
@@ -43,7 +46,6 @@ const Inputs = styled.div`
 	}
 	button{
 		width:100%;
-		margin-bottom: 1.5rem;
 		background-color:#41ABF3;
 	}
 `
@@ -85,8 +87,24 @@ const Login = () => {
 	}
 
 	const send = () => {		
-		console.log(user);
+		LoginService.getToken(user)
+		.then(
+			res => {
+				logIn(res);
+				window.location.href = '/#/';
+			}
+		).catch(
+			err => {
+				setError(true);
+			}
+		)
 	}
+
+	useEffect(() => {
+		if(isLogin()){
+			window.location.href = '/#/';
+		}	
+	}, []);
 
 	return (
 		<PageLoginContainer>
@@ -95,33 +113,39 @@ const Login = () => {
 					<Img>
 						<img
 							src={logo}
-							alt='Universidad Andrés Bello'
-							title='Universidad Andrés Bello'
+							alt='Logo Adai Laser'
+							title='Logo Adai Laser'
 						/>
 					</Img>
 				</Logo>
 				<Inputs>
-					<TextField 
-						id='mail'
-						name='mail' 
-						variant='standard'
-						label='Correo'
-						value={user.mail}
-						onChange={updateState}
-						error={error} 
-						helperText={error ? 'usuario o contraseña incorrectos' : null}
-					/>
-					<TextField 
-						id='password'
-						name='password' 
-						variant='standard'
-						label='Contraseña'
-						value={user.password}
-						onChange={updateState}
-						type='password'
-						error={error} 
-						helperText={error ? 'usuario o contraseña incorrectos' : null}
-					/>
+					<Box sx={{ display: 'flex', alignItems: 'center'}}>
+						<Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+						<TextField 
+							id='mail'
+							name='mail' 
+							variant='standard'
+							label='Correo'
+							value={user.mail}
+							onChange={updateState}
+							error={error} 
+							helperText={error ? 'usuario o contraseña incorrectos' : null}
+						/>
+					</Box>
+					<Box sx={{ display: 'flex', alignItems: 'center'}}>
+						<Password sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+						<TextField 
+							id='password'
+							name='password' 
+							variant='standard'
+							label='Contraseña'
+							value={user.password}
+							onChange={updateState}
+							type='password'
+							error={error} 
+							helperText={error ? 'usuario o contraseña incorrectos' : null}
+						/>
+					</Box>
 					<Button onClick={send} variant='contained'>Ingresar</Button>
 				</Inputs>
 			</Container>
