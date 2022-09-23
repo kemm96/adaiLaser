@@ -1,24 +1,21 @@
 const bcrypt = require('bcrypt');
 
+const model = require('./model');
 const TOKEN = require('../../../token');
 
 const login = async(user) => {
-	//const data = await model.login(user.mail);
-	const data = {
-		mail:'user@admin.com',
-		password:'$2b$10$7u.E97Z.uGuE.fd3bWbydOf9b2TUaE0mVN07sE0qyaskbg1hN9zJe',
-	}
-
-	//if(data === null){
-	if (data.mail !== user.mail){
+	const auth = await model.login(user.mail);
+	
+	if(auth === null){
 		console.log('Error de Autenticación');
       throw new Error('Error de Autenticación');
    }
 
-	return bcrypt.compare(user.password, data.password)
+	return bcrypt.compare(user.password, auth.password)
 	.then(async equal => {
       if (equal) {
-         const token = TOKEN.sign('datos del usuario');
+			const data = await model.getUser(auth.id)
+         const token = TOKEN.sign(data);
          return token
       } else {
 			console.log('Error de Autenticación');
