@@ -6,13 +6,13 @@ import LayoutComponent from '../components/layout/Layout'
 
 /****** ******************** *****/
 
-const Home = () => {
+const Clientes = () => {
 
 	return (
 		<LayoutComponent>
-			home
+			Clientes
 		</LayoutComponent>
 	)
 }
 
-export default Home
+export default Clientes

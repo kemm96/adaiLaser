@@ -6,13 +6,13 @@ import LayoutComponent from '../components/layout/Layout'
 
 /****** ******************** *****/
 
-const Home = () => {
+const Calendario = () => {
 
 	return (
 		<LayoutComponent>
-			home
+			Calendario
 		</LayoutComponent>
 	)
 }
 
-export default Home
+export default Calendario

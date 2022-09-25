@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { PageContainer } from '../styles/style'
 import { Box, Button, TextField } from '@mui/material'
 import logo from '../assets/images/logoLarge.svg'
 import background from '../assets/images/background.jpg'
 import LoginService from '../services/loginService'
 import { Email, Password } from '@mui/icons-material'
-import { logIn, isLogin } from '../utils/auth'
+import { logIn, isLogin } from '../utils'
 
 /***** Component style *****/
-const PageLoginContainer = styled(PageContainer)`
+const PageContainer = styled.div`
+	width: 100vw;
+	height: 100vh;
+	display:flex;
+	align-items:center;
+	justify-content:center;
 	background-image:url(${background});
    background-repeat:no-repeat;
    background-size: fill;
    background-position: center;
 `
-const Container = styled(PageContainer)`
-	width:initial;
-	height:initial;
+const LoginContainer = styled.div`
 	display:flex;
 	flex-direction:column;
 	background-color:#eeeeeecc;
@@ -32,7 +34,7 @@ const Container = styled(PageContainer)`
 		flex-direction:row;
    }
 `
-const Inputs = styled.div`
+const InputsContainer = styled.div`
 	padding: 0 10%;
 	width:25rem;
 	height:20rem;
@@ -47,7 +49,7 @@ const Inputs = styled.div`
 	button{
 		width:100%;
 		background-color:#41ABF3;
-	}
+	} 
 `
 const Logo = styled.div`
 	width:30rem;
@@ -91,7 +93,6 @@ const Login = () => {
 		.then(
 			res => {
 				logIn(res);
-				window.location.href = '/#/';
 			}
 		).catch(
 			err => {
@@ -107,8 +108,8 @@ const Login = () => {
 	}, []);
 
 	return (
-		<PageLoginContainer>
-			<Container>
+		<PageContainer id='PageLoginContainer'>
+			<LoginContainer>
 				<Logo>
 					<Img>
 						<img
@@ -118,7 +119,7 @@ const Login = () => {
 						/>
 					</Img>
 				</Logo>
-				<Inputs>
+				<InputsContainer>
 					<Box sx={{ display: 'flex', alignItems: 'center'}}>
 						<Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
 						<TextField 
@@ -147,9 +148,9 @@ const Login = () => {
 						/>
 					</Box>
 					<Button onClick={send} variant='contained'>Ingresar</Button>
-				</Inputs>
-			</Container>
-		</PageLoginContainer>
+				</InputsContainer>
+			</LoginContainer>
+		</PageContainer>
 	)
 }
 
