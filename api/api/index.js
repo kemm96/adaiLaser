@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const config = require('../config.js');
 const auth = require('./components/auth');
+const clientes = require('./components/clientes')
 
 // SETUP DEL SERVIDOR
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors({
 
 // ROUER
 app.use('/api/auth', auth);
+app.use('/api/clientes', clientes);
 
 app.listen(config.api.port, () => {
    console.log('Api escuchando en el puerto ', config.api.port);
@@ -25,7 +27,7 @@ app.listen(config.api.port, () => {
 /* .-` .-`  |   _  | |     | |     \  |     | |   ___| |___   | */
 /* |______| |__| |_| \_____/ |__|\__\ \_____/ |______| |______| */
 /*                                                              */
-/*                [ Julio 2022 ] - Team Berlini                 */
+/*              [ September 2022 ] - Team Berlini               */
 /*                All Copyrights Reserved © 2022                */
 /*                                                              */
 /* ************************************************************ */
