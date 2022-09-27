@@ -1,9 +1,10 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
 import ClientsService from '../services/clientsService'
 import { Add, Visibility, History } from '@mui/icons-material'
+import { ClientContext, initialClient } from '../context/ClientContext';
 
 /***** Component style *****/
 const TableContainer = styled.div`
@@ -44,16 +45,26 @@ const CustomToolbarContainer = styled.div`
 /****** ******************** *****/
 
 const TablaClientesConponent = (props) => {
+	const { setCliente, setEdit } = useContext(ClientContext)
+
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	const handleOpenDialog = (id) => {
+	const handleOpenClient = (id) => {
 		const user = data.find(cliente => cliente.id === id);
 		if(user){
-			props.handleOpenDialog(user);
+			setEdit(false);
+			setCliente(user);
+			props.handleOpenClient(user);
 		}else{
-			props.handleOpenDialog(false);
+			setEdit(true);
+			setCliente(initialClient);
+			props.handleOpenClient({});
 		}
+	};
+
+	const handleOpenHistorial = (id) => {
+		props.handleOpenHistorial(id);
 	};
 
 	const CustomToolbar = () => {
@@ -62,10 +73,18 @@ const TablaClientesConponent = (props) => {
 				<div>
 					<GridToolbarColumnsButton title='Columnas'/>
 					<GridToolbarFilterButton title='Filtros'/>
-					<GridToolbarExport title='Exportar' printOptions={{ disableToolbarButton: true }}/>
+					<GridToolbarExport 
+						title='Exportar' 
+						printOptions={{ disableToolbarButton: true }}
+						csvOptions={{
+							fileName: 'ClientesAdaiLaser',
+							utf8WithBom: true,
+							allColumns: true,
+						 }}
+					/>
 				</div>
 				<div>
-					<Button title='Agregar Cliente' onClick={() => handleOpenDialog(0)} startIcon={<Add/>}>Agregar Cliente</Button>
+					<Button title='Agregar Cliente' onClick={() => handleOpenClient(0)} startIcon={<Add/>}>Agregar Cliente</Button>
 				</div>
 			</CustomToolbarContainer>
 		);
@@ -89,8 +108,10 @@ const TablaClientesConponent = (props) => {
 	const columns = [
 		{ field: 'lastName', headerName: 'Apellidos',flex: 1, hideable: false, headerClassName: 'header',},
 		{ field: 'name', headerName: 'Nombres',flex: 1, hideable: false, headerClassName: 'header',},
-		{ field: 'age', headerName: 'Edad', flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'rut', headerName: 'R.U.T.', flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
+		{ field: 'age', headerName: 'Edad', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
+		{ field: 'birthday', headerName: 'Fecha de Nacimiento', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:180,},
+		{ field: 'genderName', headerName: 'Género', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'mail', headerName: 'Email', flex: 1, headerClassName: 'header',},
 		{ field: 'phone', headerName: 'Teléfono', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{
@@ -105,12 +126,13 @@ const TablaClientesConponent = (props) => {
 					return [
 					<GridActionsCellItem
 						icon={<Visibility/>}
-						onClick={() => handleOpenDialog(id)}
+						onClick={() => handleOpenClient(id)}
 						label={`Ver Información de ${getNombre(id)}`}
 						title={`Ver Información de ${getNombre(id)}`}
 					/>,
 					<GridActionsCellItem
 						icon={<History/>}
+						onClick={() => handleOpenHistorial(id)}
 						label={`Ver Historial de ${getNombre(id)}`}
 						title={`Ver Historial de ${getNombre(id)}`}
 					/>
@@ -155,6 +177,15 @@ const TablaClientesConponent = (props) => {
 				disableSelectionOnClick
 				disableColumnMenu
 				loading={loading}
+				initialState={{
+					...data.initialState,
+					columns: {
+					  columnVisibilityModel: {
+							birthday: false,
+							genderName:false,
+					  },
+					},
+				 }}
 			/>
 		</TableContainer>
   	);

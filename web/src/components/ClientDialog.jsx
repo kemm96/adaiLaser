@@ -1,9 +1,11 @@
-import React, { forwardRef} from 'react'
+import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, FormHelperText, Select, MenuItem, Divider} from '@mui/material';
 import { Close, Save, Edit, Email } from '@mui/icons-material'
 import { BoxShadow } from '../styles/styles'
-import { generos } from '../utils';
+import { getAge, validaciones } from '../utils';
+import { ClientContext } from '../context/ClientContext';
+import ClientsService from '../services/clientsService';
 
 /***** Component style *****/
 const Bar = styled(BoxShadow)`
@@ -43,17 +45,13 @@ const Form = styled.div`
 const LittleBar = styled.div`
 	padding:.5rem 1.5rem;
 	font-size:1.1rem;
-	& span {
-		margin-left:2rem;
-		font-size:.8rem;
-	}
 `
 const Inputs = styled.div`
 	padding:0 1rem;
 	display:flex;
 	flex-wrap:wrap;
 	& > div{
-		min-width:10rem;
+		min-width:25vw;
 		margin:.5rem;
 		flex:1;
 	}
@@ -76,113 +74,170 @@ const transition = forwardRef((props, ref) => {
 	return <Slide direction='up' ref={ref} {...props} />;
 });
 
+const generos = [
+	{ id: 1, name: 'Femenino' },
+	{ id: 2, name: 'Masculino' },
+	{ id: 3, name: 'Otro' },
+]
+
 const ClientDialog = (props) => {
+	const { cliente, edit, setEdit } = useContext(ClientContext);
+
+	const [data, setData] = useState(cliente);
+	const [error, setError]= useState({
+		name:false,
+		lastName:false,
+		rut:false,
+		birthday:false,
+		gender:false,
+		mail:false,
+		phone:false,
+	});
+	
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
-		props.updateCliente(name, value);
+		if(!validaciones(name,value)){
+			setError({
+				...error,
+				[name]: true,
+			});
+		}else{
+			setError({
+				...error,
+				[name]: false,
+			});
+		}
+
+		if(name === 'birthday'){
+			let age = getAge(value);
+			setData({
+				...data,
+				[name]: value,
+				'age': age > 0 ? age : 0,
+			});
+		}else{
+			setData({
+				...data,
+				[name]: value,
+			});
+		}
    }
 	
-  	const handleCloseClient = () => {
-    	props.handleCloseClient();
+  	const handleClose = () => {
+		setEdit(false);
+		setError(false);
+    	props.handleClose();
   	};
 
-	const handleSendClient = () => {
-		props.handleSendClient();
-	};
-
-	const handleEditClient = () => {
-		props.handleEditClient()
+	const handleEdit = () => {
+		setEdit(!edit)
 	}
+
+	const handleSend = async() => {
+		if(data.name === '' || data.lastName === '' || data.rut === '' || data.birthday === '' || data.gender === ''){
+			setError(true)
+		}else{
+			await ClientsService.postUser(data)
+			.then(
+				res => {
+					/* handleClose(); */
+				}
+			).catch(
+				err => {
+					console.log(err);
+				}
+			)
+		}
+	}
+
+	useEffect(() => {
+		setData(cliente);
+	}, [cliente]);
 
 	return (
 		<React.Fragment>
 			<Dialog
 				fullScreen
 				open={props.open}
-				onClose={handleCloseClient}
+				onClose={handleClose}
 				TransitionComponent={transition}
 			>
 				<Bar>
-					<span>{props.newClient ? 'AGREGAR NUEVO CLIENTE' : 'CLIENTE'}</span>
-					<IconButton onClick={handleCloseClient} title='Cerrar'><Close/></IconButton>
+					<span>{'PESTAÑA DE CLIENTE'}</span>
+					<IconButton onClick={handleClose} title='Cerrar'><Close/></IconButton>
 				</Bar>
 				<BodyContainer>
 					<FormContainer>
 						<Form>
-							<LittleBar>PERFIL <span>(*) Campos Obligatorios</span></LittleBar>
+							<LittleBar>PERFIL</LittleBar>
 							<Divider/>
 							<br/>
 							<Inputs>
-								<FormControl>
-									<TextField
-										disabled={!props.newClient}
-										id='name' 
-										name='name'
-										label='Nombres *'
-										value={props.data.name}
-										onChange={onChangeInput}
-										inputProps={{ maxLength: 50 }}
-									/>
-									{props.error ? <FormHelperText error>Debes llenar los campos obligatorios</FormHelperText> : null}
-								</FormControl>
-								<FormControl>
-									<TextField
-										disabled={!props.newClient}
-										id='lastName' 
-										name='lastName'
-										label='Apellidos *'
-										value={props.data.lastName}
-										onChange={onChangeInput}
-										inputProps={{ maxLength: 50 }}
-									/>
-									{props.error ? <FormHelperText error>Debes llenar los campos obligatorios</FormHelperText> : null}
-								</FormControl>
-								<FormControl>
-									<TextField
-										disabled={!props.newClient}
-										id='rut' 
-										name='rut'
-										label='R.U.T. *'
-										value={props.data.rut}
-										onChange={onChangeInput}
-									/>
-									{props.error ? <FormHelperText error>Debes llenar los campos obligatorios</FormHelperText> : null}
-								</FormControl>
+								<TextField
+									disabled={!edit}
+									id='name' 
+									name='name'
+									label='Nombres'
+									value={data.name}
+									onChange={onChangeInput}
+									inputProps={{ maxLength: 50 }}
+									error={error.name}
+									helperText={error.name ? 'Ingresa un nombre válido' : null}
+								/>
+								<TextField
+									disabled={!edit}
+									id='lastName' 
+									name='lastName'
+									label='Apellidos'
+									value={data.lastName}
+									onChange={onChangeInput}
+									inputProps={{ maxLength: 50 }}
+									error={error.lastName}
+									helperText={error.lastName ? 'Ingresa un apellido válido' : null}
+								/>
+								<TextField
+									disabled={!edit}
+									id='rut' 
+									name='rut'
+									label='R.U.T. *'
+									value={data.rut}
+									onChange={onChangeInput}
+									inputProps={{ maxLength: 10 }}
+									error={error.rut}
+									helperText={error.rut ? 'Ingresa un formato válido' : '(*) Sin puntos y con guión'}
+								/>
 							</Inputs>
 							<Inputs>
+							<TextField
+									disabled={!edit}
+									id='birthday' 
+									name='birthday'
+									label='Fecha de Nacimiento *'
+									type='date'
+									value={data.birthday}
+									onChange={onChangeInput}
+									InputLabelProps={{
+										shrink: true,
+									}}
+									error={error.birthday}
+									helperText={error.birthday ? 'Ingresa una fecha válido' : null}
+								/>
+								<TextField
+									disabled
+									id='age' 
+									name='age'
+									label='Edad'
+									value={data.age}
+								/>
 								<FormControl>
-									<TextField
-										disabled={!props.newClient}
-										id='birthday' 
-										name='birthday'
-										label='Fecha de Nacimiento *'
-										type='date'
-										value={props.data.birthday}
-										onChange={onChangeInput}
-										InputLabelProps={{
-											shrink: true,
-										 }}
-									/>
-									{props.error ? <FormHelperText error>Debes llenar los campos obligatorios</FormHelperText> : null}
-								</FormControl>
-								<FormControl>
-									<TextField
-										disabled
-										id='age' 
-										name='age'
-										label='Edad'
-										value={props.data.age}
-									/>
-								</FormControl>
-								<FormControl>
-									<InputLabel id='labelGender'>Género *</InputLabel>
+									<InputLabel id='labelGender'>Género</InputLabel>
 									<Select
-										disabled={!props.newClient}
+										disabled={!edit}
 										labelId='labelGender'
 										id='gender'
 										name='gender'
-										label='Género *'
-										value={props.data.gender}
+										label='Género'
+										value={data.gender}
 										onChange={onChangeInput}
 									>
 										{
@@ -191,7 +246,6 @@ const ClientDialog = (props) => {
 											))
 										}
 									</Select>
-									{props.error ? <FormHelperText error>Debes llenar los campos obligatorios</FormHelperText> : null}
 								</FormControl>
 							</Inputs>
 							<br/>
@@ -201,38 +255,46 @@ const ClientDialog = (props) => {
 							<br/>
 							<Inputs>
 								<TextField
-									disabled={!props.newClient && !props.edit}
+									disabled={!edit}
 									id='mail' 
 									name='mail'
 									label='Email'
-									value={props.data.mail}
+									value={data.mail}
 									onChange={onChangeInput}
 									InputProps={{
 										startAdornment: <InputAdornment position='start'><Email/></InputAdornment>,
 									}}
+									error={error.mail}
+									helperText={error.mail ? 'Ingresa un mail válido' : null}
 								/>
 								<TextField
-									disabled={!props.newClient && !props.edit}
+									disabled={!edit}
 									id='phone' 
 									name='phone'
-									label='Telefono'
-									value={props.data.phone}
+									label='Teléfono'
+									value={data.phone}
 									onChange={onChangeInput}
 									InputProps={{
 										startAdornment: <InputAdornment position='start'>+56</InputAdornment>,
 									}}
+									inputProps={{ 
+										maxLength: 9,
+										inputMode: 'numeric',
+									}}
+									error={error.phone}
+									helperText={error.phone ? 'Ingresa un número de teléfono válido' : null}
 								/>
 							</Inputs>
 						</Form>
 						<Footer>
-							{!props.newClient && !props.edit? (
-								<Button title='Editar Cliente' onClick={handleEditClient} startIcon={<Edit/>}>Editar</Button>
+							{!edit? (
+								<Button title='Editar Cliente' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
 							): null}
-							{!props.newClient && props.edit ? (
-								<Button title='Cancelar' onClick={handleEditClient} startIcon={<Close/>}>Cancelar</Button>
+							{edit ? (
+								<Button title='Cancelar' onClick={handleEdit} startIcon={<Close/>}>Cancelar</Button>
 							): null}
-							{props.newClient || props.edit ? (
-								<Button title='Guardar Cliente' onClick={handleSendClient} startIcon={<Save/>}>Guardar</Button>
+							{edit || edit ? (
+								<Button title='Guardar Cliente' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
 							): null}
 						</Footer>
 					</FormContainer>

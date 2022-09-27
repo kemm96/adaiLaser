@@ -26,18 +26,6 @@ export const getTokenData = () => {
 	}
 } 
 
-export const initialClient = {
-	id:'',
-	name:'',
-	lastName:'',
-	rut:'',
-	birthday:'',
-	age:'',
-	gender:'',
-	mail:'',
-	phone:'',
-}
-
 export const getAge = (value) => {
 	const date1 = new Date(value);
 	const date1Utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
@@ -52,8 +40,17 @@ export const getAge = (value) => {
 	}
 }
 
-export const generos = [
-	{ id: 1, name: 'Femenino' },
-	{ id: 2, name: 'Masculino' },
-	{ id: 3, name: 'Otro' },
-]
+export const validaciones = (name, value) => {
+	if(name === 'name' || name === 'lastName'){
+		return !/[^A-Za-zÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÑñ\s]/.test(value);
+	}else if (name === 'phone'){
+		return /^[0-9]{9}$/.test(value)
+	}else if(name === 'mail'){
+		return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(value);
+	}else if(name === 'rut'){
+		return /^[0-9]{7,8}-[0-9Kk]{1}$/.test(value)
+	}else if(name === 'birthday'){
+		console.log(value);
+		return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)
+	}
+}
