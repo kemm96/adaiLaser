@@ -5,19 +5,12 @@ import logo from '../../assets/images/logo.svg'
 import { Avatar, Menu, MenuItem } from '@mui/material'
 import { getTokenData, logOut } from '../../utils'
 import { NavLink } from "react-router-dom";
+import { BoxShadow } from '../../styles/styles'
 
 /***** Component style *****/
-const NavContainer = styled.div`
+const NavContainer = styled(BoxShadow)`
 	width:100%;
 	height:6vh;
-	display:flex;
-	background-color:#dddddd;
-	-webkit-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
-  	-moz-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
- 	box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
- 	-webkit-box-shadow: 0px 6px 11px -8px #000000;
-  	-moz-box-shadow: 0px 6px 11px -8px #000000;
-  	box-shadow: 0px 6px 11px -8px #000000;
 `
 const ImgContainer = styled.div`
 	height:100%;
@@ -44,10 +37,10 @@ const NavLinkStyled = styled(NavLink)`
 	margin-right:1.5rem;
 	cursor:pointer;
 	&:hover{
-		color:#30A4F2;
+		color:#1976D2;
 	}
 	&.active {
-		color:#30A4F2;
+		color:#1976D2;
 		::after{
          content: '';
          position: absolute;
@@ -55,7 +48,7 @@ const NavLinkStyled = styled(NavLink)`
 			bottom:-.2rem;
          height: .15rem;
          width: 100%;
-         background-color:#30A4F2;
+         background-color:#1976D2;
       }
 	}
 `
@@ -63,8 +56,8 @@ const AvatarContainer = styled.div`
 	display:flex;
 	align-items:center;
 	padding: 0 2rem;
-	div{
-		background-color:#30A4F2;
+	& div{
+		background-color:#1976D2;
 		cursor: pointer;
 	}
 `
@@ -76,10 +69,9 @@ const MenuItemStyled = styled(MenuItem)`
 		background-color:#eeeeee;
 	}
 `
-
 /****** ******************** *****/
 
-const NavBar = () => {
+const NavBarComponent = () => {
 
 	const [token, settoken] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -140,4 +132,4 @@ const NavBar = () => {
 	)
 }
 
-export default NavBar
+export default NavBarComponent

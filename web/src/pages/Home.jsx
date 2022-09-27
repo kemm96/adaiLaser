@@ -10,7 +10,7 @@ const Home = () => {
 
 	return (
 		<LayoutComponent>
-			home
+			Home
 		</LayoutComponent>
 	)
 }

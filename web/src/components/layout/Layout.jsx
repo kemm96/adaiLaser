@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import NavBar from './NavBar'
+import NavBarComponent from './NavBar'
 
 /***** Component style *****/
 const ChildrenContainer = styled.div`
@@ -13,7 +13,7 @@ const LayoutComponent = ({ children }) => {
 
 	return (
 		<React.Fragment>
-			<NavBar/>
+			<NavBarComponent/>
 			<ChildrenContainer>
 				{children}
 			</ChildrenContainer>

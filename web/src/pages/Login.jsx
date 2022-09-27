@@ -6,6 +6,7 @@ import background from '../assets/images/background.jpg'
 import LoginService from '../services/loginService'
 import { Email, Password } from '@mui/icons-material'
 import { logIn, isLogin } from '../utils'
+import { BoxShadow } from '../styles/styles'
 
 /***** Component style *****/
 const PageContainer = styled.div`
@@ -19,17 +20,10 @@ const PageContainer = styled.div`
    background-size: fill;
    background-position: center;
 `
-const LoginContainer = styled.div`
-	display:flex;
+const LoginContainer = styled(BoxShadow)`
 	flex-direction:column;
 	background-color:#eeeeeecc;
 	border-radius: 0.6rem;
-	-webkit-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
-  	-moz-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
- 	box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
- 	-webkit-box-shadow: 0px 6px 11px -8px #000000;
-  	-moz-box-shadow: 0px 6px 11px -8px #000000;
-  	box-shadow: 0px 6px 11px -8px #000000;
 	@media (orientation:landscape) {
 		flex-direction:row;
    }
@@ -42,13 +36,13 @@ const InputsContainer = styled.div`
 	align-items:center;
 	justify-content:space-evenly;
 	flex-direction:column;
-	div{
+	& div{
 		margin-bottom:.5rem;
 		width:100%;
 	}
-	button{
+	& button{
 		width:100%;
-		background-color:#41ABF3;
+		background-color:#1976D2;
 	} 
 `
 const Logo = styled.div`
@@ -64,7 +58,7 @@ const Logo = styled.div`
 `
 const Img = styled.div`
 	width:100%;
-	img{
+	& img{
 		width:100%;
 	}
 `

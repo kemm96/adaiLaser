@@ -6,10 +6,6 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       margin: 0;
       background-color: transparent;
-      user-select: none;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
    }
    html,
    body{
@@ -24,6 +20,9 @@ const GlobalStyle = createGlobalStyle`
       text-decoration: none;
       color: inherit;
    }
+	label{
+		color:red;
+	}
    li{
       list-style-type: none;
    }
