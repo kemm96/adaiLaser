@@ -83,9 +83,43 @@ const list = (tabla) => {
    })
 }
 
+// Modificar de tabla
+const update = (data, tabla) => {
+   return new Promise((resolve, reject) => {
+      connection.query(`
+         UPDATE ${tabla} SET ? 
+         WHERE id=${data.id}
+      `,data , (err, data) => {
+         if (err) {
+            console.log('Error actualizando', tabla);
+            return reject(err);
+         }
+         resolve(data);
+      })
+   })
+}
+
+// Elimina info de una tabla
+const eliminar = (id, tabla) => {
+   return new Promise((resolve,reject) => {
+      connection.query(`DELETE From ${tabla} WHERE id=${id}
+      `,(err,response)=>{
+         if(err){
+            console.log(err);
+            console.log('Error Borrando de la tabla', tabla);
+            return reject(err);
+         }else{
+            resolve(response);
+         }
+      })
+	})
+}
+
 module.exports = {
 	connection,
 	insert,
 	get,
 	list,
+	update,
+	eliminar
 };

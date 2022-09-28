@@ -22,8 +22,8 @@ const list = (req, res) => {
 }
 
 // Internal functions
-const postClient = (req, res) => {
-	controller.postClient(req.body)
+const insert = (req, res) => {
+	controller.insert(req.body)
    .then((body) => {
       res.send({
          error: false,
@@ -40,6 +40,6 @@ const postClient = (req, res) => {
 
 // Routes
 router.get('/', list);
-router.post('/', postClient);
+router.post('/', insert);
 
 module.exports = router;

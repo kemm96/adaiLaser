@@ -1,3 +1,4 @@
+const db = require('../../../db');
 const model = require('./model');
 
 const list = async() => {
@@ -5,11 +6,16 @@ const list = async() => {
 	return clientes
 }
 
-const postClient = async(data) => {
-	console.log(data);
+const insert = async(data) => {	
+	if(data.id === null){
+		return await db.insert(data, 'Clients')
+	}else{
+		delete data['genderName']
+		return await db.update(data, 'Clients')
+	}
 }
 
 module.exports = {
    list,
-	postClient,
+	insert,
 };
