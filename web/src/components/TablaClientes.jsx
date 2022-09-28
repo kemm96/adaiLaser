@@ -4,7 +4,8 @@ import { Button } from '@mui/material';
 import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
 import ClientsService from '../services/clientsService'
 import { Add, Visibility, History } from '@mui/icons-material'
-import { ClientContext, initialClient } from '../context/ClientContext';
+import { ClientContext } from '../context/ClientContext';
+import { initialClient } from '../utils/lists';
 
 /***** Component style *****/
 const TableContainer = styled.div`
@@ -109,7 +110,6 @@ const TablaClientesConponent = (props) => {
 		{ field: 'lastName', headerName: 'Apellidos',flex: 1, hideable: false, headerClassName: 'header',},
 		{ field: 'name', headerName: 'Nombres',flex: 1, hideable: false, headerClassName: 'header',},
 		{ field: 'rut', headerName: 'R.U.T.', flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
-		{ field: 'age', headerName: 'Edad', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'birthday', headerName: 'Fecha de Nacimiento', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:180,},
 		{ field: 'genderName', headerName: 'Género', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'mail', headerName: 'Email', flex: 1, headerClassName: 'header',},
@@ -181,7 +181,6 @@ const TablaClientesConponent = (props) => {
 					...data.initialState,
 					columns: {
 					  columnVisibilityModel: {
-							birthday: false,
 							genderName:false,
 					  },
 					},

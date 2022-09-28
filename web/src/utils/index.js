@@ -26,22 +26,8 @@ export const getTokenData = () => {
 	}
 } 
 
-export const getAge = (value) => {
-	const date1 = new Date(value);
-	const date1Utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
-	const date2 = new Date;
-	const date2Utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-	const day = 1000*60*60*24;
-	const aux = ((date2Utc - date1Utc)/day)
-	if(aux.toString() === 'NaN'){
-		return 0
-	}else{
-		return Math.trunc(aux/365) 
-	}
-}
-
 export const validaciones = (name, value) => {
-	if(name === 'name' || name === 'lastName'){
+	if(name === 'name' || name === 'lastName' || name === 'comuna'){
 		return !/[^A-Za-zÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÑñ\s]/.test(value);
 	}else if (name === 'phone'){
 		return /^[0-9]{9}$/.test(value)
@@ -50,7 +36,10 @@ export const validaciones = (name, value) => {
 	}else if(name === 'rut'){
 		return /^[0-9]{7,8}-[0-9Kk]{1}$/.test(value)
 	}else if(name === 'birthday'){
-		console.log(value);
 		return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)
+	}else if(name === 'adress'){
+		return !/[^0-9A-Za-zÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÑñ#°\s]/.test(value);
+	}else{
+		return true
 	}
 }

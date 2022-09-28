@@ -18,7 +18,7 @@ const ClientsContainerer = styled.div`
 
 const Clientes = () => {
 	
-	const [openDialogClient, setOpenDialogClient] = useState(true);
+	const [openDialogClient, setOpenDialogClient] = useState(false);
 	const [openDialogHistorial, setOpenDialogHistorial] = useState(false);
 
 	const handleOpenDialogClient = () => {
@@ -31,7 +31,6 @@ const Clientes = () => {
 
 	const handleOpenDialogHistorial = (id) => {
 		setOpenDialogHistorial(true);
-		console.log(id);
 	};
 	
 	const handleCloseDialogHistorial = () => {

@@ -1,11 +1,12 @@
 import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, FormHelperText, Select, MenuItem, Divider} from '@mui/material';
+import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Divider} from '@mui/material';
 import { Close, Save, Edit, Email } from '@mui/icons-material'
 import { BoxShadow } from '../styles/styles'
-import { getAge, validaciones } from '../utils';
+import { validaciones } from '../utils';
 import { ClientContext } from '../context/ClientContext';
 import ClientsService from '../services/clientsService';
+import { generos, initialClient } from '../utils/lists';
 
 /***** Component style *****/
 const Bar = styled(BoxShadow)`
@@ -41,25 +42,32 @@ const FormContainer = styled.div`
 `
 const Form = styled.div`
 	height:100%;
+	overflow-y:auto;
 `
 const LittleBar = styled.div`
 	padding:.5rem 1.5rem;
 	font-size:1.1rem;
+	& span {
+		margin-left:2rem;
+		font-size:.8rem;
+	}
 `
 const Inputs = styled.div`
 	padding:0 1rem;
 	display:flex;
 	flex-wrap:wrap;
 	& > div{
-		min-width:25vw;
+		min-width:20rem;
 		margin:.5rem;
 		flex:1;
 	}
 `
 const Footer = styled.div`
+	position: relative;
 	display:flex;
 	padding:.5rem;
 	justify-content:flex-end;
+	align-items:center;
 	border-top: 1px solid #e0e0e0;
 	button{
 		color:#1976D2;
@@ -68,22 +76,22 @@ const Footer = styled.div`
 		}
 	}
 `
+const Error = styled.p`
+	position:absolute;
+	color:#D32F2F;
+	left:.5rem;
+`
 /****** ******************** *****/
 
 const transition = forwardRef((props, ref) => {
 	return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const generos = [
-	{ id: 1, name: 'Femenino' },
-	{ id: 2, name: 'Masculino' },
-	{ id: 3, name: 'Otro' },
-]
-
 const ClientDialog = (props) => {
 	const { cliente, edit, setEdit } = useContext(ClientContext);
 
 	const [data, setData] = useState(cliente);
+	const [sendError, setSendError] = useState(false);
 	const [error, setError]= useState({
 		name:false,
 		lastName:false,
@@ -92,10 +100,13 @@ const ClientDialog = (props) => {
 		gender:false,
 		mail:false,
 		phone:false,
+		adress:false,
+		comuna:false,
 	});
 	
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
+		setSendError(false)
 		if(!validaciones(name,value)){
 			setError({
 				...error,
@@ -108,19 +119,10 @@ const ClientDialog = (props) => {
 			});
 		}
 
-		if(name === 'birthday'){
-			let age = getAge(value);
-			setData({
-				...data,
-				[name]: value,
-				'age': age > 0 ? age : 0,
-			});
-		}else{
-			setData({
-				...data,
-				[name]: value,
-			});
-		}
+		setData({
+			...data,
+			[name]: value,
+		});
    }
 	
   	const handleClose = () => {
@@ -134,13 +136,21 @@ const ClientDialog = (props) => {
 	}
 
 	const handleSend = async() => {
-		if(data.name === '' || data.lastName === '' || data.rut === '' || data.birthday === '' || data.gender === ''){
-			setError(true)
+		for (const i in error){
+			if(error[i]){
+				setSendError(true)
+				return
+			}
+		}
+		
+		if(data.rut === ''){
+			setSendError(true)
 		}else{
 			await ClientsService.postUser(data)
 			.then(
 				res => {
-					/* handleClose(); */
+					setData(initialClient)
+					handleClose();
 				}
 			).catch(
 				err => {
@@ -169,7 +179,7 @@ const ClientDialog = (props) => {
 				<BodyContainer>
 					<FormContainer>
 						<Form>
-							<LittleBar>PERFIL</LittleBar>
+							<LittleBar>PERFIL <span>(*) Campo Obligatorio</span></LittleBar>
 							<Divider/>
 							<br/>
 							<Inputs>
@@ -199,12 +209,12 @@ const ClientDialog = (props) => {
 									disabled={!edit}
 									id='rut' 
 									name='rut'
-									label='R.U.T. *'
+									label='R.U.T. (*)'
 									value={data.rut}
 									onChange={onChangeInput}
 									inputProps={{ maxLength: 10 }}
 									error={error.rut}
-									helperText={error.rut ? 'Ingresa un formato válido' : '(*) Sin puntos y con guión'}
+									helperText={error.rut ? 'Ingresa un formato válido' : 'Ingresar Sin puntos y con guión'}
 								/>
 							</Inputs>
 							<Inputs>
@@ -221,13 +231,6 @@ const ClientDialog = (props) => {
 									}}
 									error={error.birthday}
 									helperText={error.birthday ? 'Ingresa una fecha válido' : null}
-								/>
-								<TextField
-									disabled
-									id='age' 
-									name='age'
-									label='Edad'
-									value={data.age}
 								/>
 								<FormControl>
 									<InputLabel id='labelGender'>Género</InputLabel>
@@ -247,6 +250,33 @@ const ClientDialog = (props) => {
 										}
 									</Select>
 								</FormControl>
+							</Inputs>
+							<br/>
+							<Divider/>
+							<LittleBar>DOMICILIO</LittleBar>
+							<Divider/>
+							<br/>
+							<Inputs>
+								<TextField
+									disabled={!edit}
+									id='adress' 
+									name='adress'
+									label='Dirección'
+									value={data.adress}
+									onChange={onChangeInput}
+									error={error.adress}
+									helperText={error.adress ? 'Ingresa una dirección válida' : null}
+								/>
+								<TextField
+									disabled={!edit}
+									id='comuna' 
+									name='comuna'
+									label='Comuna'
+									value={data.comuna}
+									onChange={onChangeInput}
+									error={error.comuna}
+									helperText={error.comuna ? 'Ingresa una comuna válida' : null}
+								/>
 							</Inputs>
 							<br/>
 							<Divider/>
@@ -287,13 +317,14 @@ const ClientDialog = (props) => {
 							</Inputs>
 						</Form>
 						<Footer>
-							{!edit? (
+							{sendError ? <Error error>Arregla los errores antes de enviar</Error> : null}
+							{data.id !== null && !edit ? (
 								<Button title='Editar Cliente' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
 							): null}
-							{edit ? (
+							{data.id !== null && edit ? (
 								<Button title='Cancelar' onClick={handleEdit} startIcon={<Close/>}>Cancelar</Button>
 							): null}
-							{edit || edit ? (
+							{edit ? (
 								<Button title='Guardar Cliente' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
 							): null}
 						</Footer>

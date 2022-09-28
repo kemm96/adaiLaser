@@ -1,16 +1,5 @@
 import React, { createContext, useState } from 'react'
-
-export const initialClient = {
-	id:'',
-	name:'',
-	lastName:'',
-	rut:'',
-	birthday:'',
-	age:'',
-	gender:'',
-	mail:'',
-	phone:'',
-}
+import { initialClient } from '../utils/lists';
 
 export const ClientContext = createContext({
 	cliente: {}, 
