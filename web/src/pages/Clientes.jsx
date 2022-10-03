@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
-import TablaClientesComponent from '../components/TablaClientes'
-import ClientDialog from '../components/ClientDialog'
+import TablaClientesComponent from '../components/TablaClientesComponent'
+import ClientDialogComponent from '../components/ClientDialogComponent'
 import { ClientContextWrapper } from '../context/ClientContext'
-import HistorialDialog from '../components/HistorialDialog'
+import HistorialDialogComponent from '../components/HistorialDialogComponent'
 
 /***** Component style *****/
-const ClientsContainerer = styled.div`
+const ClientsContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	display:flex;
@@ -39,22 +39,20 @@ const Clientes = () => {
 
 	return (
 		<LayoutComponent>
-			<ClientsContainerer>
-				<ClientContextWrapper>
-					<TablaClientesComponent 
-						handleOpenClient={handleOpenDialogClient}
-						handleOpenHistorial={handleOpenDialogHistorial}
-					/>
-					<ClientDialog 
-						open={openDialogClient}
-						handleClose={handleCloseDialogClient}
-					/>
-					<HistorialDialog
-						open={openDialogHistorial}
-						handleClose={handleCloseDialogHistorial}
-					/>
-				</ClientContextWrapper>
-			</ClientsContainerer>
+			<ClientsContainer>
+				<TablaClientesComponent 
+					handleOpenClient={handleOpenDialogClient}
+					handleOpenHistorial={handleOpenDialogHistorial}
+				/>
+				<ClientDialogComponent
+					open={openDialogClient}
+					handleClose={handleCloseDialogClient}
+				/>
+				<HistorialDialogComponent
+					open={openDialogHistorial}
+					handleClose={handleCloseDialogHistorial}
+				/>
+			</ClientsContainer>
 		</LayoutComponent>
 	)
 }

@@ -16,3 +16,9 @@ export const initialClient = {
 	adress:'',
 	comuna:'',
 }
+
+export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+export const daysNameSideBar = ['D', 'L', 'M', 'X', 'J', 'V', 'S',]
+
+export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']

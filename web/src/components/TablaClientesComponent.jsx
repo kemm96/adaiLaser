@@ -46,7 +46,7 @@ const CustomToolbarContainer = styled.div`
 /****** ******************** *****/
 
 const TablaClientesConponent = (props) => {
-	const { setCliente, setEdit } = useContext(ClientContext)
+	const { setCliente, setEdit, getClientes } = useContext(ClientContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -159,8 +159,9 @@ const TablaClientesConponent = (props) => {
 	}
 
 	useEffect(() => {
+		console.log('hola');
 		get();
-	}, []);
+	}, [getClientes]);
 
   	return (
 		<TableContainer id='hola'>
@@ -184,7 +185,7 @@ const TablaClientesConponent = (props) => {
 							genderName:false,
 					  },
 					},
-				 }}
+				}}
 			/>
 		</TableContainer>
   	);

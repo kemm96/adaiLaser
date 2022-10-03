@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Divider} from '@mui/material';
+import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 import { Close, Save, Edit, Email } from '@mui/icons-material'
 import { BoxShadow } from '../styles/styles'
 import { validaciones } from '../utils';
@@ -63,7 +63,6 @@ const Inputs = styled.div`
 	}
 `
 const Footer = styled.div`
-	position: relative;
 	display:flex;
 	padding:.5rem;
 	justify-content:flex-end;
@@ -76,22 +75,16 @@ const Footer = styled.div`
 		}
 	}
 `
-const Error = styled.p`
-	position:absolute;
-	color:#D32F2F;
-	left:.5rem;
-`
 /****** ******************** *****/
 
 const transition = forwardRef((props, ref) => {
 	return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const ClientDialog = (props) => {
-	const { cliente, edit, setEdit } = useContext(ClientContext);
+const ClientDialogComponent = (props) => {
+	const { cliente, edit, setEdit, getClientes, setGetClientes } = useContext(ClientContext);
 
 	const [data, setData] = useState(cliente);
-	const [sendError, setSendError] = useState(false);
 	const [error, setError]= useState({
 		name:false,
 		lastName:false,
@@ -106,7 +99,6 @@ const ClientDialog = (props) => {
 	
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
-		setSendError(false)
 		if(!validaciones(name,value)){
 			setError({
 				...error,
@@ -138,18 +130,19 @@ const ClientDialog = (props) => {
 	const handleSend = async() => {
 		for (const i in error){
 			if(error[i]){
-				setSendError(true)
+				alert('Arregla los errores antes de guardar')
 				return
 			}
 		}
 		
 		if(data.rut === ''){
-			setSendError(true)
+			alert('EL R.U.T es obligatorio')
 		}else{
 			await ClientsService.postUser(data)
 			.then(
 				res => {
-					setData(initialClient)
+					setData(initialClient);
+					setGetClientes(!getClientes);
 					handleClose();
 				}
 			).catch(
@@ -317,7 +310,6 @@ const ClientDialog = (props) => {
 							</Inputs>
 						</Form>
 						<Footer>
-							{sendError ? <Error error>Arregla los errores antes de enviar</Error> : null}
 							{data.id !== null && !edit ? (
 								<Button title='Editar Cliente' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
 							): null}
@@ -335,4 +327,4 @@ const ClientDialog = (props) => {
 	)
 }
 
-export default ClientDialog
+export default ClientDialogComponent

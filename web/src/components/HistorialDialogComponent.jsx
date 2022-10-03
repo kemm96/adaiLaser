@@ -35,7 +35,7 @@ const transition = forwardRef((props, ref) => {
 	return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const HistorialDialog = (props) => {
+const HistorialDialogComponent = (props) => {
 	
   	const handleClose = () => {
     	props.handleClose();
@@ -61,4 +61,4 @@ const HistorialDialog = (props) => {
 	)
 }
 
-export default HistorialDialog
+export default HistorialDialogComponent

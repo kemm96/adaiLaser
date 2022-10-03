@@ -1,4 +1,5 @@
 import jwt_decode from 'jwt-decode'
+import dayjs from 'dayjs'
 
 export const logIn = (token) => {
 	window.localStorage.setItem('access-token', token);
@@ -42,4 +43,22 @@ export const validaciones = (name, value) => {
 	}else{
 		return true
 	}
+}
+
+export const getMonth = (month, year) => {
+	const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
+	let currentMonthCount = 0 - firstDayOfTheMonth;
+	
+	const daysMatrix = new Array(6).fill([]).map(() => {
+		return new Array(7).fill(null).map(() => {
+		  currentMonthCount++;
+		  return dayjs(new Date(year, month, currentMonthCount));
+		});
+	 }); 
+	/* console.log(month);
+	console.log(year);
+	console.log(firstDayOfTheMonth);
+	console.log(currentMonthCount);
+	console.log(daysMatrix); */
+	return daysMatrix;
 }

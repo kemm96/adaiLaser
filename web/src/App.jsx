@@ -7,6 +7,8 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Calendario from './pages/Calendario'
 import Clientes from './pages/Clientes'
+import { ClientContextWrapper } from './context/ClientContext'
+import { CalendarContextWrapper } from './context/CalendarContext'
 
 /***** Component style *****/
 const AppContainer = styled.div`
@@ -24,8 +26,8 @@ const App = () => {
 					<Routes>
 						<Route exact path='/login' element={<Login/>}/>
 						<Route exact path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
-						<Route exact path='/calendario' element={<PrivateRoute><Calendario/></PrivateRoute>}/>
-						<Route exact path='/clientes' element={<PrivateRoute><Clientes/></PrivateRoute>}/>
+						<Route exact path='/calendario' element={<PrivateRoute><CalendarContextWrapper><Calendario/></CalendarContextWrapper></PrivateRoute>}/>
+						<Route exact path='/clientes' element={<PrivateRoute><ClientContextWrapper><Clientes/></ClientContextWrapper></PrivateRoute>}/>
 					</Routes>
 				</HashRouter>
 			</AppContainer>
