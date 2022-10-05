@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'
 import TratamientosService from '../services/tratamientosService'
-import { Edit, Delete } from '@mui/icons-material';
+import { Edit, Delete } from '@mui/icons-material'
 
 /***** Component style *****/
 const TratamientosContainer = styled.div`
@@ -36,6 +36,12 @@ const ColorPickerContainer = styled.div`
 
 const ColorPicker = (color) => {
 	return <ColorPickerContainer color={color}>{color}</ColorPickerContainer>
+}
+
+const CustomNoRows = () => {
+	return (
+		<TratamientosContainer>No hay tratamientos disponibles</TratamientosContainer>
+	);
 }
 
 const TratamientosComponent = () => {
@@ -80,12 +86,6 @@ const TratamientosComponent = () => {
 				},
 			}
 	]
-
-	const CustomNoRows = () => {
-		return (
-			<TratamientosContainer>No hay tratamientos disponibles</TratamientosContainer>
-		);
-	}
 
 	const get = async() => {
 		setLoading(true);
