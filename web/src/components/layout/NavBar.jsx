@@ -109,6 +109,7 @@ const NavBarComponent = () => {
 			<Nav>
 				<NavLinkStyled to='/calendario'>CALENDARIO</NavLinkStyled>
 				<NavLinkStyled to='/clientes'>CLIENTES</NavLinkStyled>
+				<NavLinkStyled to='/administracion'>ADMINISTRACIÓN</NavLinkStyled>
 			</Nav>
 			<AvatarContainer>
 				<Avatar
@@ -124,7 +125,6 @@ const NavBarComponent = () => {
 					open={open}
 					onClose={closeAvatar}
 				>
-					<MenuItemStyled onClick={closeAvatar}>Mi Perfil</MenuItemStyled>
 					<MenuItemStyled onClick={logOut}>Cerrar Sesión</MenuItemStyled>
 				</Menu>
 			</AvatarContainer>

@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Calendario from './pages/Calendario'
 import Clientes from './pages/Clientes'
+import Administracion from './pages/Administracion'
 import { ClientContextWrapper } from './context/ClientContext'
 import { CalendarContextWrapper } from './context/CalendarContext'
 
@@ -28,6 +29,7 @@ const App = () => {
 						<Route exact path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
 						<Route exact path='/calendario' element={<PrivateRoute><CalendarContextWrapper><Calendario/></CalendarContextWrapper></PrivateRoute>}/>
 						<Route exact path='/clientes' element={<PrivateRoute><ClientContextWrapper><Clientes/></ClientContextWrapper></PrivateRoute>}/>
+						<Route exact path='/administracion' element={<PrivateRoute><Administracion/></PrivateRoute>}/>
 					</Routes>
 				</HashRouter>
 			</AppContainer>
