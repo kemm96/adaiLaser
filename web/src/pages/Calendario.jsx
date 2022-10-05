@@ -38,7 +38,6 @@ const Calendario = () => {
 	const [ currentMonth, setCurrentMonth ] = useState(getMonth(monthIndex, year));
 
 	useEffect(() => {
-		console.log('hola');
 		setCurrentMonth(getMonth(monthIndex, year))
 	}, [monthIndex, year, selectValue])
 

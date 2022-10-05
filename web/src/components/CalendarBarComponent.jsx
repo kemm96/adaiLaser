@@ -9,7 +9,6 @@ import { useState } from 'react';
 
 /***** Component style *****/
 const BarContainer = styled.div`
-background-color:red;
 	position:relative;
 	padding:0 15vw;
 	display:flex;

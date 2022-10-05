@@ -42,17 +42,16 @@ const Day = styled.div`
 `
 /****** ******************** *****/
 
-const DayComponent = ({ day, column, disabled, name }) => {
+const DayComponent = ({ day, column, disabled }) => {
 
 	const handleClick = (i) => {
 		if(!disabled){
 			console.log(i);
 		}
-		{console.log(name)}
 	}
 
 	return (
-		<DayContainer disabled={disabled} name={name} onClick={() => handleClick(day)}>
+		<DayContainer disabled={disabled} onClick={() => handleClick(day)}>
 			<Day 
 				today={day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')}
 				domingo={column === 0 && !disabled} 

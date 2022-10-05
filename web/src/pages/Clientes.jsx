@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
 import TablaClientesComponent from '../components/TablaClientesComponent'
 import ClientDialogComponent from '../components/ClientDialogComponent'
-import { ClientContextWrapper } from '../context/ClientContext'
 import HistorialDialogComponent from '../components/HistorialDialogComponent'
 
 /***** Component style *****/

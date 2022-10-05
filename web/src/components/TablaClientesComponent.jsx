@@ -28,7 +28,7 @@ const CustomNoRowsContainer = styled.div`
 	display:flex;
 	align-items:center;
 	justify-content:center;
-	font-size:1.5rem;
+	font-size:1.2rem;
 `
 const CustomToolbarContainer = styled.div`
 	position:relative;
@@ -93,7 +93,7 @@ const TablaClientesConponent = (props) => {
 
 	const CustomNoRows = () => {
 		return (
-			<CustomNoRowsContainer>No existen Usuarios</CustomNoRowsContainer>
+			<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
 		);
 	}
 
@@ -123,7 +123,7 @@ const TablaClientesConponent = (props) => {
 			hideable: false,
 			headerClassName: 'header',
 			getActions: ({ id }) => {
-					return [
+				return [
 					<GridActionsCellItem
 						icon={<Visibility/>}
 						onClick={() => handleOpenClient(id)}
@@ -159,12 +159,11 @@ const TablaClientesConponent = (props) => {
 	}
 
 	useEffect(() => {
-		console.log('hola');
 		get();
 	}, [getClientes]);
 
   	return (
-		<TableContainer id='hola'>
+		<TableContainer>
 			<DataGrid 
 				rowHeight={40}
 				components={{ 
