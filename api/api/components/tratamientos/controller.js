@@ -2,8 +2,8 @@ const db = require('../../../db');
 const model = require('./model');
 
 const list = async() => {
-	const clientes = await model.list('Tratamientos')
-	return clientes
+	const tratamientos = await model.list('Tratamientos')
+	return tratamientos
 }
 
 const insert = async(data) => {	
