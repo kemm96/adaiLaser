@@ -4,6 +4,7 @@ const cors = require('cors');
 const config = require('../config.js');
 const auth = require('./components/auth');
 const clientes = require('./components/clientes')
+const tratamientos = require('./components/tratamientos')
 
 // SETUP DEL SERVIDOR
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors({
 // ROUER
 app.use('/api/auth', auth);
 app.use('/api/clientes', clientes);
+app.use('/api/tratamientos', tratamientos);
 
 app.listen(config.api.port, () => {
    console.log('Api escuchando en el puerto ', config.api.port);
