@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import UsuariosComponent from '../components/UsuariosComponent';
-import TratamientosComponent from '../components/TratamientosComponent';
-import TrataminetosDrawerComponent from '../components/TrataminetosDrawerComponent';
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import TablaUsuariosComponent from '../components/table/TablaUsuarios'
+import TablaTratamientosComponent from '../components/table/TablaTratamientos'
+import TrataminetosDrawerComponent from '../components/TrataminetosDrawerComponent'
 
 /***** Component style *****/
 const AdministracionContainer = styled.div`
@@ -25,6 +25,9 @@ const SwitchContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	border-left: 1px solid #e0e0e0;
+	display:flex;
+	justify-content:center;
+	align-items:center;
 `
 /****** ******************** *****/
 
@@ -71,10 +74,10 @@ const Administracion = () => {
 						<Tab label='tratamientos'/>
 					</Tabs>
 					<SwitchCase value={value} index={0}>
-						<UsuariosComponent/>
+						<TablaUsuariosComponent/>
 					</SwitchCase>
 					<SwitchCase value={value} index={1}>
-						<TratamientosComponent
+						<TablaTratamientosComponent
 							handleOpenDrawer={handleOpenDrawerTratamientos}
 						/>
 					</SwitchCase>

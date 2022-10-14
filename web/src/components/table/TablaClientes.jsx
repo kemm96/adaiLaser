@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
-import ClientsService from '../services/clientsService'
+import ClientsService from '../../services/clientsService'
 import { Add, Visibility, History } from '@mui/icons-material'
-import { ClientContext } from '../context/ClientContext';
-import { initialClient } from '../utils/lists';
+import { ClientContext } from '../../context/ClientContext'
+import { initialClient } from '../../utils/lists'
 
 /***** Component style *****/
-const TableContainer = styled.div`
+const Container = styled.div`
 	width: 90%;
 	height: 90%;
 	& .header {
@@ -163,7 +163,7 @@ const TablaClientesConponent = (props) => {
 	}, [getClientes]);
 
   	return (
-		<TableContainer>
+		<Container>
 			<DataGrid 
 				rowHeight={40}
 				components={{ 
@@ -186,7 +186,7 @@ const TablaClientesConponent = (props) => {
 					},
 				}}
 			/>
-		</TableContainer>
+		</Container>
   	);
 }
 

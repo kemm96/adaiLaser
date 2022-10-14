@@ -1,44 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
-import { daysName } from '../utils/lists';
-import DayComponent from './DayComponent';
+import { daysName } from '../../utils/lists'
+import DayComponent from './CalendarDay'
 
 /***** Component style *****/
-const WeekContainer = styled.div`
+const Container = styled.div`
 	display:grid;
 	grid-template-columns:repeat(7, 1fr);
-	grid-template-rows: min-content min-content;
+	grid-template-rows: min-content repeat(6, 1fr);
 	width:100%;
-	height:100%;
 `
 const Day = styled.div`
 	display:flex;
 	justify-content:center;
-	border:1px solid #e0e0e0;
+	background-color:#1976D2;
+	color:#e0e0e0;
 `
 /****** ******************** *****/
 
-const WeekComponent = () => {
+const CalendarDayComponent = ({ month }) => {
+
+	const handleDisabled = (day, i) => {
+		return (day.format('DD') > 7 && i === 0) ? true : (day.format('DD') < 15 && i > 3) ? true : false
+	}
+
 	return (
-		<WeekContainer>
+		<Container>
 			{daysName.map((day, i) => (
-				<Day key={i}>{day}</Day>
+					<Day key={i}>{day}</Day>
 			))}
-			{/* {month.map((row, i) => (
+			{month.map((row, i) => (
 				<React.Fragment key={i}>
 					{row.map((day, j) => (
 						<DayComponent
 							key={j} 
 							day={day}  
-							row={i} 
 							column={j}
 							disabled={handleDisabled(day,i)}
 						/>
 					))}
 				</React.Fragment>					
-			))} */}
-		</WeekContainer>
+			))}
+		</Container>
 	)
 }
 
-export default WeekComponent
+export default CalendarDayComponent

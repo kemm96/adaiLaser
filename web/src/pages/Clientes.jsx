@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
-import TablaClientesComponent from '../components/TablaClientesComponent'
-import ClientDialogComponent from '../components/ClientDialogComponent'
-import HistorialDialogComponent from '../components/HistorialDialogComponent'
+import TablaClientesComponent from '../components/table/TablaClientes'
+import DialogClientComponent from '../components/dialog/DialogClient'
+import DialogHistorialComponent from '../components/dialog/DialogHistorial'
 
 /***** Component style *****/
-const ClientsContainer = styled.div`
+const Container = styled.div`
 	width: 100%;
 	height: 100%;
 	display:flex;
@@ -38,20 +38,20 @@ const Clientes = () => {
 
 	return (
 		<LayoutComponent>
-			<ClientsContainer>
+			<Container>
 				<TablaClientesComponent 
 					handleOpenClient={handleOpenDialogClient}
 					handleOpenHistorial={handleOpenDialogHistorial}
 				/>
-				<ClientDialogComponent
+				<DialogClientComponent
 					open={openDialogClient}
 					handleClose={handleCloseDialogClient}
 				/>
-				<HistorialDialogComponent
+				<DialogHistorialComponent
 					open={openDialogHistorial}
 					handleClose={handleCloseDialogHistorial}
 				/>
-			</ClientsContainer>
+			</Container>
 		</LayoutComponent>
 	)
 }

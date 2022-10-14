@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'
-import TratamientosService from '../services/tratamientosService'
+import TratamientosService from '../../services/tratamientosService'
 import { Edit, Delete } from '@mui/icons-material'
 
 /***** Component style *****/
-const TratamientosContainer = styled.div`
-	width: 100%;
-	height: 100%;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	font-size:1.2rem;
-`
-const TablaContainer = styled.div`
+const Container = styled.div`
 	width: 90%;
 	height: 90%;
 	& .header {
@@ -44,7 +36,7 @@ const CustomNoRows = () => {
 	);
 }
 
-const TratamientosComponent = (props) => {
+const TablaTratamientosComponent = (props) => {
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -110,26 +102,24 @@ const TratamientosComponent = (props) => {
 	}, []);
 
 	return (
-		<TratamientosContainer>
-			<TablaContainer>
-				<DataGrid 
-					components={{
-						NoRowsOverlay: CustomNoRows,
-					}}
-					rowHeight={40}
-					localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-					rows={data}
-					columns={columns} 
-					autoPageSize
-					disableSelectionOnClick
-					disableColumnMenu
-					loading={loading}
-				/>
-			</TablaContainer>
-		</TratamientosContainer>
+		<Container>
+			<DataGrid 
+				components={{
+					NoRowsOverlay: CustomNoRows,
+				}}
+				rowHeight={40}
+				localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+				rows={data}
+				columns={columns} 
+				autoPageSize
+				disableSelectionOnClick
+				disableColumnMenu
+				loading={loading}
+			/>
+		</Container>
 	)
 
 	
 }
 
-export default TratamientosComponent
+export default TablaTratamientosComponent

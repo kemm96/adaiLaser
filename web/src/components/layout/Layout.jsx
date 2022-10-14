@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import NavBarComponent from './NavBar'
 
 /***** Component style *****/
-const ChildrenContainer = styled.div`
+const Container = styled.div`
 	width:100%;
 	height: 94vh;
 `
@@ -14,9 +14,9 @@ const LayoutComponent = ({ children }) => {
 	return (
 		<React.Fragment>
 			<NavBarComponent/>
-			<ChildrenContainer>
+			<Container>
 				{children}
-			</ChildrenContainer>
+			</Container>
 		</React.Fragment>
 	)
 }

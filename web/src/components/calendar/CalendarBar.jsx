@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { ArrowBackIosNew, ArrowForwardIos, Today } from '@mui/icons-material'
-import { Button, IconButton, MenuItem, Select } from '@mui/material';
-import { months } from '../utils/lists';
-import { CalendarContext } from '../context/CalendarContext';
+import { Button, IconButton, MenuItem, Select } from '@mui/material'
+import { months } from '../../utils/lists'
+import { CalendarContext } from '../../context/CalendarContext'
 import dayjs from 'dayjs'
-import { useState } from 'react';
 
 /***** Component style *****/
-const BarContainer = styled.div`
+const Container = styled.div`
 	position:relative;
 	padding:0 15vw;
 	display:flex;
@@ -80,7 +79,7 @@ const CalendarBarComponent = () => {
 	}
 
 	return (
-		<BarContainer>
+		<Container>
 			<TodayContainer>
 				<Button title='Hoy' onClick={handleToday} startIcon={<Today/>}>Hoy</Button>
 			</TodayContainer>
@@ -99,7 +98,7 @@ const CalendarBarComponent = () => {
 					}
 				</Select>
 			</SelectContainer>
-		</BarContainer>
+		</Container>
 	)
 }
 

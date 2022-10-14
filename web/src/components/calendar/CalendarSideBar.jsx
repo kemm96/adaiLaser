@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import MonthComponent from './MonthComponent'
+import MonthComponent from './CalendarMonth'
 
 /***** Component style *****/
-const SideBarContainer = styled.div`
+const Container = styled.div`
 background-color:yellow;
 	width:15vw;
 	height:100%;
@@ -17,11 +17,11 @@ const MonthContainer = styled.div`
 const CalendarSideBarComponent = ({ month }) => {
 
 	return (
-		<SideBarContainer>
+		<Container>
 			<MonthContainer>
 				{/* <MonthComponent month={month}/> */}
 			</MonthContainer>
-		</SideBarContainer>
+		</Container>
 	)
 }
 

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
-import MonthComponent from '../components/MonthComponent'
+import MonthComponent from '../components/calendar/CalendarMonth'
 import { CalendarContext } from '../context/CalendarContext'
 import { getMonth } from '../utils'
-import CalendarBarComponent from '../components/CalendarBarComponent'
-import CalendarSideBarComponent from '../components/CalendarSideBarComponent'
-import WeekComponent from '../components/WeekComponent'
+import CalendarBarComponent from '../components/calendar/CalendarBar'
+import CalendarSideBarComponent from '../components/calendar/CalendarSideBar'
+import WeekComponent from '../components/calendar/CalendarWeek'
 
 
 /***** Component style *****/

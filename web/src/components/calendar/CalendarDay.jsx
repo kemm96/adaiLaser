@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 
 /***** Component style *****/
-const DayContainer = styled.div`
+const Container = styled.div`
 	display:flex;
 	justify-content:center;
 	width: 100%;
@@ -42,7 +42,7 @@ const Day = styled.div`
 `
 /****** ******************** *****/
 
-const DayComponent = ({ day, column, disabled }) => {
+const CalendarDayComponent = ({ day, column, disabled }) => {
 
 	const handleClick = (i) => {
 		if(!disabled){
@@ -51,7 +51,7 @@ const DayComponent = ({ day, column, disabled }) => {
 	}
 
 	return (
-		<DayContainer disabled={disabled} onClick={() => handleClick(day)}>
+		<Container disabled={disabled} onClick={() => handleClick(day)}>
 			<Day 
 				today={day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')}
 				domingo={column === 0 && !disabled} 
@@ -59,8 +59,8 @@ const DayComponent = ({ day, column, disabled }) => {
 			>
 				{day.format('DD')}
 			</Day>
-		</DayContainer>
+		</Container>
 	)
 }
 
-export default DayComponent
+export default CalendarDayComponent

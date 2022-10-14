@@ -4,11 +4,11 @@ import logoLarge from '../../assets/images/logoLarge.svg'
 import logo from '../../assets/images/logo.svg'
 import { Avatar, Menu, MenuItem } from '@mui/material'
 import { getTokenData, logOut } from '../../utils'
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom'
 import { BoxShadow } from '../../styles/styles'
 
 /***** Component style *****/
-const NavContainer = styled(BoxShadow)`
+const Container = styled(BoxShadow)`
 	width:100%;
 	height:6vh;
 `
@@ -90,7 +90,7 @@ const NavBarComponent = () => {
 	}, []);
 
 	return (
-		<NavContainer>
+		<Container>
 			<NavLink to='/'>
 				<ImgContainer>
 					<Img
@@ -128,7 +128,7 @@ const NavBarComponent = () => {
 					<MenuItemStyled onClick={logOut}>Cerrar Sesión</MenuItemStyled>
 				</Menu>
 			</AvatarContainer>
-		</NavContainer>
+		</Container>
 	)
 }
 
