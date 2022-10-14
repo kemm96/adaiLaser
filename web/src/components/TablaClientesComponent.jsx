@@ -45,35 +45,6 @@ const CustomToolbarContainer = styled.div`
 `
 /****** ******************** *****/
 
-const CustomToolbar = () => {
-	return (
-		<CustomToolbarContainer>
-			<div>
-				<GridToolbarColumnsButton title='Columnas'/>
-				<GridToolbarFilterButton title='Filtros'/>
-				<GridToolbarExport 
-					title='Exportar' 
-					printOptions={{ disableToolbarButton: true }}
-					csvOptions={{
-						fileName: 'ClientesAdaiLaser',
-						utf8WithBom: true,
-						allColumns: true,
-					 }}
-				/>
-			</div>
-			<div>
-				<Button title='Agregar Cliente' onClick={() => handleOpenClient(0)} startIcon={<Add/>}>Agregar Cliente</Button>
-			</div>
-		</CustomToolbarContainer>
-	);
-}
-
-const CustomNoRows = () => {
-	return (
-		<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
-	);
-}
-
 const TablaClientesConponent = (props) => {
 	const { setCliente, setEdit, getClientes } = useContext(ClientContext)
 
@@ -104,6 +75,35 @@ const TablaClientesConponent = (props) => {
 			return user.name + ' ' + user.lastName
 		}
 		return 'usuario'
+	}
+	
+	const CustomToolbar = () => {
+		return (
+			<CustomToolbarContainer>
+				<div>
+					<GridToolbarColumnsButton title='Columnas'/>
+					<GridToolbarFilterButton title='Filtros'/>
+					<GridToolbarExport 
+						title='Exportar' 
+						printOptions={{ disableToolbarButton: true }}
+						csvOptions={{
+							fileName: 'ClientesAdaiLaser',
+							utf8WithBom: true,
+							allColumns: true,
+						 }}
+					/>
+				</div>
+				<div>
+					<Button title='Agregar Cliente' onClick={() => handleOpenClient(0)} startIcon={<Add/>}>Agregar Cliente</Button>
+				</div>
+			</CustomToolbarContainer>
+		);
+	}
+	
+	const CustomNoRows = () => {
+		return (
+			<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
+		);
 	}
 
 	const columns = [

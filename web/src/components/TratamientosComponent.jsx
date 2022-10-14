@@ -44,7 +44,7 @@ const CustomNoRows = () => {
 	);
 }
 
-const TratamientosComponent = () => {
+const TratamientosComponent = (props) => {
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -76,6 +76,7 @@ const TratamientosComponent = () => {
 							icon={<Edit/>}
 							label='Editar'
 							title='Editar'
+							onClick={() => props.handleOpenDrawer()}
 						/>,
 						<GridActionsCellItem
 							icon={<Delete/>}

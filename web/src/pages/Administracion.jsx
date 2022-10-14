@@ -5,6 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UsuariosComponent from '../components/UsuariosComponent';
 import TratamientosComponent from '../components/TratamientosComponent';
+import TrataminetosDrawerComponent from '../components/TrataminetosDrawerComponent';
 
 /***** Component style *****/
 const AdministracionContainer = styled.div`
@@ -41,7 +42,16 @@ const SwitchCase = (props) => {
 
 const Administracion = () => {
 
-	const [value, setValue] = useState(1);
+	const [value, setValue] = useState(0);
+	const [openDrawerTratamientos, setOpenDrawerTratamientos] = useState(false);
+
+	const handleOpenDrawerTratamientos = () => {
+		setOpenDrawerTratamientos(true);
+	};
+	
+	const handleCloseDrawerTratamientos = () => {
+		setOpenDrawerTratamientos(false);
+	};
 
   	const handleChange = (e, newValue) => {
     	setValue(newValue);
@@ -64,9 +74,15 @@ const Administracion = () => {
 						<UsuariosComponent/>
 					</SwitchCase>
 					<SwitchCase value={value} index={1}>
-						<TratamientosComponent/>
+						<TratamientosComponent
+							handleOpenDrawer={handleOpenDrawerTratamientos}
+						/>
 					</SwitchCase>
 				</TabsContainer>
+				<TrataminetosDrawerComponent
+					open={openDrawerTratamientos}
+					handleClose={handleCloseDrawerTratamientos}
+				/>
 			</AdministracionContainer>
 		</LayoutComponent>
 	)
