@@ -45,7 +45,7 @@ const SwitchCase = (props) => {
 const Administracion = () => {
 
 	const [value, setValue] = useState(1);
-	const [openDialogTratamientos, setOpenDialogTratamientos] = useState(true);
+	const [openDialogTratamientos, setOpenDialogTratamientos] = useState(false);
 
 	const handleOpenDialogTratamientos = () => {
 		setOpenDialogTratamientos(true);
@@ -69,13 +69,10 @@ const Administracion = () => {
 						value={value}
 						onChange={handleChange}
 					>
-						<Tab label='usuarios'></Tab>
 						<Tab label='tratamientos'/>
+						<Tab label='usuarios'/>
 					</Tabs>
 					<SwitchCase value={value} index={0}>
-						<TablaUsuariosComponent/>
-					</SwitchCase>
-					<SwitchCase value={value} index={1}>
 						<TablaTratamientosComponent
 							handleOpenTratamientos={handleOpenDialogTratamientos}
 						/>
@@ -83,6 +80,9 @@ const Administracion = () => {
 							open={openDialogTratamientos}
 							handleClose={handleCloseDialogTratamientos}
 						/>
+					</SwitchCase>
+					<SwitchCase value={value} index={1}>
+						<TablaUsuariosComponent/>
 					</SwitchCase>
 				</TabsContainer>
 			</AdministracionContainer>

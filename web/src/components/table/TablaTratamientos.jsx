@@ -6,6 +6,7 @@ import TratamientosService from '../../services/tratamientosService'
 import { Edit, Delete, Add } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext'
 import { initialTratamiento } from '../../utils/lists';
+import ConfirmationComponent from '../dialog/Confirmation';
 
 /***** Component style *****/
 const Container = styled.div`
@@ -56,10 +57,15 @@ const CustomNoRows = () => {
 }
 
 const TablaTratamientosComponent = (props) => {
-	const { setTratamiento, render } = useContext(AdministracionContext)
+	const { setTratamiento, render, setRender } = useContext(AdministracionContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [deleteConfirmation, setDeleteConfirmation] = useState({
+		id:null,
+		open:false,
+		text:'',
+	})
 
 	const handleOpenTratamiento = (id) => {
 		const aux = data.find(tratamiento => tratamiento.id === id);
@@ -70,7 +76,22 @@ const TablaTratamientosComponent = (props) => {
 			setTratamiento(initialTratamiento);
 			props.handleOpenTratamientos()
 		}
-	};
+	}
+
+	const handleOpenDeleteConfirmation = (id) => {
+		setDeleteConfirmation({
+			id:id,
+			open:true,
+			text:`eliminar tratamiento ${getNombre(id)}`,
+		})
+	}
+
+	const handleCloseDeleteConfirmation = () => {
+		setDeleteConfirmation({
+			...deleteConfirmation,
+			open:false,
+		})
+	}
 
 	// Obtine el nombre del cliente segun el id
 	const getNombre = (id) => {
@@ -122,11 +143,25 @@ const TablaTratamientosComponent = (props) => {
 						icon={<Delete/>}
 						label={`Eliminar ${getNombre(id)}`}
 						title={`Eliminar ${getNombre(id)}`}
+						onClick={() => handleOpenDeleteConfirmation(id)}
 					/>,
 				]
 			},
 		}
 	]
+
+	const onDelete = async() => {
+		await TratamientosService.delete(deleteConfirmation.id)
+		.then(
+			res => {
+				setRender(!render)
+			}
+		).catch(
+			err => {
+				console.log(err);
+			}
+		)
+	}
 
 	const get = async() => {
 		setLoading(true);
@@ -164,6 +199,12 @@ const TablaTratamientosComponent = (props) => {
 				disableSelectionOnClick
 				disableColumnMenu
 				loading={loading}
+			/>
+			<ConfirmationComponent
+				open={deleteConfirmation.open}
+				onClose={handleCloseDeleteConfirmation}
+				text={deleteConfirmation.text}
+				confirmation={onDelete}
 			/>
 		</Container>
 	)
