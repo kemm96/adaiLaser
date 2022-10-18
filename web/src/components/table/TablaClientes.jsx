@@ -46,7 +46,7 @@ const CustomToolbarContainer = styled.div`
 /****** ******************** *****/
 
 const TablaClientesConponent = (props) => {
-	const { setCliente, setEdit, getClientes } = useContext(ClientContext)
+	const { setCliente, setEdit, render } = useContext(ClientContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -56,11 +56,11 @@ const TablaClientesConponent = (props) => {
 		if(user){
 			setEdit(false);
 			setCliente(user);
-			props.handleOpenClient(user);
+			props.handleOpenClient();
 		}else{
 			setEdit(true);
 			setCliente(initialClient);
-			props.handleOpenClient({});
+			props.handleOpenClient();
 		}
 	};
 
@@ -160,7 +160,7 @@ const TablaClientesConponent = (props) => {
 
 	useEffect(() => {
 		get();
-	}, [getClientes]);
+	}, [render]);
 
   	return (
 		<Container>

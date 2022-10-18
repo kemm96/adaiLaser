@@ -6,7 +6,7 @@ import { BoxShadow } from '../../styles/styles'
 import { validaciones } from '../../utils'
 import { ClientContext } from '../../context/ClientContext'
 import ClientsService from '../../services/clientsService'
-import { generos, initialClient } from '../../utils/lists'
+import { clientError, generos, initialClient } from '../../utils/lists'
 
 /***** Component style *****/
 const Bar = styled(BoxShadow)`
@@ -82,20 +82,10 @@ const transition = forwardRef((props, ref) => {
 });
 
 const DialogClientComponent = (props) => {
-	const { cliente, edit, setEdit, getClientes, setGetClientes } = useContext(ClientContext);
+	const { cliente, edit, setEdit, render, setRender } = useContext(ClientContext);
 
 	const [data, setData] = useState(cliente);
-	const [error, setError]= useState({
-		name:false,
-		lastName:false,
-		rut:false,
-		birthday:false,
-		gender:false,
-		mail:false,
-		phone:false,
-		adress:false,
-		comuna:false,
-	});
+	const [error, setError]= useState(clientError);
 	
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
@@ -142,7 +132,7 @@ const DialogClientComponent = (props) => {
 			.then(
 				res => {
 					setData(initialClient);
-					setGetClientes(!getClientes);
+					setRender(!render);
 					handleClose();
 				}
 			).catch(

@@ -17,6 +17,25 @@ export const initialClient = {
 	comuna:'',
 }
 
+export const clientError = {
+	name:false,
+	lastName:false,
+	rut:false,
+	birthday:false,
+	gender:false,
+	mail:false,
+	phone:false,
+	adress:false,
+	comuna:false,
+}
+
+export const initialTratamiento = {
+	id:null,
+	name:'',
+	time:'',
+	color:'',
+}
+
 export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
 export const daysNameSideBar = ['D', 'L', 'M', 'X', 'J', 'V', 'S',]

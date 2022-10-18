@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import LayoutComponent from '../components/layout/Layout'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
+import { Tabs, Tab } from '@mui/material'
 import TablaUsuariosComponent from '../components/table/TablaUsuarios'
 import TablaTratamientosComponent from '../components/table/TablaTratamientos'
-import TrataminetosDrawerComponent from '../components/TrataminetosDrawerComponent'
+import DialogTratamientosComponent from '../components/dialog/DialogTratamientos'
 
 /***** Component style *****/
 const AdministracionContainer = styled.div`
@@ -45,15 +44,15 @@ const SwitchCase = (props) => {
 
 const Administracion = () => {
 
-	const [value, setValue] = useState(0);
-	const [openDrawerTratamientos, setOpenDrawerTratamientos] = useState(false);
+	const [value, setValue] = useState(1);
+	const [openDialogTratamientos, setOpenDialogTratamientos] = useState(true);
 
-	const handleOpenDrawerTratamientos = () => {
-		setOpenDrawerTratamientos(true);
+	const handleOpenDialogTratamientos = () => {
+		setOpenDialogTratamientos(true);
 	};
 	
-	const handleCloseDrawerTratamientos = () => {
-		setOpenDrawerTratamientos(false);
+	const handleCloseDialogTratamientos = () => {
+		setOpenDialogTratamientos(false);
 	};
 
   	const handleChange = (e, newValue) => {
@@ -78,14 +77,14 @@ const Administracion = () => {
 					</SwitchCase>
 					<SwitchCase value={value} index={1}>
 						<TablaTratamientosComponent
-							handleOpenDrawer={handleOpenDrawerTratamientos}
+							handleOpenTratamientos={handleOpenDialogTratamientos}
+						/>
+						<DialogTratamientosComponent
+							open={openDialogTratamientos}
+							handleClose={handleCloseDialogTratamientos}
 						/>
 					</SwitchCase>
 				</TabsContainer>
-				<TrataminetosDrawerComponent
-					open={openDrawerTratamientos}
-					handleClose={handleCloseDrawerTratamientos}
-				/>
 			</AdministracionContainer>
 		</LayoutComponent>
 	)

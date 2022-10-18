@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'
 import TratamientosService from '../../services/tratamientosService'
 import { Edit, Delete } from '@mui/icons-material'
+import { AdministracionContext } from '../../context/AdministracionContext'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -37,9 +38,22 @@ const CustomNoRows = () => {
 }
 
 const TablaTratamientosComponent = (props) => {
+	const { setTratamiento } = useContext(AdministracionContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const handleOpenTratamiento = (id) => {
+		const tratamiento = data.find(tratamiento => tratamiento.id === id);
+		if(tratamiento){
+			setTratamiento(tratamiento);
+			props.handleOpenTratamientos()
+		}else{
+			setEdit(true);
+			setCliente(initialClient);
+			props.handleOpenTratamientos()
+		}
+	};
 
 	const columns = [
 		{ field: 'name', headerName: 'Nombre',flex: 1, headerClassName: 'header',},
@@ -68,7 +82,7 @@ const TablaTratamientosComponent = (props) => {
 							icon={<Edit/>}
 							label='Editar'
 							title='Editar'
-							onClick={() => props.handleOpenDrawer()}
+							onClick={() => handleOpenTratamiento(id)}
 						/>,
 						<GridActionsCellItem
 							icon={<Delete/>}

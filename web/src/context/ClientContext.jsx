@@ -6,8 +6,8 @@ export const ClientContext = createContext({
 	setCliente: (i) => {},
 	edit: {}, 
 	setEdit: (i) => {},
-	getClientes:{},
-	setGetClientes: (i) => {},
+	render:{},
+	setRender: (i) => {},
 })
 
 // Context Wrapper
@@ -15,7 +15,7 @@ export const ClientContextWrapper = ({ children }) => {
 	
 	const [cliente, setCliente] = useState(initialClient);
 	const [edit, setEdit] = useState(true);
-	const [getClientes, setGetClientes] = useState(true);
+	const [render, setRender] = useState(true);
 
 	return (
 		<ClientContext.Provider value={{
@@ -23,8 +23,8 @@ export const ClientContextWrapper = ({ children }) => {
 			setCliente,
 			edit, 
 			setEdit,
-			getClientes,
-			setGetClientes
+			render,
+			setRender
 		}}>
 			{children}
 		</ClientContext.Provider>

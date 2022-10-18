@@ -10,6 +10,7 @@ import Clientes from './pages/Clientes'
 import Administracion from './pages/Administracion'
 import { ClientContextWrapper } from './context/ClientContext'
 import { CalendarContextWrapper } from './context/CalendarContext'
+import { AdministracionContextWrapper } from './context/AdministracionContext'
 
 /***** Component style *****/
 const AppContainer = styled.div`
@@ -29,7 +30,7 @@ const App = () => {
 						<Route exact path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
 						<Route exact path='/calendario' element={<PrivateRoute><CalendarContextWrapper><Calendario/></CalendarContextWrapper></PrivateRoute>}/>
 						<Route exact path='/clientes' element={<PrivateRoute><ClientContextWrapper><Clientes/></ClientContextWrapper></PrivateRoute>}/>
-						<Route exact path='/administracion' element={<PrivateRoute><Administracion/></PrivateRoute>}/>
+						<Route exact path='/administracion' element={<PrivateRoute><AdministracionContextWrapper><Administracion/></AdministracionContextWrapper></PrivateRoute>}/>
 					</Routes>
 				</HashRouter>
 			</AppContainer>
