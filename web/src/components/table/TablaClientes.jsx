@@ -31,19 +31,17 @@ const CustomNoRowsContainer = styled.div`
 	font-size:1.2rem;
 `
 const CustomToolbarContainer = styled.div`
-	position:relative;
 	display:flex;
 	align-items:center;
 	padding:.5rem;
 	justify-content:space-between;
-	& div button{
-		color:#1976D2;
-		:hover{
-			background-color:#1976D233;
-		}
-	}
 `
 /****** ******************** *****/
+const CustomNoRows = () => {
+	return (
+		<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
+	);
+}
 
 const TablaClientesConponent = (props) => {
 	const { setCliente, setEdit, render } = useContext(ClientContext)
@@ -52,10 +50,10 @@ const TablaClientesConponent = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	const handleOpenClient = (id) => {
-		const user = data.find(cliente => cliente.id === id);
-		if(user){
+		const aux = data.find(cliente => cliente.id === id);
+		if(aux){
 			setEdit(false);
-			setCliente(user);
+			setCliente(aux);
 			props.handleOpenClient();
 		}else{
 			setEdit(true);
@@ -70,9 +68,9 @@ const TablaClientesConponent = (props) => {
 
 	// Obtine el nombre del cliente segun el id
 	const getNombre = (id) => {
-		const user = data.find(cliente => cliente.id === id);
-		if(user){
-			return user.name + ' ' + user.lastName
+		const aux = data.find(cliente => cliente.id === id);
+		if(aux){
+			return aux.name + ' ' + aux.lastName
 		}
 		return 'usuario'
 	}
@@ -97,12 +95,6 @@ const TablaClientesConponent = (props) => {
 					<Button title='Agregar Cliente' onClick={() => handleOpenClient(0)} startIcon={<Add/>}>Agregar Cliente</Button>
 				</div>
 			</CustomToolbarContainer>
-		);
-	}
-	
-	const CustomNoRows = () => {
-		return (
-			<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
 		);
 	}
 

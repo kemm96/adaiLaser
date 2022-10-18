@@ -17,7 +17,7 @@ const ClientsService = {
 			)
 		}
 	),
-	postUser: (cliente) => new Promise(
+	post: (cliente) => new Promise(
 		(resolve, reject) => {
 			API.post('/clientes',cliente)
 			.then(

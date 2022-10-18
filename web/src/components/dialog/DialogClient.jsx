@@ -128,7 +128,7 @@ const DialogClientComponent = (props) => {
 		if(data.rut === ''){
 			alert('EL R.U.T es obligatorio')
 		}else{
-			await ClientsService.postUser(data)
+			await ClientsService.post(data)
 			.then(
 				res => {
 					setData(initialClient);
