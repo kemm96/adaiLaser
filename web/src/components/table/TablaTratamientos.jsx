@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Button } from '@mui/material';
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'
 import TratamientosService from '../../services/tratamientosService'
-import { Edit, Delete } from '@mui/icons-material'
+import { Edit, Delete, Add } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext'
+import { initialTratamiento } from '../../utils/lists';
 
 /***** Component style *****/
 const Container = styled.div`
@@ -20,40 +22,72 @@ const Container = styled.div`
 		text-align:center;
 	}
 `
-const ColorPickerContainer = styled.div`
+const CustomNoRowsContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	font-size:1.2rem;
+`
+const ColorContainer = styled.div`
 	background-color:${props => props.color || ''};
 	display:flex;
 	justify-content:center;
+	height:60%;
+	width:50%;
+`
+const CustomToolbarContainer = styled.div`
+	display:flex;
+	align-items:center;
+	padding:.5rem;
+	justify-content:flex-end;
 `
 /****** ******************** *****/
 
-const ColorPicker = (color) => {
-	return <ColorPickerContainer color={color}>{color}</ColorPickerContainer>
+const Color = (color) => {
+	return <ColorContainer color={color}/>
 }
 
 const CustomNoRows = () => {
 	return (
-		<TratamientosContainer>No hay tratamientos disponibles</TratamientosContainer>
+		<CustomNoRowsContainer>No hay tratamientos disponibles</CustomNoRowsContainer>
 	);
 }
 
 const TablaTratamientosComponent = (props) => {
-	const { setTratamiento } = useContext(AdministracionContext)
+	const { setTratamiento, render } = useContext(AdministracionContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const handleOpenTratamiento = (id) => {
-		const tratamiento = data.find(tratamiento => tratamiento.id === id);
-		if(tratamiento){
-			setTratamiento(tratamiento);
+		const aux = data.find(tratamiento => tratamiento.id === id);
+		if(aux){
+			setTratamiento(aux);
 			props.handleOpenTratamientos()
 		}else{
-			setEdit(true);
-			setCliente(initialClient);
+			setTratamiento(initialTratamiento);
 			props.handleOpenTratamientos()
 		}
 	};
+
+	// Obtine el nombre del cliente segun el id
+	const getNombre = (id) => {
+		const aux = data.find(tratamiento => tratamiento.id === id);
+		if(aux){
+			return aux.name
+		}
+		return 'tratamiento'
+	}
+
+	const CustomToolbar = () => {
+		return (
+			<CustomToolbarContainer>
+				<Button title='Agregar Tratamiento' onClick={() => handleOpenTratamiento(0)} startIcon={<Add/>}>Agregar Tratamiento</Button>
+			</CustomToolbarContainer>
+		);
+	}
 
 	const columns = [
 		{ field: 'name', headerName: 'Nombre',flex: 1, headerClassName: 'header',},
@@ -67,31 +101,31 @@ const TablaTratamientosComponent = (props) => {
 			headerAlign: 'center', 
 			maxWidth:150, 
 			sortable: false ,
-			renderCell:({ formattedValue }) => (ColorPicker(formattedValue))},
-			{
-				field: 'options',
-				type: 'actions',
-				headerName: 'Opciones',
-				flex: 1,
-				maxWidth:100,
-				hideable: false,
-				headerClassName: 'header',
-				getActions: ({ id }) => {
-					return [
-						<GridActionsCellItem
-							icon={<Edit/>}
-							label='Editar'
-							title='Editar'
-							onClick={() => handleOpenTratamiento(id)}
-						/>,
-						<GridActionsCellItem
-							icon={<Delete/>}
-							label='Eliminar'
-							title='Eliminar'
-						/>,
-					]
-				},
-			}
+			renderCell:({ formattedValue }) => (Color(formattedValue))},
+		{
+			field: 'options',
+			type: 'actions',
+			headerName: 'Opciones',
+			flex: 1,
+			maxWidth:100,
+			hideable: false,
+			headerClassName: 'header',
+			getActions: ({ id }) => {
+				return [
+					<GridActionsCellItem
+						icon={<Edit/>}
+						label={`Editar ${getNombre(id)}`}
+						title={`Editar ${getNombre(id)}`}
+						onClick={() => handleOpenTratamiento(id)}
+					/>,
+					<GridActionsCellItem
+						icon={<Delete/>}
+						label={`Eliminar ${getNombre(id)}`}
+						title={`Eliminar ${getNombre(id)}`}
+					/>,
+				]
+			},
+		}
 	]
 
 	const get = async() => {
@@ -113,12 +147,13 @@ const TablaTratamientosComponent = (props) => {
 
 	useEffect(() => {
 		get();
-	}, []);
+	}, [render]);
 
 	return (
 		<Container>
 			<DataGrid 
-				components={{
+				components={{ 
+					Toolbar: CustomToolbar,
 					NoRowsOverlay: CustomNoRows,
 				}}
 				rowHeight={40}

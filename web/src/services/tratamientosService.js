@@ -17,6 +17,38 @@ const TratamientosService = {
 			)
 		}
 	),
+	post: (tratamiento) => new Promise(
+		(resolve, reject) => {
+			API.post('/tratamientos',tratamiento)
+			.then(
+				res => {
+					if (res.data.error) {
+						reject(err)
+					}else{
+						resolve(res.data.body)
+					}
+				}
+			).catch(
+				err => reject(err)
+			)
+		}
+	),
+	delete: (id) => new Promise(
+		(resolve, reject) => {
+			API.delete(`/tratamientos/${id}`)
+			.then(
+				res => {
+					if (res.data.error) {
+						reject(err)
+					}else{
+						resolve(res.data.body)
+					}
+				}
+			).catch(
+				err => reject(err)
+			)
+		}
+	)
 }
 
 export default TratamientosService

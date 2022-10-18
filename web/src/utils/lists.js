@@ -33,7 +33,7 @@ export const initialTratamiento = {
 	id:null,
 	name:'',
 	time:'',
-	color:'',
+	color:'#000000',
 }
 
 export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
