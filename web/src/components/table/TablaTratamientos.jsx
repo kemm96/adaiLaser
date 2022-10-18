@@ -1,48 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@mui/material';
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'
+import { DataGrid, esES, GridActionsCellItem, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid'
 import TratamientosService from '../../services/tratamientosService'
 import { Edit, Delete, Add } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext'
 import { initialTratamiento } from '../../utils/lists';
 import ConfirmationComponent from '../dialog/Confirmation';
+import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles';
 
 /***** Component style *****/
-const Container = styled.div`
-	width: 90%;
-	height: 90%;
-	& .header {
-		font-size:1rem;
-		font-weight: bold;
-		background-color:#1976D2;
-		color:#ffffff;
-	}
-	& .cell div{
-		width:100%;
-		text-align:center;
-	}
-`
-const CustomNoRowsContainer = styled.div`
-	width: 100%;
-	height: 100%;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	font-size:1.2rem;
-`
 const ColorContainer = styled.div`
 	background-color:${props => props.color || ''};
 	display:flex;
 	justify-content:center;
 	height:60%;
 	width:50%;
-`
-const CustomToolbarContainer = styled.div`
-	display:flex;
-	align-items:center;
-	padding:.5rem;
-	justify-content:flex-end;
 `
 /****** ******************** *****/
 
@@ -105,7 +78,21 @@ const TablaTratamientosComponent = (props) => {
 	const CustomToolbar = () => {
 		return (
 			<CustomToolbarContainer>
-				<Button title='Agregar Tratamiento' onClick={() => handleOpenTratamiento(0)} startIcon={<Add/>}>Agregar Tratamiento</Button>
+				<div>
+					<GridToolbarFilterButton title='Filtros'/>
+					<GridToolbarExport 
+						title='Exportar' 
+						printOptions={{ disableToolbarButton: true }}
+						csvOptions={{
+							fileName: 'TratamientosAdaiLaser',
+							utf8WithBom: true,
+							allColumns: true,
+						}}
+					/>
+				</div>
+				<div>
+					<Button title='Agregar Tratamiento' onClick={() => handleOpenTratamiento(0)} startIcon={<Add/>}>Agregar Tratamiento</Button>
+				</div>
 			</CustomToolbarContainer>
 		);
 	}
@@ -122,6 +109,7 @@ const TablaTratamientosComponent = (props) => {
 			headerAlign: 'center', 
 			maxWidth:150, 
 			sortable: false ,
+			filterable: false,
 			renderCell:({ formattedValue }) => (Color(formattedValue))},
 		{
 			field: 'options',
@@ -185,7 +173,7 @@ const TablaTratamientosComponent = (props) => {
 	}, [render]);
 
 	return (
-		<Container>
+		<TablaContainer>
 			<DataGrid 
 				components={{ 
 					Toolbar: CustomToolbar,
@@ -206,7 +194,7 @@ const TablaTratamientosComponent = (props) => {
 				text={deleteConfirmation.text}
 				confirmation={onDelete}
 			/>
-		</Container>
+		</TablaContainer>
 	)
 
 	

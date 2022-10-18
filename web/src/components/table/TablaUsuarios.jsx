@@ -1,29 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
-import { Edit, Delete } from '@mui/icons-material'
+import { Button } from '@mui/material';
+import { DataGrid, esES, GridActionsCellItem, GridToolbarFilterButton } from '@mui/x-data-grid'
+import { Add, Settings } from '@mui/icons-material'
 import UserService from '../../services/userService'
+import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles'
 
 /***** Component style *****/
-const Container = styled.div`
-	width: 90%;
-	height: 90%;
-	& .header {
-		font-size:1rem;
-		font-weight: bold;
-		background-color:#1976D2;
-		color:#ffffff;
-	}
-	& .cell div{
-		width:100%;
-		text-align:center;
-	}
-`
+
 /****** ******************** *****/
 
 const CustomNoRows = () => {
 		return (
-			<UsuariosContainer>No hay usuarios disponibles</UsuariosContainer>
+			<CustomNoRowsContainer>No hay usuarios disponibles</CustomNoRowsContainer>
 		);
 	}
 
@@ -31,6 +20,23 @@ const TablaUsuariosComponent = () => {
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const handleOpenUsuario = (id) => {
+		console.log(id);
+	}
+
+	const CustomToolbar = () => {
+		return (
+			<CustomToolbarContainer>
+				<div>
+					<GridToolbarFilterButton title='Filtros'/>
+				</div>
+				<div>
+					<Button title='Agregar Tratamiento' onClick={() => handleOpenUsuario(0)} startIcon={<Add/>}>Agregar Usuario</Button>
+				</div>
+			</CustomToolbarContainer>
+		);
+	}
 
 	const columns = [
 		{ field: 'name', headerName: 'Nombre',flex: 1, headerClassName: 'header',},
@@ -47,14 +53,9 @@ const TablaUsuariosComponent = () => {
 			getActions: ({ id }) => {
 				return [
 					<GridActionsCellItem
-						icon={<Edit/>}
-						label='Editar'
-						title='Editar'
-					/>,
-					<GridActionsCellItem
-						icon={<Delete/>}
-						label='Eliminar'
-						title='Eliminar'
+						icon={<Settings/>}
+						label='Configuración'
+						title='Configuración'
 					/>,
 				]
 			},
@@ -83,9 +84,10 @@ const TablaUsuariosComponent = () => {
 	}, []);
 
 	return (
-		<Container>
+		<TablaContainer>
 			<DataGrid 
-				components={{
+				components={{ 
+					Toolbar: CustomToolbar,
 					NoRowsOverlay: CustomNoRows,
 				}}
 				rowHeight={40}
@@ -97,7 +99,7 @@ const TablaUsuariosComponent = () => {
 				disableColumnMenu
 				loading={loading}
 			/>
-		</Container>
+		</TablaContainer>
 	)
 }
 

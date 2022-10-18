@@ -6,36 +6,10 @@ import ClientsService from '../../services/clientsService'
 import { Add, Visibility, History } from '@mui/icons-material'
 import { ClientContext } from '../../context/ClientContext'
 import { initialClient } from '../../utils/lists'
+import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles';
 
 /***** Component style *****/
-const Container = styled.div`
-	width: 90%;
-	height: 90%;
-	& .header {
-		font-size:1rem;
-		font-weight: bold;
-		background-color:#1976D2;
-		color:#ffffff;
-	}
-	& .cell div{
-		width:100%;
-		text-align:center;
-	}
-`
-const CustomNoRowsContainer = styled.div`
-	width: 100%;
-	height: 100%;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	font-size:1.2rem;
-`
-const CustomToolbarContainer = styled.div`
-	display:flex;
-	align-items:center;
-	padding:.5rem;
-	justify-content:space-between;
-`
+
 /****** ******************** *****/
 const CustomNoRows = () => {
 	return (
@@ -155,7 +129,7 @@ const TablaClientesConponent = (props) => {
 	}, [render]);
 
   	return (
-		<Container>
+		<TablaContainer>
 			<DataGrid 
 				rowHeight={40}
 				components={{ 
@@ -178,7 +152,7 @@ const TablaClientesConponent = (props) => {
 					},
 				}}
 			/>
-		</Container>
+		</TablaContainer>
   	);
 }
 
