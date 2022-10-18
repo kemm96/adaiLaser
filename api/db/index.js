@@ -100,7 +100,7 @@ const update = (data, tabla) => {
 }
 
 // Elimina info de una tabla
-const eliminar = (id, tabla) => {
+const erase = (id, tabla) => {
    return new Promise((resolve,reject) => {
       connection.query(`DELETE From ${tabla} WHERE id=${id}
       `,(err,response)=>{
@@ -121,5 +121,5 @@ module.exports = {
 	get,
 	list,
 	update,
-	eliminar
+	erase
 };

@@ -38,8 +38,25 @@ const insert = (req, res) => {
    });
 }
 
+const erase = (req, res) => {
+	controller.erase(req.params.id)
+   .then((body) => {
+      res.send({
+         error: false,
+         body: body
+      })
+   })
+   .catch((err) => {
+      res.send({
+         error: true,
+         body: err.message,
+      })
+   });
+}
+
 // Routes
 router.get('/', list);
 router.post('/', insert);
+router.delete('/:id', erase)
 
 module.exports = router;

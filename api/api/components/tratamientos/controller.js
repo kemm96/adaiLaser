@@ -14,7 +14,12 @@ const insert = async(data) => {
 	}
 }
 
+const erase = async(id) => {	
+	return await db.erase(id, 'Tratamientos')
+}
+
 module.exports = {
    list,
 	insert,
+	erase
 };
