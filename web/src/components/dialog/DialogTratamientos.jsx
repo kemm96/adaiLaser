@@ -1,6 +1,6 @@
-import React, { forwardRef, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Dialog, Slide, TextField, Drawer } from '@mui/material'
+import { Button, TextField, Drawer } from '@mui/material'
 import { Close, Save } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext';
 import { ChromePicker } from 'react-color'
@@ -66,6 +66,7 @@ const DialogTratamientosComponent = (props) => {
    }
 
   	const handleClose = () => {
+		setData(tratamiento);
 		props.handleClose();
 	};
 
@@ -95,7 +96,7 @@ const DialogTratamientosComponent = (props) => {
 			onClose={handleClose}
 		>
 			<Bar>
-				<span>{'TRATAMIENTO'}</span>
+				<span>{data.id === null ? 'NUEVO TRATAMIENTO' : data.name}</span>
 			</Bar>
 			<BodyContainer>
 				<Content>

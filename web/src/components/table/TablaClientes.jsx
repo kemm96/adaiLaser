@@ -28,12 +28,11 @@ const TablaClientesConponent = (props) => {
 		if(aux){
 			setEdit(false);
 			setCliente(aux);
-			props.handleOpenClient();
 		}else{
 			setEdit(true);
 			setCliente(initialClient);
-			props.handleOpenClient();
 		}
+		props.handleOpenClient();
 	};
 
 	const handleOpenHistorial = (id) => {

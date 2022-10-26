@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridActionsCellItem, GridToolbarFilterButton } from '@mui/x-data-grid'
 import { Add, Settings } from '@mui/icons-material'
 import UserService from '../../services/userService'
 import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles'
+import { AdministracionContext } from '../../context/AdministracionContext';
+import { initialUser } from '../../utils/lists';
 
 /***** Component style *****/
 
 /****** ******************** *****/
+
+const Rol = (rol) => {
+	return rol === 1 ? 'Administrador' : 'Funcionario'
+}
 
 const CustomNoRows = () => {
 		return (
@@ -16,13 +22,29 @@ const CustomNoRows = () => {
 		);
 	}
 
-const TablaUsuariosComponent = () => {
+const TablaUsuariosComponent = (props) => {
+	const { setUser, render } = useContext(AdministracionContext)
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const handleOpenUsuario = (id) => {
-		console.log(id);
+		const aux = data.find(user => user.id === id);
+		if(aux){
+			setUser(aux);
+		}else{
+			setUser(initialUser);
+		}
+		props.handleOpenUsers()
+	}
+
+	// Obtine el nombre del usuario segun el id
+	const getNombre = (id) => {
+		const aux = data.find(user => user.id === id);
+		if(aux){
+			return aux.name
+		}
+		return 'usuario'
 	}
 
 	const CustomToolbar = () => {
@@ -40,22 +62,30 @@ const TablaUsuariosComponent = () => {
 
 	const columns = [
 		{ field: 'name', headerName: 'Nombre',flex: 1, headerClassName: 'header',},
-		{ field: 'mail', headerName: 'Correo',flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center',},
-		{ field: 'rol', headerName: 'Rol',flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
+		{ field: 'mail', headerName: 'Correo',flex: 1, headerClassName: 'header',},
+		{ 
+			field: 'rol', 
+			headerName: 'Rol',
+			flex: 1, 
+			headerClassName: 'header', 
+			cellClassName:'cell', 
+			maxWidth:150,
+			renderCell:({ formattedValue }) => (Rol(formattedValue))
+		},
 		{
 			field: 'options',
 			type: 'actions',
 			headerName: 'Opciones',
 			flex: 1,
 			maxWidth:100,
-			hideable: false,
 			headerClassName: 'header',
 			getActions: ({ id }) => {
 				return [
 					<GridActionsCellItem
 						icon={<Settings/>}
-						label='Configuración'
-						title='Configuración'
+						label={`Configuración ${getNombre(id)}`}
+						title={`Configuración ${getNombre(id)}`}
+						onClick={() => handleOpenUsuario(id)}
 					/>,
 				]
 			},
@@ -81,7 +111,7 @@ const TablaUsuariosComponent = () => {
 
 	useEffect(() => {
 		get();
-	}, []);
+	}, [render]);
 
 	return (
 		<TablaContainer>

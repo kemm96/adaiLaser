@@ -4,7 +4,7 @@ const db = require('../../../db');
 const login = (mail) => {
    return new Promise((resolve, reject) => {
       db.connection.query(`
-         SELECT id, password
+         SELECT password
          FROM Auth
          WHERE mail= '${mail}'
       `,(err, data) => {
@@ -16,12 +16,12 @@ const login = (mail) => {
    })
 }
 
-const getUser = (id) => {
+const getUser = (mail) => {
    return new Promise((resolve, reject) => {
       db.connection.query(`
-         SELECT name
+         SELECT name, rol
          FROM User
-         WHERE auth= '${id}'
+         WHERE mail= '${mail}'
       `,(err, data) => {
          if (err) {
             return reject(err);

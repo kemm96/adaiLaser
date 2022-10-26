@@ -108,6 +108,7 @@ const DialogClientComponent = (props) => {
    }
 	
   	const handleClose = () => {
+		setData(cliente);
 		setEdit(false);
 		setError(false);
     	props.handleClose();
@@ -155,7 +156,7 @@ const DialogClientComponent = (props) => {
 			TransitionComponent={transition}
 		>
 			<Bar>
-				<span>{'PESTAÑA DE CLIENTE'}</span>
+				<span>{data.id === null ? 'NUEVO CLIENTE' : ''}</span>
 				<IconButton onClick={handleClose} title='Cerrar'><Close/></IconButton>
 			</Bar>
 			<BodyContainer>

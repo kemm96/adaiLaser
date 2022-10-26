@@ -44,11 +44,10 @@ const TablaTratamientosComponent = (props) => {
 		const aux = data.find(tratamiento => tratamiento.id === id);
 		if(aux){
 			setTratamiento(aux);
-			props.handleOpenTratamientos()
 		}else{
 			setTratamiento(initialTratamiento);
-			props.handleOpenTratamientos()
 		}
+		props.handleOpenTratamientos()
 	}
 
 	const handleOpenDeleteConfirmation = (id) => {
@@ -66,7 +65,7 @@ const TablaTratamientosComponent = (props) => {
 		})
 	}
 
-	// Obtine el nombre del cliente segun el id
+	// Obtine el nombre del tratamineto segun el id
 	const getNombre = (id) => {
 		const aux = data.find(tratamiento => tratamiento.id === id);
 		if(aux){
@@ -99,25 +98,25 @@ const TablaTratamientosComponent = (props) => {
 
 	const columns = [
 		{ field: 'name', headerName: 'Nombre',flex: 1, headerClassName: 'header',},
-		{ field: 'time', headerName: 'Duración (minutos)',flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center',},
+		{ field: 'time', headerName: 'Duración (minutos)',flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center',},
 		{ 
 			field: 'color', 
 			headerName: 'Color', 
-			flex: 1, hideable: false, 
+			flex: 1,
 			headerClassName: 'header', 
 			cellClassName:'cell', 
 			headerAlign: 'center', 
 			maxWidth:150, 
 			sortable: false ,
 			filterable: false,
-			renderCell:({ formattedValue }) => (Color(formattedValue))},
+			renderCell:({ formattedValue }) => (Color(formattedValue))
+		},
 		{
 			field: 'options',
 			type: 'actions',
 			headerName: 'Opciones',
 			flex: 1,
 			maxWidth:100,
-			hideable: false,
 			headerClassName: 'header',
 			getActions: ({ id }) => {
 				return [

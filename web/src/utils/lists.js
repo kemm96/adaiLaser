@@ -22,7 +22,6 @@ export const clientError = {
 	lastName:false,
 	rut:false,
 	birthday:false,
-	gender:false,
 	mail:false,
 	phone:false,
 	adress:false,
@@ -34,6 +33,23 @@ export const initialTratamiento = {
 	name:'',
 	time:'',
 	color:'#000000',
+}
+
+export const initialUser = {
+	id:null,
+	name:'',
+	rut:'',
+	phone:'',
+	mail:'',
+	rol:2,
+}
+
+export const userError = {
+	name:false,
+	rut:false,
+	phone:false,
+	mail:false,
+	rol:false,
 }
 
 export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];

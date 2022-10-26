@@ -5,6 +5,7 @@ import { Tabs, Tab } from '@mui/material'
 import TablaUsuariosComponent from '../components/table/TablaUsuarios'
 import TablaTratamientosComponent from '../components/table/TablaTratamientos'
 import DialogTratamientosComponent from '../components/dialog/DialogTratamientos'
+import DialogUsersComponent from '../components/dialog/DialogUsers'
 
 /***** Component style *****/
 const AdministracionContainer = styled.div`
@@ -44,8 +45,9 @@ const SwitchCase = (props) => {
 
 const Administracion = () => {
 
-	const [value, setValue] = useState(1);
+	const [value, setValue] = useState(0);
 	const [openDialogTratamientos, setOpenDialogTratamientos] = useState(false);
+	const [openDialogUsers, setOpenDialogUsers] = useState(false);
 
 	const handleOpenDialogTratamientos = () => {
 		setOpenDialogTratamientos(true);
@@ -53,6 +55,14 @@ const Administracion = () => {
 	
 	const handleCloseDialogTratamientos = () => {
 		setOpenDialogTratamientos(false);
+	};
+
+	const handleOpenDialogUsers = () => {
+		setOpenDialogUsers(true);
+	};
+	
+	const handleCloseDialogUsers = () => {
+		setOpenDialogUsers(false);
 	};
 
   	const handleChange = (e, newValue) => {
@@ -82,7 +92,13 @@ const Administracion = () => {
 						/>
 					</SwitchCase>
 					<SwitchCase value={value} index={1}>
-						<TablaUsuariosComponent/>
+						<TablaUsuariosComponent
+							handleOpenUsers={handleOpenDialogUsers}
+						/>
+						<DialogUsersComponent
+							open={openDialogUsers}
+							handleClose={handleCloseDialogUsers}
+						/>
 					</SwitchCase>
 				</TabsContainer>
 			</AdministracionContainer>
