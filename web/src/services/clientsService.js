@@ -7,7 +7,7 @@ const ClientsService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}
@@ -23,7 +23,7 @@ const ClientsService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}

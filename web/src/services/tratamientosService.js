@@ -7,7 +7,7 @@ const TratamientosService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}
@@ -23,7 +23,7 @@ const TratamientosService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}
@@ -39,7 +39,7 @@ const TratamientosService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}

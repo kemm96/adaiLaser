@@ -7,7 +7,7 @@ const LoginService = {
 			.then(
 				res => {
 					if (res.data.error) {
-						reject(err)
+						reject(res)
 					}else{
 						resolve(res.data.body)
 					}
