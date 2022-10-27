@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { checkAdmin } = require('../secure')
+const { checkAuth } = require('../secure')
 const controller = require('./controller')
 
 // Internal functions
@@ -56,8 +56,8 @@ const erase = (req, res) => {
 }
 
 // Routes
-router.get('/', checkAdmin(), list);
-router.post('/', checkAdmin(), insert);
-router.delete('/:id', checkAdmin(), erase)
+router.get('/', checkAuth(true), list);
+router.post('/', checkAuth(true), insert);
+router.delete('/:id', checkAuth(true), erase)
 
 module.exports = router;

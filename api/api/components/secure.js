@@ -1,19 +1,18 @@
 const auth = require('../../token');
 
-const checkAuth = () => {
-	console.log('checkAuth');
-}
-
-const checkAdmin = () => {
-
-   const middleWare = (req, res, next) => {
+const checkAuth = (admin) => {
+	const middleWare = (req, res, next) => {
       auth.check(req)
-		.then((body) => {
-			if(req.user.user.rol === 1){
-				next();
-			}else{
-				console.log('No tiene los permisos necesarios');
-				throw new Error('Error de Autenticación');
+		.then(() => {
+			if (admin) {
+				if(req.user.user.rol === 1){
+					next();
+				}else{
+					console.log('No tiene los permisos necesarios');
+					throw new Error('Error de Autenticación');
+				}
+			} else {
+				next();	
 			}
 		})
 		.catch((err) => {
@@ -29,5 +28,4 @@ const checkAdmin = () => {
 
 module.exports = {
    checkAuth,
-	checkAdmin,
 };

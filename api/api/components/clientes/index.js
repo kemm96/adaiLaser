@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
+const { checkAuth } = require('../secure')
 const controller = require('./controller')
 
 // Internal functions
@@ -39,7 +40,7 @@ const insert = (req, res) => {
 }
 
 // Routes
-router.get('/', list);
-router.post('/', insert);
+router.get('/', checkAuth(false), list);
+router.post('/', checkAuth(false), insert);
 
 module.exports = router;

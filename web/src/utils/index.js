@@ -10,6 +10,7 @@ export const logIn = (token) => {
 export const logOut = () => {
 	window.localStorage.removeItem('access-token');
 	window.location.href = '/#/login';
+	window.location.reload();
 }
 
 export const isLogin = () => {
