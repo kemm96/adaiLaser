@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
+const { checkAdmin } = require('../secure')
 const controller = require('./controller')
 
 // Internal functions
@@ -55,8 +56,8 @@ const erase = (req, res) => {
 }
 
 // Routes
-router.get('/', list);
-router.post('/', insert);
-router.delete('/:id', erase)
+router.get('/', checkAdmin(), list);
+router.post('/', checkAdmin(), insert);
+router.delete('/:id', checkAdmin(), erase)
 
 module.exports = router;

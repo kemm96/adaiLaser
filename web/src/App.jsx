@@ -27,10 +27,10 @@ const App = () => {
 				<HashRouter>
 					<Routes>
 						<Route exact path='/login' element={<Login/>}/>
-						<Route exact path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
-						<Route exact path='/calendario' element={<PrivateRoute><CalendarContextWrapper><Calendario/></CalendarContextWrapper></PrivateRoute>}/>
-						<Route exact path='/clientes' element={<PrivateRoute><ClientContextWrapper><Clientes/></ClientContextWrapper></PrivateRoute>}/>
-						<Route exact path='/administracion' element={<PrivateRoute><AdministracionContextWrapper><Administracion/></AdministracionContextWrapper></PrivateRoute>}/>
+						<Route exact path='/' element={<PrivateRoute needAdmin={false}><Home/></PrivateRoute>}/>
+						<Route exact path='/calendario' element={<PrivateRoute needAdmin={false}><CalendarContextWrapper><Calendario/></CalendarContextWrapper></PrivateRoute>}/>
+						<Route exact path='/clientes' element={<PrivateRoute needAdmin={false}><ClientContextWrapper><Clientes/></ClientContextWrapper></PrivateRoute>}/>
+						<Route exact path='/administracion' element={<PrivateRoute needAdmin={true}><AdministracionContextWrapper><Administracion/></AdministracionContextWrapper></PrivateRoute>}/>
 					</Routes>
 				</HashRouter>
 			</AppContainer>

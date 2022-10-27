@@ -109,7 +109,9 @@ const NavBarComponent = () => {
 			<Nav>
 				<NavLinkStyled to='/calendario'>CALENDARIO</NavLinkStyled>
 				<NavLinkStyled to='/clientes'>CLIENTES</NavLinkStyled>
-				<NavLinkStyled to='/administracion'>ADMINISTRACIÓN</NavLinkStyled>
+				{token ? (token.user.rol === 1 ? (
+					<NavLinkStyled to='/administracion'>ADMINISTRACIÓN</NavLinkStyled>
+				) : null) : null }
 			</Nav>
 			<AvatarContainer>
 				<Avatar

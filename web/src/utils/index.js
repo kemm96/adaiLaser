@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 export const logIn = (token) => {
 	window.localStorage.setItem('access-token', token);
 	window.location.href = '/#/';
+	window.location.reload();
 }
 
 export const logOut = () => {
@@ -55,10 +56,5 @@ export const getMonth = (month, year) => {
 		  return dayjs(new Date(year, month, currentMonthCount));
 		});
 	 }); 
-	/* console.log(month);
-	console.log(year);
-	console.log(firstDayOfTheMonth);
-	console.log(currentMonthCount);
-	console.log(daysMatrix); */
 	return daysMatrix;
 }

@@ -13,7 +13,6 @@ const login = async(user) => {
 
 	return bcrypt.compare(user.password, auth.password)
 	.then(async equal => {
-		console.log(equal);
       if (equal) {
 			const data = await model.getUser(user.mail)
          const token = TOKEN.sign(data);
