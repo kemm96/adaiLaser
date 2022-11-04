@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useContext} from 'react'
-import styled from 'styled-components'
+import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles';
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridToolbarFilterButton, GridActionsCellItem, GridToolbarExport, GridToolbarColumnsButton } from '@mui/x-data-grid'
 import ClientsService from '../../services/clientsService'
 import { Add, Visibility, History } from '@mui/icons-material'
 import { ClientContext } from '../../context/ClientContext'
 import { initialClient } from '../../utils/lists'
-import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles';
-
-/***** Component style *****/
-
-/****** ******************** *****/
 
 const CustomNoRows = () => {
 	return (

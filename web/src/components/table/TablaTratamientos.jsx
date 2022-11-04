@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { CustomNoRowsContainer, CustomToolbarContainer, FlexContainer, TablaContainer } from '../../styles/styles';
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridActionsCellItem, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid'
 import TratamientosService from '../../services/tratamientosService'
@@ -7,13 +8,10 @@ import { Edit, Delete, Add } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext'
 import { initialTratamiento } from '../../utils/lists';
 import ConfirmationComponent from '../dialog/Confirmation';
-import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles';
 
 /***** Component style *****/
-const ColorContainer = styled.div`
+const ColorContainer = styled(FlexContainer)`
 	background-color:${props => props.color || ''};
-	display:flex;
-	justify-content:center;
 	height:60%;
 	width:50%;
 `

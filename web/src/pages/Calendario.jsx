@@ -4,29 +4,22 @@ import LayoutComponent from '../components/layout/Layout'
 import MonthComponent from '../components/calendar/CalendarMonth'
 import { CalendarContext } from '../context/CalendarContext'
 import { getMonth } from '../utils'
-import CalendarBarComponent from '../components/calendar/CalendarBar'
 import CalendarSideBarComponent from '../components/calendar/CalendarSideBar'
 import WeekComponent from '../components/calendar/CalendarWeek'
-
 
 /***** Component style *****/
 const CalendarContainer = styled.div`
 	display:flex;
-	width:100%;
-	height:88vh;
+	width:100vw;
 `
 /****** ******************** *****/
 
 const SwitchCase = ({ i, month }) => {
 	switch (i) {
 		case 0:
-			return (
-				<WeekComponent/>
-			)
+			return <WeekComponent/>
 		case 1:
-			return (
-				<MonthComponent month={month}/>
-			)
+			return <MonthComponent month={month}/>
 		default:
 			return null
 	}
@@ -43,9 +36,8 @@ const Calendario = () => {
 
 	return (
 		<LayoutComponent>
-			<CalendarBarComponent/>
 			<CalendarContainer>
-				{/* <CalendarSideBarComponent month={currentMonth}/> */}
+				<CalendarSideBarComponent/>
 				<SwitchCase i={selectValue} month={currentMonth}/>
 			</CalendarContainer>
 		</LayoutComponent>

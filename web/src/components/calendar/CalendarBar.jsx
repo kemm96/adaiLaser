@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { FlexContainer } from '../../styles/styles'
 import { ArrowBackIosNew, ArrowForwardIos, Today } from '@mui/icons-material'
 import { Button, IconButton, MenuItem, Select } from '@mui/material'
 import { months } from '../../utils/lists'
@@ -7,36 +8,19 @@ import { CalendarContext } from '../../context/CalendarContext'
 import dayjs from 'dayjs'
 
 /***** Component style *****/
-const Container = styled.div`
-	position:relative;
-	padding:0 15vw;
-	display:flex;
-	align-items:center;
+const Container = styled(FlexContainer)`
+	padding:0 5vw;
 	width:100%;
 	height:6vh;
+	justify-content:space-between;
 	& button{
 		color:#1976D2;
 		:hover{
-			background-color:#1976D233;
+			background-color:#1976D211;
 		}
 	}
 `
-const TodayContainer = styled.div`
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	button{
-		color:#1976D2;
-		:hover{
-			background-color:#1976D233;
-		}
-	}
-`
-const SelectContainer = styled.div`
-	display:flex;
-	align-items:center;
-	position:absolute;
-	right:5vw;
+const SelectContainer = styled(FlexContainer)`
 	height:100%;
 	& div{
 		height:60%;
@@ -80,12 +64,12 @@ const CalendarBarComponent = () => {
 
 	return (
 		<Container>
-			<TodayContainer>
+			<FlexContainer>
 				<Button title='Hoy' onClick={handleToday} startIcon={<Today/>}>Hoy</Button>
-			</TodayContainer>
-			<IconButton onClick={subtractMonthIndex}><ArrowBackIosNew/></IconButton>
-			<IconButton onClick={AddMonthIndex}><ArrowForwardIos/></IconButton>
-			<div>{months[monthIndex]} {year}</div>
+				<IconButton onClick={subtractMonthIndex}><ArrowBackIosNew/></IconButton>
+				<IconButton onClick={AddMonthIndex}><ArrowForwardIos/></IconButton>
+				<div>{months[monthIndex].toUpperCase()} {year}</div>
+			</FlexContainer>
 			<SelectContainer>
 				<Select
 					value={selectValue}

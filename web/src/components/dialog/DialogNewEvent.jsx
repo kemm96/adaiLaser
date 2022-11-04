@@ -15,7 +15,7 @@ const transition = forwardRef((props, ref) => {
 	return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const DialogHistorialComponent = (props) => {
+const DialogNewEventComponent = (props) => {
 	
   	const handleClose = () => {
     	props.handleClose();
@@ -29,7 +29,7 @@ const DialogHistorialComponent = (props) => {
 			TransitionComponent={transition}
 		>
 			<DialogBar>
-				<span>{`Historial de `}</span>
+				<span>{``}</span>
 				<IconButton onClick={handleClose} title='Cerrar'><Close/></IconButton>
 			</DialogBar>
 			<BodyContainer>
@@ -39,4 +39,4 @@ const DialogHistorialComponent = (props) => {
 	)
 }
 
-export default DialogHistorialComponent
+export default DialogNewEventComponent

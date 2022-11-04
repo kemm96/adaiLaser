@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
-export const FlexCenterContainer = styled.div`
+export const FlexContainer = styled.div`
 	display:flex;
 	justify-content:center;
 	align-items:center;
-	height:100%;
-	width:100%;
 `
 
 export const BoxShadow = styled.div`
@@ -31,12 +29,9 @@ export const TablaContainer = styled.div`
 		text-align:center;
 	}
 `
-export const CustomNoRowsContainer = styled.div`
+export const CustomNoRowsContainer = styled(FlexContainer)`
 	width: 100%;
 	height: 100%;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 	font-size:1.2rem;
 `
 export const CustomToolbarContainer = styled.div`
@@ -45,7 +40,7 @@ export const CustomToolbarContainer = styled.div`
 	padding:.5rem;
 	justify-content:space-between;
 `
-export const FullDialogBar = styled(BoxShadow)`
+export const DialogBar = styled(BoxShadow)`
 	height:6vh;
 	align-items:center;
 	justify-content:space-between;

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { BoxShadow, FlexContainer } from '../../styles/styles'
 import logoLarge from '../../assets/images/logoLarge.svg'
 import logo from '../../assets/images/logo.svg'
 import { Avatar, Menu, MenuItem } from '@mui/material'
 import { getTokenData, logOut } from '../../utils'
 import { NavLink } from 'react-router-dom'
-import { BoxShadow } from '../../styles/styles'
 
 /***** Component style *****/
 const Container = styled(BoxShadow)`
 	width:100%;
 	height:6vh;
 `
-const ImgContainer = styled.div`
+const ImgContainer = styled(FlexContainer)`
 	height:100%;
 	width:30%;
 	min-width:max-content;
-	display:flex;
-	align-items:center;
 	padding: 0 2rem;
 `
 const Img = styled.img`
@@ -27,9 +25,8 @@ const Img = styled.img`
 		display:${props => props.landscape ? 'initial' : 'none'};
 	}
 `
-const Nav = styled.nav`
-	display:flex;
-	align-items:center;
+const Nav = styled(FlexContainer)`
+	justify-content:flex-start;
 	width:100%;
 `
 const NavLinkStyled = styled(NavLink)`
@@ -52,9 +49,7 @@ const NavLinkStyled = styled(NavLink)`
       }
 	}
 `
-const AvatarContainer = styled.div`
-	display:flex;
-	align-items:center;
+const AvatarContainer = styled(FlexContainer)`
 	padding: 0 2rem;
 	& div{
 		background-color:#1976D2;

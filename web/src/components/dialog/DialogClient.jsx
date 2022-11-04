@@ -1,14 +1,18 @@
 import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+import { DialogBar, FlexContainer } from '../../styles/styles'
 import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, Divider } from '@mui/material'
 import { Close, Save, Edit, Email } from '@mui/icons-material'
-import { FullDialogBar, FlexCenterContainer } from '../../styles/styles'
 import { validaciones } from '../../utils'
 import { ClientContext } from '../../context/ClientContext'
 import ClientsService from '../../services/clientsService'
 import { clientError, initialClient } from '../../utils/lists'
 
 /***** Component style *****/
+const BodyContainer = styled(FlexContainer)`
+	height:100%;
+	width:100%;
+`
 const FormContainer = styled.div`
 	border: 1px solid #e0e0e0;
 	height:90%;
@@ -131,11 +135,11 @@ const DialogClientComponent = (props) => {
 			onClose={handleClose}
 			TransitionComponent={transition}
 		>
-			<FullDialogBar>
+			<DialogBar>
 				<span>{data.id === null ? 'NUEVO CLIENTE' : ''}</span>
 				<IconButton onClick={handleClose} title='Cerrar'><Close/></IconButton>
-			</FullDialogBar>
-			<FlexCenterContainer>
+			</DialogBar>
+			<BodyContainer>
 				<FormContainer>
 					<Form>
 						<LittleBar>PERFIL <span>(*) Campo Obligatorio</span></LittleBar>
@@ -269,7 +273,7 @@ const DialogClientComponent = (props) => {
 						): null}
 					</Footer>
 				</FormContainer>
-			</FlexCenterContainer>
+			</BodyContainer>
 		</Dialog>
 	)
 }

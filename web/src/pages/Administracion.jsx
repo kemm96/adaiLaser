@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FlexContainer } from '../styles/styles'
 import LayoutComponent from '../components/layout/Layout'
 import { Tabs, Tab } from '@mui/material'
 import TablaUsuariosComponent from '../components/table/TablaUsuarios'
@@ -8,12 +9,9 @@ import DialogTratamientosComponent from '../components/dialog/DialogTratamientos
 import DialogUsersComponent from '../components/dialog/DialogUsers'
 
 /***** Component style *****/
-const AdministracionContainer = styled.div`
+const AdministracionContainer = styled(FlexContainer)`
 	width: 100%;
 	height: 100%;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 `
 const TabsContainer = styled.div`
 	width: 90%;
@@ -21,13 +19,10 @@ const TabsContainer = styled.div`
 	display:flex;
 	border: 1px solid #e0e0e0;
 `
-const SwitchContainer = styled.div`
+const SwitchContainer = styled(FlexContainer)`
 	width: 100%;
 	height: 100%;
 	border-left: 1px solid #e0e0e0;
-	display:flex;
-	justify-content:center;
-	align-items:center;
 `
 /****** ******************** *****/
 

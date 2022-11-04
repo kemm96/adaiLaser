@@ -1,29 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 import { daysName } from '../../utils/lists'
-import DayComponent from './CalendarDay'
+import CalendarBarComponent from './CalendarBar'
 
 /***** Component style *****/
 const Container = styled.div`
+	display:flex;
+	flex-direction:column;
+	width:100%;
+	height:94vh;
+`
+const WeekContainer = styled.div`
 	display:grid;
 	grid-template-columns:repeat(7, 1fr);
-	grid-template-rows: min-content min-content;
+	grid-template-rows: min-content  min-content;
 	width:100%;
-	height:100%;
+	height:88vh;
 `
-const Day = styled.div`
+const DayName = styled.div`
 	display:flex;
 	justify-content:center;
-	border:1px solid #e0e0e0;
+	background-color:#1976D2;
+	color:#e0e0e0;
 `
 /****** ******************** *****/
 
 const CalendarWeekComponent = () => {
 	return (
 		<Container>
-			{daysName.map((day, i) => (
-				<Day key={i}>{day}</Day>
-			))}
+			<CalendarBarComponent/>
+			<WeekContainer>
+				{daysName.map((day, i) => (
+					<DayName key={i}>{day}</DayName>
+				))}
+			</WeekContainer>
 			{/* {month.map((row, i) => (
 				<React.Fragment key={i}>
 					{row.map((day, j) => (

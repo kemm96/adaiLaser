@@ -1,29 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { DialogBar, FlexContainer } from '../../styles/styles';
 import { Button, TextField, Drawer } from '@mui/material'
 import { Close, Save } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext';
 import { ChromePicker } from 'react-color'
-import { BoxShadow } from '../../styles/styles';
 import TratamientosService from '../../services/tratamientosService';
 import { initialTratamiento } from '../../utils/lists';
 
 /***** Component style *****/
-const Bar = styled(BoxShadow)`
-	height:6vh;
-	align-items:center;
-	padding: 0 1rem;
-	background-color:#1976D2;
-	text-align:center;
-	& span{
-		color:#ffffff;
-		font-size:1.5rem;
-	}
-`
-const BodyContainer = styled.div`
-	display:flex;
-	justify-content:center;
-	align-items:center;
+const BodyContainer = styled(FlexContainer)`
 	height:88vh;
 `
 const Content = styled.div`
@@ -35,11 +21,8 @@ const Content = styled.div`
 		margin:1rem 0;
 	}
 `
-const Footer = styled.div`
+const Footer = styled(FlexContainer)`
 	height:6vh;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 	padding: 0 1rem;
 `
 /****** ******************** *****/
@@ -95,9 +78,9 @@ const DialogTratamientosComponent = (props) => {
 			open={props.open}
 			onClose={handleClose}
 		>
-			<Bar>
+			<DialogBar>
 				<span>{data.id === null ? 'NUEVO TRATAMIENTO' : data.name}</span>
-			</Bar>
+			</DialogBar>
 			<BodyContainer>
 				<Content>
 					<TextField

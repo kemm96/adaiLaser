@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { BoxShadow, FlexContainer } from '../styles/styles'
 import { Box, Button, TextField } from '@mui/material'
 import logo from '../assets/images/logoLarge.svg'
 import background from '../assets/images/background.jpg'
 import LoginService from '../services/loginService'
 import { Email, Password } from '@mui/icons-material'
 import { logIn, isLogin } from '../utils'
-import { BoxShadow } from '../styles/styles'
 
 /***** Component style *****/
-const PageContainer = styled.div`
+const PageContainer = styled(FlexContainer)`
 	width: 100vw;
 	height: 100vh;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 	background-image:url(${background});
    background-repeat:no-repeat;
    background-size: fill;
@@ -28,12 +25,10 @@ const LoginContainer = styled(BoxShadow)`
 		flex-direction:row;
    }
 `
-const InputsContainer = styled.div`
+const InputsContainer = styled(FlexContainer)`
 	padding: 0 10%;
 	width:25rem;
 	height:20rem;
-	display:flex;
-	align-items:center;
 	justify-content:space-evenly;
 	flex-direction:column;
 	& div{
@@ -45,13 +40,10 @@ const InputsContainer = styled.div`
 		background-color:#1976D2;
 	} 
 `
-const Logo = styled.div`
+const Logo = styled(FlexContainer)`
 	width:30rem;
 	height:10rem;
 	padding:1rem;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 	@media (orientation:landscape) {
 		height:20rem;
    }

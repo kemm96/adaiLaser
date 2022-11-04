@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FlexContainer } from '../styles/styles'
 import LayoutComponent from '../components/layout/Layout'
 import TablaClientesComponent from '../components/table/TablaClientes'
 import DialogClientComponent from '../components/dialog/DialogClient'
 import DialogHistorialComponent from '../components/dialog/DialogHistorial'
 
 /***** Component style *****/
-const Container = styled.div`
+const Container = styled(FlexContainer)`
 	width: 100%;
 	height: 100%;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 `
 /****** ******************** *****/
 

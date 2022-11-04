@@ -1,30 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { DialogBar, FlexContainer } from '../../styles/styles';
 import { Button, TextField, Drawer, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, InputAdornment } from '@mui/material'
 import { Close, Save, Email } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext';
-import { BoxShadow } from '../../styles/styles';
 import UserService from '../../services/userService';
 import { initialUser, userError } from '../../utils/lists';
 import ConfirmationComponent from './Confirmation';
 import { validaciones } from '../../utils';
 
 /***** Component style *****/
-const Bar = styled(BoxShadow)`
-	height:6vh;
-	align-items:center;
-	padding: 0 1rem;
-	background-color:#1976D2;
-	text-align:center;
-	& span{
-		color:#ffffff;
-		font-size:1.5rem;
-	}
-`
-const BodyContainer = styled.div`
-	display:flex;
-	justify-content:center;
-	align-items:center;
+const BodyContainer = styled(FlexContainer)`
 	height:88vh;
 `
 const Content = styled.div`
@@ -49,11 +35,8 @@ const Delete = styled.div`
 		color:red;	
 	}
 `
-const Footer = styled.div`
+const Footer = styled(FlexContainer)`
 	height:6vh;
-	display:flex;
-	align-items:center;
-	justify-content:center;
 	padding: 0 1rem;
 `
 /****** ******************** *****/
@@ -187,9 +170,9 @@ const DialogUsersComponent = (props) => {
 			open={props.open}
 			onClose={handleClose}
 		>
-			<Bar>
+			<DialogBar>
 				<span>{data.id === null ? 'NUEVO USUARIO' : data.name}</span>
-			</Bar>
+			</DialogBar>
 			<BodyContainer>
 				<Content>
 					{data.id !== null ? (

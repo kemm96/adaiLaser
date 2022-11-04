@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles'
 import { Button } from '@mui/material';
 import { DataGrid, esES, GridActionsCellItem, GridToolbarFilterButton } from '@mui/x-data-grid'
 import { Add, Settings } from '@mui/icons-material'
 import UserService from '../../services/userService'
-import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '../../styles/styles'
 import { AdministracionContext } from '../../context/AdministracionContext';
 import { initialUser } from '../../utils/lists';
-
-/***** Component style *****/
-
-/****** ******************** *****/
 
 const Rol = (rol) => {
 	return rol === 1 ? 'Administrador' : 'Funcionario'
