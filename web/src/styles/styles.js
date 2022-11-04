@@ -1,5 +1,13 @@
 import styled from 'styled-components'
 
+export const FlexCenterContainer = styled.div`
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	height:100%;
+	width:100%;
+`
+
 export const BoxShadow = styled.div`
 	display:flex;
 	-webkit-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
@@ -36,4 +44,22 @@ export const CustomToolbarContainer = styled.div`
 	align-items:center;
 	padding:.5rem;
 	justify-content:space-between;
+`
+export const FullDialogBar = styled(BoxShadow)`
+	height:6vh;
+	align-items:center;
+	justify-content:space-between;
+	padding: 0 5%;
+	background-color:#1976D2;
+	& button{
+		color:#ffffff;
+		transform:scale(1.2);
+		:hover{
+			background-color:#ffffff33;
+		}
+	}
+	& span{
+		color:#ffffff;
+		font-size:1.5rem;
+	}
 `

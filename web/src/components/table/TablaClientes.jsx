@@ -11,6 +11,7 @@ import { CustomNoRowsContainer, CustomToolbarContainer, TablaContainer } from '.
 /***** Component style *****/
 
 /****** ******************** *****/
+
 const CustomNoRows = () => {
 	return (
 		<CustomNoRowsContainer>No hay clientes disponibles</CustomNoRowsContainer>
@@ -76,7 +77,6 @@ const TablaClientesConponent = (props) => {
 		{ field: 'name', headerName: 'Nombres',flex: 1, hideable: false, headerClassName: 'header',},
 		{ field: 'rut', headerName: 'R.U.T.', flex: 1, hideable: false, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'birthday', headerName: 'Fecha de Nacimiento', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:180,},
-		{ field: 'genderName', headerName: 'Género', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{ field: 'mail', headerName: 'Email', flex: 1, headerClassName: 'header',},
 		{ field: 'phone', headerName: 'Teléfono', flex: 1, headerClassName: 'header', cellClassName:'cell', headerAlign: 'center', maxWidth:150,},
 		{
@@ -142,14 +142,6 @@ const TablaClientesConponent = (props) => {
 				disableSelectionOnClick
 				disableColumnMenu
 				loading={loading}
-				initialState={{
-					...data.initialState,
-					columns: {
-					  columnVisibilityModel: {
-							genderName:false,
-					  },
-					},
-				}}
 			/>
 		</TablaContainer>
   	);

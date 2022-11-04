@@ -1,38 +1,14 @@
 import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material'
+import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, Divider } from '@mui/material'
 import { Close, Save, Edit, Email } from '@mui/icons-material'
-import { BoxShadow } from '../../styles/styles'
+import { FullDialogBar, FlexCenterContainer } from '../../styles/styles'
 import { validaciones } from '../../utils'
 import { ClientContext } from '../../context/ClientContext'
 import ClientsService from '../../services/clientsService'
-import { clientError, generos, initialClient } from '../../utils/lists'
+import { clientError, initialClient } from '../../utils/lists'
 
 /***** Component style *****/
-const Bar = styled(BoxShadow)`
-	height:6vh;
-	align-items:center;
-	justify-content:space-between;
-	padding: 0 5%;
-	background-color:#1976D2;
-	& button{
-		color:#ffffff;
-		transform:scale(1.2);
-		:hover{
-			background-color:#ffffff33;
-		}
-	}
-	& span{
-		color:#ffffff;
-		font-size:1.5rem;
-	}
-`
-const BodyContainer = styled.div`
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	height:100%;
-`
 const FormContainer = styled.div`
 	border: 1px solid #e0e0e0;
 	height:90%;
@@ -155,11 +131,11 @@ const DialogClientComponent = (props) => {
 			onClose={handleClose}
 			TransitionComponent={transition}
 		>
-			<Bar>
+			<FullDialogBar>
 				<span>{data.id === null ? 'NUEVO CLIENTE' : ''}</span>
 				<IconButton onClick={handleClose} title='Cerrar'><Close/></IconButton>
-			</Bar>
-			<BodyContainer>
+			</FullDialogBar>
+			<FlexCenterContainer>
 				<FormContainer>
 					<Form>
 						<LittleBar>PERFIL <span>(*) Campo Obligatorio</span></LittleBar>
@@ -171,7 +147,7 @@ const DialogClientComponent = (props) => {
 								id='name' 
 								name='name'
 								label='Nombres'
-								value={data.name}
+								value={data.name === null ? '' : data.name}
 								onChange={onChangeInput}
 								inputProps={{ maxLength: 50 }}
 								error={error.name}
@@ -182,32 +158,32 @@ const DialogClientComponent = (props) => {
 								id='lastName' 
 								name='lastName'
 								label='Apellidos'
-								value={data.lastName}
+								value={data.lastName === null ? '' : data.lastName}
 								onChange={onChangeInput}
 								inputProps={{ maxLength: 50 }}
 								error={error.lastName}
 								helperText={error.lastName ? 'Ingresa un apellido válido' : null}
 							/>
+						</Inputs>
+						<Inputs>
 							<TextField
 								disabled={!edit}
 								id='rut' 
 								name='rut'
 								label='R.U.T. (*)'
-								value={data.rut}
+								value={data.rut === null ? '' : data.rut}
 								onChange={onChangeInput}
 								inputProps={{ maxLength: 10 }}
 								error={error.rut}
 								helperText={error.rut ? 'Ingresa un formato válido' : 'Ingresar Sin puntos y con guión'}
 							/>
-						</Inputs>
-						<Inputs>
 						<TextField
 								disabled={!edit}
 								id='birthday' 
 								name='birthday'
 								label='Fecha de Nacimiento *'
 								type='date'
-								value={data.birthday}
+								value={data.birthday === null ? '' : data.birthday}
 								onChange={onChangeInput}
 								InputLabelProps={{
 									shrink: true,
@@ -215,24 +191,6 @@ const DialogClientComponent = (props) => {
 								error={error.birthday}
 								helperText={error.birthday ? 'Ingresa una fecha válido' : null}
 							/>
-							<FormControl>
-								<InputLabel id='labelGender'>Género</InputLabel>
-								<Select
-									disabled={!edit}
-									labelId='labelGender'
-									id='gender'
-									name='gender'
-									label='Género'
-									value={data.gender}
-									onChange={onChangeInput}
-								>
-									{
-										generos.map((opcion, i) => (
-											<MenuItem key={i} value={opcion.id}>{opcion.name}</MenuItem>
-										))
-									}
-								</Select>
-							</FormControl>
 						</Inputs>
 						<br/>
 						<Divider/>
@@ -245,7 +203,7 @@ const DialogClientComponent = (props) => {
 								id='adress' 
 								name='adress'
 								label='Dirección'
-								value={data.adress}
+								value={data.adress === null ? '' : data.adress}
 								onChange={onChangeInput}
 								error={error.adress}
 								helperText={error.adress ? 'Ingresa una dirección válida' : null}
@@ -255,7 +213,7 @@ const DialogClientComponent = (props) => {
 								id='comuna' 
 								name='comuna'
 								label='Comuna'
-								value={data.comuna}
+								value={data.comuna === null ? '' : data.comuna}
 								onChange={onChangeInput}
 								error={error.comuna}
 								helperText={error.comuna ? 'Ingresa una comuna válida' : null}
@@ -272,7 +230,7 @@ const DialogClientComponent = (props) => {
 								id='mail' 
 								name='mail'
 								label='Email'
-								value={data.mail}
+								value={data.mail === null ? '' : data.mail}
 								onChange={onChangeInput}
 								InputProps={{
 									startAdornment: <InputAdornment position='start'><Email/></InputAdornment>,
@@ -285,7 +243,7 @@ const DialogClientComponent = (props) => {
 								id='phone' 
 								name='phone'
 								label='Teléfono'
-								value={data.phone}
+								value={data.phone === null ? '' : data.phone}
 								onChange={onChangeInput}
 								InputProps={{
 									startAdornment: <InputAdornment position='start'>+56</InputAdornment>,
@@ -311,7 +269,7 @@ const DialogClientComponent = (props) => {
 						): null}
 					</Footer>
 				</FormContainer>
-			</BodyContainer>
+			</FlexCenterContainer>
 		</Dialog>
 	)
 }
