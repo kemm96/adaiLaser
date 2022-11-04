@@ -59,3 +59,17 @@ export const getMonth = (month, year) => {
 	 }); 
 	return daysMatrix;
 }
+
+export const getWeek = (month, year) => {
+	const currentMonth = getMonth(month, year);
+	let daysMatrix = [];
+
+	for(let i of currentMonth){
+		for(let j of i){
+			if(j.format('DD-MM-YY') === dayjs().format('DD-MM-YY')){
+				daysMatrix = i;
+			}
+		}
+	}
+	return daysMatrix;
+}

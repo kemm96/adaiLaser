@@ -6,14 +6,14 @@ export const CalendarContext = createContext({
 	setMonthIndex : (i) => {},
 	year: dayjs().year(),
 	setYear : (i) => {},
-	selectValue: 1,
+	selectValue: 0,
 	setSelectValue: (i) => {},
 })
 
 export const CalendarContextWrapper = ({ children }) => {
 	const [monthIndex, setMonthIndex] = useState(dayjs().month());
 	const [year, setYear] = useState(dayjs().year());
-	const [ selectValue , setSelectValue] = useState(1)
+	const [ selectValue , setSelectValue] = useState(0)
 
 	return (
 		<CalendarContext.Provider value={{
