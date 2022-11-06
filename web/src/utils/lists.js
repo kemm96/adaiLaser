@@ -29,6 +29,11 @@ export const initialTratamiento = {
 	color:'#000000',
 }
 
+export const tratamientoError = {
+	name:false,
+	time:false,
+}
+
 export const initialUser = {
 	id:null,
 	name:'',

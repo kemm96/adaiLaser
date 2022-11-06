@@ -43,6 +43,8 @@ export const validaciones = (name, value) => {
 		return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)
 	}else if(name === 'adress'){
 		return !/[^0-9A-Za-zÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÑñ#°\s]/.test(value);
+	}else if (name === 'time'){
+		return /^[0-9]{0,5}$/.test(value)
 	}else{
 		return true
 	}

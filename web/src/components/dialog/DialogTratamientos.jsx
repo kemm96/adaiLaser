@@ -6,7 +6,8 @@ import { Close, Save } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext';
 import { ChromePicker } from 'react-color'
 import TratamientosService from '../../services/tratamientosService';
-import { initialTratamiento } from '../../utils/lists';
+import { initialTratamiento, tratamientoError } from '../../utils/lists';
+import { validaciones } from '../../utils';
 
 /***** Component style *****/
 const BodyContainer = styled(FlexContainer)`
@@ -31,9 +32,22 @@ const DialogTratamientosComponent = (props) => {
 	const { tratamiento, render, setRender } = useContext(AdministracionContext);
 
 	const [data, setData] = useState(tratamiento);
+	const [error, setError]= useState(tratamientoError);
 
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
+
+		if(!validaciones(name,value)){
+			setError({
+				...error,
+				[name]: true,
+			});
+		}else{
+			setError({
+				...error,
+				[name]: false,
+			});
+		}
 
 		setData({
 			...data,
@@ -54,6 +68,16 @@ const DialogTratamientosComponent = (props) => {
 	};
 
 	const handleSend = async() => {
+		for (const i in error){
+			if(error[i]){
+				alert('Arregla los errores antes de guardar')
+				return
+			}
+		}
+		if(data['name'] === ''){
+			alert('Rellena el nombre antes de guardar')
+			return
+		}	
 		await TratamientosService.post(data)
 		.then(
 			res => {
@@ -90,6 +114,8 @@ const DialogTratamientosComponent = (props) => {
 						value={data.name}
 						onChange={onChangeInput}
 						inputProps={{ maxLength: 50 }}
+						error={error.name}
+						helperText={error.name ? 'Ingresa un nombre válido' : null}
 					/>
 					<TextField
 						id='time' 
@@ -99,6 +125,8 @@ const DialogTratamientosComponent = (props) => {
 						onChange={onChangeInput}
 						inputProps={{ maxLength: 5 }}
 						className='second'
+						error={error.time}
+						helperText={error.time ? 'Ingresa un valor válido' : null}
 					/>
 					<ChromePicker 
 						color={data.color}
