@@ -5,8 +5,9 @@ import { Dialog, Slide, IconButton, TextField, InputLabel, Select, FormControl, 
 import { Close } from '@mui/icons-material'
 import { CalendarContext } from '../../context/CalendarContext'
 import CalendarService from '../../services/calendarService'
-import { getTokenData } from '../../utils'
+import { getTokenData, validaciones } from '../../utils'
 import dayjs from 'dayjs'
+import { eventError } from '../../utils/lists'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -47,6 +48,7 @@ const DialogEventComponent = (props) => {
 	const { event } = useContext(CalendarContext);
 
 	const [data, setData] = useState(event);
+	const [error, setError]= useState(eventError);
 	const [disabled, setDisabled] = useState(false);
 	const [selectList, setSelectList] = useState({
 		tratamientos:[],
@@ -60,7 +62,19 @@ const DialogEventComponent = (props) => {
 
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
-	
+		
+		if(!validaciones(name,value)){
+			setError({
+				...error,
+				[name]: true,
+			});
+		}else{
+			setError({
+				...error,
+				[name]: false,
+			});
+		}
+
 		setData({
 			...data,
 			[name]: value,
@@ -189,8 +203,8 @@ const DialogEventComponent = (props) => {
 									InputLabelProps={{
 										shrink: true,
 									}}
-									/* error={error.birthday}
-									helperText={error.birthday ? 'Ingresa una fecha válida' : null} */
+									error={error.date}
+									helperText={error.date ? 'Ingresa una fecha válida' : null}
 								/>
 							</Inputs>
 							<Inputs>

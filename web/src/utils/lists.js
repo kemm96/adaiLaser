@@ -63,6 +63,10 @@ export const initialEvent = {
 	description:'',
 }
 
+export const eventError = {
+	date:false,
+}
+
 export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
 export const daysNameSideBar = ['D', 'L', 'M', 'X', 'J', 'V', 'S',]

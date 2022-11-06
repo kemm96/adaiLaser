@@ -74,7 +74,7 @@ const DialogTratamientosComponent = (props) => {
 				return
 			}
 		}
-		if(data['name'] === ''){
+		if(data['name'] === '' || data['name'] === null){
 			alert('Rellena el nombre antes de guardar')
 			return
 		}	

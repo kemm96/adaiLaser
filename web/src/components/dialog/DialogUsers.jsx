@@ -107,12 +107,12 @@ const DialogUsersComponent = (props) => {
 				return
 			}
 			for (const i in data){
-				if(data[i] === ''){
+				if(data[i] === '' || data[i] === null){
 					alert('Rellena todos los campos antes de guardar')
 					return
 				}
 			}
-			if(password.pass1 === ''){
+			if(password.pass1 === '' || password.pass1 === null){
 				alert('Rellena todos los campos antes de guardar')
 				return
 			}

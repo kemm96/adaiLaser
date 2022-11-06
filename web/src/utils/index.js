@@ -39,7 +39,7 @@ export const validaciones = (name, value) => {
 		return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(value);
 	}else if(name === 'rut'){
 		return /^[0-9]{7,8}-[0-9Kk]{1}$/.test(value)
-	}else if(name === 'birthday'){
+	}else if(name === 'birthday' || name === 'date'){
 		return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)
 	}else if(name === 'adress'){
 		return !/[^0-9A-Za-zÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÑñ#°\s]/.test(value);
