@@ -42,6 +42,7 @@ export const CustomToolbarContainer = styled.div`
 `
 export const DialogBar = styled(BoxShadow)`
 	height:6vh;
+	width:100%;
 	align-items:center;
 	justify-content:space-between;
 	padding: 0 5%;
@@ -55,6 +56,6 @@ export const DialogBar = styled(BoxShadow)`
 	}
 	& span{
 		color:#ffffff;
-		font-size:1.5rem;
+		font-size:1.2rem;
 	}
 `

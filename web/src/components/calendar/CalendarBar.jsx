@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexContainer } from '../../styles/styles'
 import { ArrowBackIosNew, ArrowForwardIos, Today } from '@mui/icons-material'
@@ -6,6 +6,7 @@ import { Button, IconButton, MenuItem, Select } from '@mui/material'
 import { months } from '../../utils/lists'
 import { CalendarContext } from '../../context/CalendarContext'
 import dayjs from 'dayjs'
+import { getWeek } from '../../utils'
 
 /***** Component style *****/
 const Container = styled(FlexContainer)`
@@ -32,35 +33,70 @@ const CalendarBarComponent = () => {
 
 	const selectMap = ['Semana', 'Mes']
 
-	const { monthIndex, setMonthIndex, year, setYear, selectValue, setSelectValue } = useContext(CalendarContext);
+	const { week, setWeek, monthIndex, setMonthIndex, year, setYear, selectValue, setSelectValue } = useContext(CalendarContext);
+
+	const [ weekMonths, setWeekMonths ] = useState([]);
 
 	const onChangeSelect = (e) => {
 		const { value } = e.target;
 		setSelectValue(value);
+		handleToday();
 	}
 
 	const handleToday = () => {
 		setMonthIndex(dayjs().month());
+		setWeek(0);
 		setYear(dayjs().year());
 	}
 
 	const subtractMonthIndex = () => {
-		if(monthIndex === 0){
-			setMonthIndex(11);
-			setYear(year - 1);
-		}else{ 
-			setMonthIndex(monthIndex - 1)
+		if(selectValue === 0){
+			setWeek(week - 7)
+		}else{
+			if(monthIndex === 0){
+				setMonthIndex(11);
+				setYear(year - 1);
+			}else{ 
+				setMonthIndex(monthIndex - 1)
+			}
 		}
 	}
 
 	const AddMonthIndex = () => {
-		if(monthIndex === 11){
-			setMonthIndex(0);
-			setYear(year + 1);
+		if(selectValue === 0){
+			setWeek(week + 7)
 		}else{
-			setMonthIndex(monthIndex + 1)
+			if(monthIndex === 11){
+				setMonthIndex(0);
+				setYear(year + 1);
+			}else{
+				setMonthIndex(monthIndex + 1)
+			}
 		}
 	}
+
+	const getWeekMonth = () => {
+		let currentWeek = getWeek(week)
+		let first = dayjs(currentWeek[0]);
+		let last =  dayjs(currentWeek[6]);
+		
+		let firstMonth = '';
+		
+		if(first.month() !== last.month()){
+			firstMonth = months[first.month()].toUpperCase()
+		}
+		
+		setWeekMonths([
+			first.format('DD'),
+			firstMonth,
+			last.format('DD'),
+			months[last.month()].toUpperCase(),
+		])
+	}
+
+	useEffect(() => {
+		getWeekMonth();
+	}, [week])
 
 	return (
 		<Container>
@@ -68,7 +104,11 @@ const CalendarBarComponent = () => {
 				<Button title='Hoy' onClick={handleToday} startIcon={<Today/>}>Hoy</Button>
 				<IconButton onClick={subtractMonthIndex}><ArrowBackIosNew/></IconButton>
 				<IconButton onClick={AddMonthIndex}><ArrowForwardIos/></IconButton>
-				<div>{months[monthIndex].toUpperCase()} {year}</div>
+				{selectValue === 0 ? (
+					<div>{weekMonths[0]} {weekMonths[1]} - {weekMonths[2]} {weekMonths[3]}</div>
+				) : (
+					<div>{months[monthIndex].toUpperCase()} {year}</div>
+				)}
 			</FlexContainer>
 			<SelectContainer>
 				<Select

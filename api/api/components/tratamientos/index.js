@@ -56,7 +56,7 @@ const erase = (req, res) => {
 }
 
 // Routes
-router.get('/', checkAuth(true), list);
+router.get('/', checkAuth(false), list);
 router.post('/', checkAuth(true), insert);
 router.delete('/:id', checkAuth(true), erase)
 

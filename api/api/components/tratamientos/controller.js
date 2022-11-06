@@ -2,7 +2,7 @@ const db = require('../../../db');
 const model = require('./model');
 
 const list = async() => {
-	const tratamientos = await model.list('Tratamientos')
+	const tratamientos = await model.list()
 	return tratamientos
 }
 

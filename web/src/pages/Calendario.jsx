@@ -6,6 +6,7 @@ import { CalendarContext } from '../context/CalendarContext'
 import { getMonth, getWeek } from '../utils'
 import CalendarSideBarComponent from '../components/calendar/CalendarSideBar'
 import WeekComponent from '../components/calendar/CalendarWeek'
+import DialogEventComponent from '../components/dialog/DialogEvent'
 
 /***** Component style *****/
 const CalendarContainer = styled.div`
@@ -27,23 +28,40 @@ const SwitchCase = ({ i, month, week }) => {
 
 const Calendario = () => {
 
-	const { monthIndex, year, selectValue } = useContext(CalendarContext);
-	const [ currentMonth, setCurrentMonth ] = useState(getMonth(monthIndex, year));
-	const [ currentWeek, setCurrentWeek ] = useState(getWeek(monthIndex, year));
+	const { week, monthIndex, year, selectValue } = useContext(CalendarContext);
+	const [ currentMonth, setCurrentMonth ] = useState([]);
+	const [ currentWeek, setCurrentWeek ] = useState([]);
+
+	const [openDialogEvent, setOpenDialogEvent] = useState(true);
+
+	const handleOpenDialogEvent = () => {
+		setOpenDialogEvent(true);
+	};
+	
+	const handleCloseDialogEvent = () => {
+		setOpenDialogEvent(false);
+	};
 
 	useEffect(() => {
 		setCurrentMonth(getMonth(monthIndex, year));
-		setCurrentWeek(getWeek(monthIndex, year));
-	}, [monthIndex, year, selectValue])
+		setCurrentWeek(getWeek(week));
+	}, [week, monthIndex, year])
 
 	return (
 		<LayoutComponent>
 			<CalendarContainer>
-				<CalendarSideBarComponent/>
+				<CalendarSideBarComponent
+					handleOpen={handleOpenDialogEvent}
+				/>
 				<SwitchCase 
 					i={selectValue} 
 					month={currentMonth} 
-					week={currentWeek}/>
+					week={currentWeek}
+				/>
+				<DialogEventComponent
+					open={openDialogEvent}
+					handleClose={handleCloseDialogEvent}
+				/>
 			</CalendarContainer>
 		</LayoutComponent>
 	)

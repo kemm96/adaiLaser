@@ -193,7 +193,7 @@ const DialogClientComponent = (props) => {
 									shrink: true,
 								}}
 								error={error.birthday}
-								helperText={error.birthday ? 'Ingresa una fecha válido' : null}
+								helperText={error.birthday ? 'Ingresa una fecha válida' : null}
 							/>
 						</Inputs>
 						<br/>

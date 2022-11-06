@@ -38,7 +38,7 @@ const Tratamiento = styled.div`
 `
 /****** ******************** *****/
 
-const CalendarSideBarComponent = () => {
+const CalendarSideBarComponent = (props) => {
 
 	const [tratamientos, setTratamientos] = useState([])
 
@@ -56,6 +56,10 @@ const CalendarSideBarComponent = () => {
 		)
 	}
 
+	const handleOpenDialog = () => {
+		props.handleOpen();
+	}
+
 	useEffect(() => {
 		get();
 	}, []);
@@ -63,7 +67,7 @@ const CalendarSideBarComponent = () => {
 	return (
 		<Container>
 			<ButtonContainer>
-				<Button title='Nueva Cita' variant='contained'>NUEVA CITA</Button>
+				<Button onClick={handleOpenDialog} title='Nueva Cita' variant='contained'>NUEVA CITA</Button>
 			</ButtonContainer>
 			<TratamientosContainer>
 				<span>TRATAMIENTOS</span> 

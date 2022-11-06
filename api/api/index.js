@@ -3,9 +3,10 @@ const cors = require('cors');
 
 const config = require('../config.js');
 const auth = require('./components/auth');
-const clientes = require('./components/clientes')
-const tratamientos = require('./components/tratamientos')
-const user = require('./components/user')
+const clientes = require('./components/clientes');
+const tratamientos = require('./components/tratamientos');
+const user = require('./components/user');
+const calendar = require('./components/calendar');
 
 // SETUP DEL SERVIDOR
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/auth', auth);
 app.use('/api/clientes', clientes);
 app.use('/api/tratamientos', tratamientos);
 app.use('/api/user', user);
+app.use('/api/calendar', calendar)
 
 app.listen(config.api.port, () => {
    console.log('Api escuchando en el puerto ', config.api.port);

@@ -1,37 +1,37 @@
 const db = require('../../../db');
 
-// Auth
-const login = (mail) => {
+const listTratamientos = () => {
    return new Promise((resolve, reject) => {
       db.connection.query(`
-         SELECT password
-         FROM Auth
-         WHERE mail= '${mail}'
+			SELECT t.id, t.name, t.time
+			FROM Tratamientos t
+			ORDER BY t.name ASC
       `,(err, data) => {
          if (err) {
             return reject(err);
          }
-         resolve(data[0] || null);
+         resolve(data);
       })
    })
 }
 
-const getUser = (mail) => {
+const listUser = () => {
    return new Promise((resolve, reject) => {
       db.connection.query(`
-         SELECT id, name, rol
-         FROM User
-         WHERE mail= '${mail}'
+			SELECT u.id, u.name  
+			FROM User u
+			WHERE u.status=1 
+			ORDER BY u.name ASC 
       `,(err, data) => {
          if (err) {
             return reject(err);
          }
-         resolve(data[0] || null);
+         resolve(data);
       })
    })
 }
 
 module.exports = {
-   login,
-	getUser
+   listTratamientos,
+	listUser,
 };

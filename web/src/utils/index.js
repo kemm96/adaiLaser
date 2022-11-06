@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode'
 import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
 
 export const logIn = (token) => {
 	window.localStorage.setItem('access-token', token);
@@ -49,27 +50,25 @@ export const validaciones = (name, value) => {
 
 export const getMonth = (month, year) => {
 	const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
-	let currentMonthCount = 0 - firstDayOfTheMonth;
+	let currentMonthCount = 1 - firstDayOfTheMonth;
 	
-	const daysMatrix = new Array(6).fill([]).map(() => {
+	let daysMatrix = new Array(6).fill([]).map(() => {
 		return new Array(7).fill(null).map(() => {
-		  currentMonthCount++;
-		  return dayjs(new Date(year, month, currentMonthCount));
+			let aux = dayjs(new Date(year, month, currentMonthCount));
+		  	currentMonthCount++;
+		  return aux
 		});
-	 }); 
+	});  
 	return daysMatrix;
 }
 
-export const getWeek = (month, year) => {
-	const currentMonth = getMonth(month, year);
-	let daysMatrix = [];
+export const getWeek = (week) => {
+	dayjs.extend(weekday); 
 
-	for(let i of currentMonth){
-		for(let j of i){
-			if(j.format('DD-MM-YY') === dayjs().format('DD-MM-YY')){
-				daysMatrix = i;
-			}
-		}
-	}
+	let daysMatrix = new Array(7).fill(null).map(() => {
+		let aux = dayjs().weekday(week);
+		week++;
+		return aux
+	});
 	return daysMatrix;
 }

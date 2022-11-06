@@ -38,6 +38,7 @@ const CalendarWeekComponent = ({ week }) => {
 					<CalendarDayComponent
 						key={i} 
 						day={day}
+						column={i === 0 ? i : null}
 					/>			
 				))}
 			</WeekContainer>
