@@ -54,13 +54,12 @@ export const userError = {
 export const initialEvent = {
 	id:null,
 	user:'',
-	client:'',
+	client:null,
 	tratamiento:'',
 	box:'',
 	date:'',
 	time1:'',
 	time2:'',
-	description:'',
 }
 
 export const eventError = {

@@ -19,7 +19,7 @@ const login = (mail) => {
 const getUser = (mail) => {
    return new Promise((resolve, reject) => {
       db.connection.query(`
-         SELECT id, name, rol
+         SELECT id, name, avatar, rol
          FROM User
          WHERE mail= '${mail}'
       `,(err, data) => {

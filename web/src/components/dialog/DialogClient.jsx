@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { DialogBar, FlexContainer } from '../../styles/styles'
+import { DialogBar, DialogFooter, FlexContainer } from '../../styles/styles'
 import { Button, Dialog, Slide, IconButton, TextField, InputAdornment, Divider } from '@mui/material'
 import { Close, Save, Edit, Email } from '@mui/icons-material'
 import { validaciones } from '../../utils'
@@ -42,18 +42,8 @@ const Inputs = styled.div`
 		flex:1;
 	}
 `
-const Footer = styled.div`
-	display:flex;
-	padding:.5rem;
+const Footer = styled(DialogFooter)`
 	justify-content:flex-end;
-	align-items:center;
-	border-top: 1px solid #e0e0e0;
-	button{
-		color:#1976D2;
-		:hover{
-			background-color:#1976D233;
-		}
-	}
 `
 /****** ******************** *****/
 

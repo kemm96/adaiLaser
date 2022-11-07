@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { DialogBar, FlexContainer } from '../../styles/styles';
+import { DialogBar, DialogFooter, FlexContainer } from '../../styles/styles';
 import { Button, TextField, Drawer } from '@mui/material'
 import { Close, Save } from '@mui/icons-material'
 import { AdministracionContext } from '../../context/AdministracionContext';
@@ -11,20 +11,23 @@ import { validaciones } from '../../utils';
 
 /***** Component style *****/
 const BodyContainer = styled(FlexContainer)`
-	height:88vh;
+	height:100vh;
+	padding:.5rem;
+`
+const ContentContainer = styled(FlexContainer)`
+	flex-direction:column;
+	height:94vh;
 `
 const Content = styled.div`
+	width:100%;
+	margin-top:1rem;
 	display:flex;
 	flex-direction:column;
-	height:90%;
-	margin:0 1rem;
+	height:100%;
+	overflow-y:auto;
 	& .second {
 		margin:1rem 0;
 	}
-`
-const Footer = styled(FlexContainer)`
-	height:6vh;
-	padding: 0 1rem;
 `
 /****** ******************** *****/
 
@@ -106,39 +109,43 @@ const DialogTratamientosComponent = (props) => {
 				<span>{data.id === null ? 'NUEVO TRATAMIENTO' : data.name}</span>
 			</DialogBar>
 			<BodyContainer>
-				<Content>
-					<TextField
-						id='name' 
-						name='name'
-						label='Nombre'
-						value={data.name}
-						onChange={onChangeInput}
-						inputProps={{ maxLength: 50 }}
-						error={error.name}
-						helperText={error.name ? 'Ingresa un nombre válido' : null}
-					/>
-					<TextField
-						id='time' 
-						name='time'
-						label='Duración (minutos)'
-						value={data.time}
-						onChange={onChangeInput}
-						inputProps={{ maxLength: 5 }}
-						className='second'
-						error={error.time}
-						helperText={error.time ? 'Ingresa un valor válido' : null}
-					/>
-					<ChromePicker 
-						color={data.color}
-						onChange={onChangeColor}
-						disableAlpha={true}
-					/>
-				</Content>
+				<ContentContainer>
+					<Content>
+						<TextField
+							id='name' 
+							name='name'
+							label='Nombre'
+							value={data.name}
+							onChange={onChangeInput}
+							inputProps={{ maxLength: 50 }}
+							error={error.name}
+							helperText={error.name ? 'Ingresa un nombre válido' : null}
+						/>
+						<TextField
+							id='time' 
+							name='time'
+							label='Duración (minutos)'
+							value={data.time}
+							onChange={onChangeInput}
+							inputProps={{ maxLength: 5 }}
+							className='second'
+							error={error.time}
+							helperText={error.time ? 'Ingresa un valor válido' : null}
+						/>
+						<FlexContainer>
+							<ChromePicker 
+								color={data.color}
+								onChange={onChangeColor}
+								disableAlpha={true}
+							/>
+						</FlexContainer>
+					</Content>
+					<DialogFooter>
+						<Button title='Cancelar' onClick={handleClose} startIcon={<Close/>}>Cancelar</Button>
+						<Button title='Guardar' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
+					</DialogFooter>
+				</ContentContainer>
 			</BodyContainer>
-			<Footer>
-				<Button title='Cancelar' onClick={handleClose} startIcon={<Close/>}>Cancelar</Button>
-				<Button title='Guardar' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
-			</Footer>
 		</Drawer>
   	);
 }

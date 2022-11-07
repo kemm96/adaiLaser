@@ -1,8 +1,8 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { DialogBar, FlexContainer } from '../../styles/styles'
-import { Dialog, Slide, IconButton, TextField, InputLabel, Select, FormControl, MenuItem } from '@mui/material'
-import { Close } from '@mui/icons-material'
+import { DialogBar, DialogFooter, FlexContainer } from '../../styles/styles'
+import { Dialog, Slide, IconButton, TextField, InputLabel, Select, FormControl, MenuItem, Autocomplete, Button } from '@mui/material'
+import { Close, Save } from '@mui/icons-material'
 import { CalendarContext } from '../../context/CalendarContext'
 import CalendarService from '../../services/calendarService'
 import { getTokenData, validaciones } from '../../utils'
@@ -22,9 +22,11 @@ const FormContainer = styled(FlexContainer)`
 	border: 1px solid #e0e0e0;
 	height:90%;
 	width:90%;
+	flex-direction:column;
 `
 const Form = styled.div`
-	height:90%;
+	padding-top:1rem;
+	height:100%;
 	width:90%;
 	overflow-y:auto;
 `
@@ -36,6 +38,9 @@ const Inputs = styled.div`
 		margin:.5rem;
 		flex:1;
 	}
+`
+const Footer = styled(DialogFooter)`
+	justify-content:flex-end;
 `
 /****** ******************** *****/
 
@@ -54,12 +59,15 @@ const DialogEventComponent = (props) => {
 		tratamientos:[],
 		user:[],
 		box:[],
+		client:[],
 	});
+	const [inputClient, setInputClient] = useState(null);
 	
 	const handleClose = () => {
     	props.handleClose();
   	};
 
+	// actuaización input y select
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
 		
@@ -81,7 +89,26 @@ const DialogEventComponent = (props) => {
 		});
    }
 
+	// actualización autocomplete del cliente
+	const onChangeClient = (value) => {
+		console.log(value);
+		if(value !== null){
+			setInputClient(value)
+			setData({
+				...data,
+				['client']: value.id,
+			});
+		}else{
+			setInputClient(value)
+			setData({
+			...data,
+			['client']: '',
+		});
+		}
+	}
+
 	const get = async() => {
+		// obtiene las opciones de los select
 		await CalendarService.selectList()
 		.then(
 			res => {
@@ -108,6 +135,10 @@ const DialogEventComponent = (props) => {
 				['date']: dayjs(new Date()).format('YYYY-MM-DD'),
 			});
 		}
+	}
+
+	const handleSend = () => {
+		console.log('enviado');
 	}
 
 	useEffect(() => {
@@ -150,10 +181,15 @@ const DialogEventComponent = (props) => {
 								</FormControl>
 							</Inputs>
 							<Inputs>
-								<TextField
-									id='client' 
-									name='client'
-									label='Cliente'
+								<Autocomplete
+									id='client'
+									value={inputClient}
+									options={selectList.client}
+									renderInput={(params) => <TextField {...params} label='Cliente' />}
+									onChange={(e, value) => {
+										onChangeClient(value)
+									}}
+
 								/>
 							</Inputs>
 							<Inputs>
@@ -219,14 +255,16 @@ const DialogEventComponent = (props) => {
 									label='Hasta'
 								/>
 							</Inputs>
-							<Inputs>
-								<TextField
-									id='description' 
-									name='description'
-									label='Comentarios'
-								/>
-							</Inputs>
 						</Form>
+						<Footer>
+							{/* {data.id !== null && !edit ? (
+								<Button title='Editar Cliente' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
+							): null}
+							{data.id !== null && edit ? (
+								<Button title='Cancelar' onClick={handleEdit} startIcon={<Close/>}>Cancelar</Button>
+							): null} */}							
+							<Button title='Guardar Cliente' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
+						</Footer>
 					</FormContainer>
 				</BodyContainer>
 			</Container>

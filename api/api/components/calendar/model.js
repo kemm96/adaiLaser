@@ -31,7 +31,23 @@ const listUser = () => {
    })
 }
 
+const listClient = () => {
+   return new Promise((resolve, reject) => {
+      db.connection.query(`
+			SELECT c.id, c.name as label  
+			FROM Clients c 
+			ORDER BY c.name ASC 
+      `,(err, data) => {
+         if (err) {
+            return reject(err);
+         }
+         resolve(data);
+      })
+   })
+}
+
 module.exports = {
    listTratamientos,
 	listUser,
+	listClient
 };

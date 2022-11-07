@@ -5,7 +5,6 @@ export const FlexContainer = styled.div`
 	justify-content:center;
 	align-items:center;
 `
-
 export const BoxShadow = styled.div`
 	display:flex;
 	-webkit-box-shadow: 0px 4px 10px -3px rgba(117, 117, 117, 1);
@@ -57,5 +56,16 @@ export const DialogBar = styled(BoxShadow)`
 	& span{
 		color:#ffffff;
 		font-size:1.2rem;
+	}
+`
+export const DialogFooter = styled(FlexContainer)`
+	width:100%;
+	padding:.5rem;
+	border-top: 1px solid #e0e0e0;
+	button{
+		color:#1976D2;
+		:hover{
+			background-color:#1976D233;
+		}
 	}
 `

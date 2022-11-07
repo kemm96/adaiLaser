@@ -115,7 +115,7 @@ const NavBarComponent = () => {
 					alt={`${token ? token.user.name : null}`}
 					onClick={openAvatar}
 				>
-					KM
+					{token !== null ? token.user.avatar : ''}
 				</Avatar>
 				<Menu
 					anchorEl={anchorEl}
