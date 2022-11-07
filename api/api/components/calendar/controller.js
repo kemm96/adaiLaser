@@ -16,6 +16,15 @@ const selectList = async() => {
 	return response
 }
 
+const insert = async(data) => {	
+	if(data.id === null){
+		return await db.insert(data, 'Citas')
+	}else{
+		return await db.update(data, 'Citas')
+	}
+}
+
 module.exports = {
    selectList,
+	insert
 };

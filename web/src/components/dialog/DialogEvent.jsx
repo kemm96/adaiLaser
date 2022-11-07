@@ -7,7 +7,7 @@ import { CalendarContext } from '../../context/CalendarContext'
 import CalendarService from '../../services/calendarService'
 import { getTokenData, validaciones } from '../../utils'
 import dayjs from 'dayjs'
-import { eventError } from '../../utils/lists'
+import { eventError, initialEvent } from '../../utils/lists'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -50,11 +50,13 @@ const transition = forwardRef((props, ref) => {
 
 const DialogEventComponent = (props) => {
 	
-	const { event } = useContext(CalendarContext);
+	const { event, render, setRender } = useContext(CalendarContext);
 
 	const [data, setData] = useState(event);
+	const [minutes, setMinutes] = useState('');
 	const [error, setError]= useState(eventError);
-	const [disabled, setDisabled] = useState(false);
+	const [disabledUser, setDisabledUser] = useState(false);
+	const [disabledTime, setDisabledTime] = useState(true);
 	const [selectList, setSelectList] = useState({
 		tratamientos:[],
 		user:[],
@@ -64,13 +66,41 @@ const DialogEventComponent = (props) => {
 	const [inputClient, setInputClient] = useState(null);
 	
 	const handleClose = () => {
+		setData(event);
+		setInputClient(null)
     	props.handleClose();
   	};
+
+	const handleHour = (time, min) => {
+		if(min === '' || min === null){
+			setDisabledTime(false);
+			return ''
+		}else{
+			setDisabledTime(true);
+			if(time !== '' && time !== null){
+				let aux = time.split(':');
+				let hora = parseInt(aux[0]);
+				let minutos = parseInt(aux[1]);
+				let suma = parseInt(min) + minutos;
+
+				hora = hora + Math.trunc(suma/60);
+				minutos = suma%60;
+
+				if(Math.trunc(hora/10) < 1){
+					hora = '0' + hora;
+				}
+				if(Math.trunc(minutos/10) < 1){
+					minutos = '0' + minutos;
+				}
+				return (hora + ':' + minutos)
+			}
+			return ''
+		}
+	}
 
 	// actuaización input y select
 	const onChangeInput = (e) => {
       const {name, value} = e.target;
-		
 		if(!validaciones(name,value)){
 			setError({
 				...error,
@@ -82,16 +112,31 @@ const DialogEventComponent = (props) => {
 				[name]: false,
 			});
 		}
-
-		setData({
-			...data,
-			[name]: value,
-		});
+		
+		if(name === 'tratamiento'){
+			const found = selectList.tratamientos.find(element => element.id === value);
+			setMinutes(found.time)
+			setData({
+				...data,
+				[name]: value,
+				['time2']: handleHour(data.time1,found.time),
+			});
+		}else if(name === 'time1'){
+			setData({
+				...data,
+				[name]: value,
+				['time2']: handleHour(value, minutes),
+			});
+		}else{
+			setData({
+				...data,
+				[name]: value,
+			});
+		}
    }
 
 	// actualización autocomplete del cliente
 	const onChangeClient = (value) => {
-		console.log(value);
 		if(value !== null){
 			setInputClient(value)
 			setData({
@@ -126,24 +171,47 @@ const DialogEventComponent = (props) => {
 			setData({
 				...data,
 				['user']: tokenData.user.id,
-				['date']: dayjs(new Date()).format('YYYY-MM-DD'),
 			});
-			setDisabled(true);
-		}else{
-			setData({
-				...data,
-				['date']: dayjs(new Date()).format('YYYY-MM-DD'),
-			});
+			setDisabledUser(true);
 		}
 	}
 
-	const handleSend = () => {
-		console.log('enviado');
+	const handleSend = async() => {
+		for (const i in error){
+			if(error[i]){
+				alert('Arregla los errores antes de guardar')
+				return
+			}
+		}
+		for (const i in data){
+			if((data[i] === '' || data[i] === null) && i !== 'id'){
+				alert('Rellena todos los campos antes de guardar')
+				return
+			}
+		}
+
+		await CalendarService.post(data)
+		.then(
+			res => {
+				setData(initialEvent);
+				setInputClient(null)
+				setRender(!render);
+				handleClose();
+			}
+		).catch(
+			err => {
+				console.log(err);
+			}
+		)
 	}
 
 	useEffect(() => {
 		get();
 	}, []);
+
+	useEffect(() => {
+		setData(event);
+	}, [event]);
 
 	return (
 		<Dialog
@@ -164,7 +232,7 @@ const DialogEventComponent = (props) => {
 								<FormControl fullWidth>
 									<InputLabel id={props.name+'-userLabel'}>Kinesióloga</InputLabel>
 									<Select
-										disabled={disabled}
+										disabled={disabledUser}
 										labelId={props.name+'-userLabel'}
 										id={props.name+'-user'}
 										name='user'
@@ -248,11 +316,24 @@ const DialogEventComponent = (props) => {
 									id='time1' 
 									name='time1'
 									label='Desde'
+									type='time'
+									value={data.time1 === null ? '' : data.time1}
+									onChange={onChangeInput}
+									InputLabelProps={{
+										shrink: true,
+									}}
 								/>
 								<TextField
+									disabled={disabledTime}
 									id='time2' 
 									name='time2'
 									label='Hasta'
+									type='time'
+									value={data.time2 === null ? '' : data.time2}
+									onChange={onChangeInput}
+									InputLabelProps={{
+										shrink: true,
+									}}
 								/>
 							</Inputs>
 						</Form>

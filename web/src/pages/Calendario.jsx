@@ -32,7 +32,7 @@ const Calendario = () => {
 	const [ currentMonth, setCurrentMonth ] = useState([]);
 	const [ currentWeek, setCurrentWeek ] = useState([]);
 
-	const [openDialogEvent, setOpenDialogEvent] = useState(true);
+	const [openDialogEvent, setOpenDialogEvent] = useState(false);
 
 	const handleOpenDialogEvent = () => {
 		setOpenDialogEvent(true);

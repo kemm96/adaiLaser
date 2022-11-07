@@ -22,7 +22,25 @@ const SelectList = (req, res) => {
    });
 }
 
+// Internal functions
+const insert = (req, res) => {
+	controller.insert(req.body)
+   .then((body) => {
+      res.send({
+         error: false,
+         body: body
+      })
+   })
+   .catch((err) => {
+      res.send({
+         error: true,
+         body: err.message,
+      })
+   });
+}
+
 // Routes
 router.get('/list',checkAuth(false), SelectList);
+router.post('/', checkAuth(false), insert);
 
 module.exports = router;

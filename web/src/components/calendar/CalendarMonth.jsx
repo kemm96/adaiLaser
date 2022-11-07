@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { FlexContainer } from '../../styles/styles'
 import { daysName } from '../../utils/lists'
 import dayjs from 'dayjs'
 import CalendarBarComponent from './CalendarBar'
 import CalendarDayComponent from './CalendarDay'
+import { CalendarContext } from '../../context/CalendarContext'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -28,9 +29,15 @@ const DayName = styled(FlexContainer)`
 
 const CalendarMonthComponent = ({ month }) => {
 
+	const { render } = useContext(CalendarContext);
+
 	const handleDisabled = (day, i) => {
 		return (day.format('DD') > 7 && i === 0) ? true : (day.format('DD') < 15 && i > 3) ? true : false
 	}
+
+	useEffect(() => {
+		
+	}, [render]);
 
 	return (
 		<Container>

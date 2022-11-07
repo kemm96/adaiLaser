@@ -109,7 +109,8 @@ const DialogUsersComponent = (props) => {
 				return
 			}
 			for (const i in data){
-				if(data[i] === '' || data[i] === null){
+				
+				if((data[i] === '' || data[i] === null) && i !== 'id'){
 					alert('Rellena todos los campos antes de guardar')
 					return
 				}

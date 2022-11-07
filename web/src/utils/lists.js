@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const initialClient = {
 	id:null,
 	name:'',
@@ -57,7 +59,7 @@ export const initialEvent = {
 	client:null,
 	tratamiento:'',
 	box:'',
-	date:'',
+	date:dayjs(new Date()).format('YYYY-MM-DD'),
 	time1:'',
 	time2:'',
 }
