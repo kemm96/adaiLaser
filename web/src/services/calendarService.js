@@ -33,9 +33,9 @@ const CalendarService = {
 			)
 		}
 	),
-	list: (box, month, year) => new Promise(
+	list: (box, date) => new Promise(
 		(resolve, reject) => {
-			API.get(`/calendar/${box}/${month}/${year}`)
+			API.get(`/calendar/${box}/${date}`)
 			.then(
 				res => {
 					if (res.data.error) {

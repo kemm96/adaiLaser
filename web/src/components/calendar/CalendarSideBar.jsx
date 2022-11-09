@@ -11,11 +11,6 @@ const Container = styled.div`
 const ButtonContainer = styled(FlexContainer)`
 	margin-top:6vh;
 `
-const BoxContainer = styled.div`
-	display:flex;
-	padding-top:1rem;
-	flex-direction:column;
-`
 const TratamientosContainer = styled.div`
 	text-align:center;
 	& span {

@@ -40,7 +40,7 @@ const insert = (req, res) => {
 }
 
 const list = (req, res) => {
-	controller.list(req.params.box, req.params.month, req.params.year)
+	controller.list(req.params.box, req.params.date)
    .then((body) => {
       res.send({
          error: false,
@@ -58,6 +58,6 @@ const list = (req, res) => {
 // Routes
 router.get('/list',checkAuth(false), SelectList);
 router.post('/', checkAuth(false), insert);
-router.get('/:box/:month/:year',checkAuth(false), list);
+router.get('/:box/:date',checkAuth(false), list);
 
 module.exports = router;

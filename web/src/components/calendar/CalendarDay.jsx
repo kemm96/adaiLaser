@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexContainer } from '../../styles/styles'
 import dayjs from 'dayjs'
+import { CalendarContext } from '../../context/CalendarContext'
+import { CircularProgress } from '@mui/material'
+import CalendarService from '../../services/calendarService'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -33,7 +36,6 @@ const Day = styled(FlexContainer)`
 			height: 1.5rem;
 			color:#eeeeee;
 			background-color:#1976D2;
-			border-radius:50%;
 		}
    `}
 	${({ domingo }) => domingo && `
@@ -57,7 +59,12 @@ const Citas = styled(FlexContainer)`
 `
 /****** ******************** *****/
 
-const CalendarDayComponent = ({ day, column, disabled, data }) => {
+const CalendarDayComponent = ({ day, column, disabled }) => {
+	
+	const {  boxValue, render } = useContext(CalendarContext);
+
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	const handleClick = (i) => {
 		if(!disabled){
@@ -65,26 +72,54 @@ const CalendarDayComponent = ({ day, column, disabled, data }) => {
 		}
 	}
 
+	const get = async() => {
+		setLoading(true)
+		if(!disabled){
+			await CalendarService.list(boxValue, day.format('YYYY-MM-DD'))
+			.then(
+				res => {
+					setData(res);
+					setLoading(false)
+				}
+			).catch(
+				err => {
+					setData([]);
+					console.log(err);
+				}
+			)
+		}
+	}
+
+	useEffect(() => {
+		get();
+	}, [render, boxValue, day]);
+
 	return (
 		<Container disabled={disabled} onClick={() => handleClick(day)}>
-			<Day 
-				today={day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')}
-				domingo={column === 0 && !disabled} 
-				disabled={disabled}
-			>
-				<FlexContainer>
-					{day.format('DD')}
-				</FlexContainer>
-			</Day>
-			<ContainerCitas>
-				{data.map((cita, i) => (
-					<Citas 
-						key={i}
-						color={cita.color}
-						title={`${cita.name} [desde:${cita.time1}-hasta: ${cita.time2}]`}
-					/>
-				))}
-			</ContainerCitas>
+			{loading && !disabled ? (
+				<CircularProgress/>
+			) : (
+				<>
+					<Day 
+						today={day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')}
+						domingo={column === 0 && !disabled} 
+						disabled={disabled}
+					>
+						<FlexContainer>
+							{day.format('DD')}
+						</FlexContainer>
+					</Day>
+					<ContainerCitas>
+						{data.map((cita, i) => (
+							<Citas 
+								key={i}
+								color={cita.color}
+								title={`${cita.name} [desde:${cita.time1}-hasta: ${cita.time2}]`}
+							/>
+						))}
+					</ContainerCitas>
+				</>
+			)}
 		</Container>
 	)
 }

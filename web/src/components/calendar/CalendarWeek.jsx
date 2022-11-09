@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { CalendarContext } from '../../context/CalendarContext'
 import { daysName } from '../../utils/lists'
 import CalendarBarComponent from './CalendarBar'
 import CalendarDayComponent from './CalendarDay'
@@ -29,12 +28,6 @@ const DayName = styled.div`
 
 const CalendarWeekComponent = ({ week }) => {
 
-	const { render } = useContext(CalendarContext);
-
-	useEffect(() => {
-		
-	}, [render]);
-
 	return (
 		<Container>
 			<CalendarBarComponent/>
@@ -47,7 +40,6 @@ const CalendarWeekComponent = ({ week }) => {
 						key={i} 
 						day={day}
 						column={i === 0 ? i : null}
-						data={[]}
 					/>			
 				))}
 			</WeekContainer>

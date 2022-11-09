@@ -24,8 +24,8 @@ const insert = async(data) => {
 	}
 }
 
-const list = async(box, month, year) => {
-	const data = await model.listCitas(box, month, year);
+const list = async(box, date) => {
+	const data = await model.listCitas(box, date);
 	return data
 }
 
