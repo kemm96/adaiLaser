@@ -23,7 +23,7 @@ export const CalendarContextWrapper = ({ children }) => {
 	const [ week , setWeek] = useState(0)
 	const [ monthIndex, setMonthIndex] = useState(dayjs().month());
 	const [ year, setYear] = useState(dayjs().year());
-	const [ selectValue , setSelectValue] = useState(1);
+	const [ selectValue , setSelectValue] = useState(0);
 	const [ boxValue , setBoxValue] = useState(1);
 	const [ event, setEvent] = useState(initialEvent);
 	const [ render, setRender] = useState(true);

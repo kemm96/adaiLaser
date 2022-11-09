@@ -125,6 +125,7 @@ const DialogEventComponent = (props) => {
 				['time2']: handleHour(data.time1,found.time),
 			});
 		}else if(name === 'time1'){
+			console.log(value);
 			setData({
 				...data,
 				[name]: value,
