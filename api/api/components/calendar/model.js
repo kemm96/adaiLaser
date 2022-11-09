@@ -46,8 +46,24 @@ const listClient = () => {
    })
 }
 
+const listCitas = (box, month, year) => {
+   return new Promise((resolve, reject) => {
+      db.connection.query(`
+			SELECT c.id, t.name, t.color, c.date, c.time1, c.time2
+			FROM Citas c
+			LEFT JOIN Tratamientos t ON t.id = c.tratamiento 
+			WHERE date LIKE '${year}-${month}-%' AND c.box=${box}
+      `,(err, data) => {
+         if (err) {
+            return reject(err);
+         }
+         resolve(data);
+      })
+   })
+}
 module.exports = {
    listTratamientos,
 	listUser,
-	listClient
+	listClient,
+	listCitas
 };

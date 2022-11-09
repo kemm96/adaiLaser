@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexContainer } from '../../styles/styles'
 import { daysName } from '../../utils/lists'
-import dayjs from 'dayjs'
 import CalendarBarComponent from './CalendarBar'
 import CalendarDayComponent from './CalendarDay'
 import { CalendarContext } from '../../context/CalendarContext'
+import CalendarService from '../../services/calendarService'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -29,15 +29,41 @@ const DayName = styled(FlexContainer)`
 
 const CalendarMonthComponent = ({ month }) => {
 
-	const { render } = useContext(CalendarContext);
+	const { render, boxValue, monthIndex, year } = useContext(CalendarContext);
+
+	const [data, setData] = useState([]);
 
 	const handleDisabled = (day, i) => {
 		return (day.format('DD') > 7 && i === 0) ? true : (day.format('DD') < 15 && i > 3) ? true : false
 	}
 
+	const getDayCitas = (day) => {
+		let aux = []
+		for(let i of data){
+			if(day.format('YYYY-MM-DD') === i.date){
+				aux.push(i);
+			}
+		}
+		return aux
+	}
+
+	const get = async() => {
+		await CalendarService.list(boxValue, monthIndex + 1, year)
+		.then(
+			res => {
+				setData(res);
+			}
+		).catch(
+			err => {
+				setData([]);
+				console.log(err);
+			}
+		)
+	}
+
 	useEffect(() => {
-		
-	}, [render]);
+		get();
+	}, [render, boxValue, monthIndex]);
 
 	return (
 		<Container>
@@ -54,6 +80,7 @@ const CalendarMonthComponent = ({ month }) => {
 								day={day}  
 								column={j}
 								disabled={handleDisabled(day,i)}
+								data={getDayCitas(day)}
 							/>
 						))}
 					</React.Fragment>					

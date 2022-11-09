@@ -72,11 +72,13 @@ const DialogEventComponent = (props) => {
   	};
 
 	const handleHour = (time, min) => {
+		// desbloquea el tiempo2 si no existen minutos en el tratamiento
 		if(min === '' || min === null){
 			setDisabledTime(false);
 			return ''
 		}else{
 			setDisabledTime(true);
+			// suma los minutos al tiempo1 
 			if(time !== '' && time !== null){
 				let aux = time.split(':');
 				let hora = parseInt(aux[0]);
@@ -113,6 +115,7 @@ const DialogEventComponent = (props) => {
 			});
 		}
 		
+		// actualiza el tiempo2 si es que existen minutos en el tratamiento
 		if(name === 'tratamiento'){
 			const found = selectList.tratamientos.find(element => element.id === value);
 			setMinutes(found.time)
@@ -165,7 +168,8 @@ const DialogEventComponent = (props) => {
 				console.log(err);
 			}
 		)
-
+		
+		// obtiene la data del token
 		const tokenData = getTokenData();
 		if(tokenData.user.rol === 2){
 			setData({

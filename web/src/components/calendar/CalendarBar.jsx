@@ -26,21 +26,29 @@ const SelectContainer = styled(FlexContainer)`
 	& div{
 		height:60%;
 	}
+	& .box {
+		margin-left:1.5rem;
+	}
 `
 /****** ******************** *****/
 
 const CalendarBarComponent = () => {
 
 	const selectMap = ['Semana', 'Mes']
+	const boxMap = [{id:1,name:'Box 1'}, {id:2,name:'Box 2'}]
 
-	const { week, setWeek, monthIndex, setMonthIndex, year, setYear, selectValue, setSelectValue } = useContext(CalendarContext);
+	const { week, setWeek, monthIndex, setMonthIndex, year, setYear, selectValue, setSelectValue, boxValue, setBoxValue } = useContext(CalendarContext);
 
 	const [ weekMonths, setWeekMonths ] = useState([]);
 
 	const onChangeSelect = (e) => {
-		const { value } = e.target;
-		setSelectValue(value);
-		handleToday();
+		const { value, name } = e.target;
+		if(name === 'select'){
+			setSelectValue(value);
+			handleToday();
+		}else{
+			setBoxValue(value);
+		}
 	}
 
 	const handleToday = () => {
@@ -110,14 +118,28 @@ const CalendarBarComponent = () => {
 					<div>{months[monthIndex].toUpperCase()} {year}</div>
 				)}
 			</FlexContainer>
+			<div>{boxMap[boxValue - 1].name.toUpperCase()}</div>
 			<SelectContainer>
 				<Select
+					name='select'
 					value={selectValue}
 					onChange={onChangeSelect}
 				>
 					{
 						selectMap.map((opcion, i) => (
 							<MenuItem key={i} value={i}>{opcion}</MenuItem>
+						))
+					}
+				</Select>
+				<Select
+					name='box'
+					value={boxValue}
+					onChange={onChangeSelect}
+					className='box'
+				>
+					{
+						boxMap.map((opcion, i) => (
+							<MenuItem key={i} value={opcion.id}>{opcion.name}</MenuItem>
 						))
 					}
 				</Select>

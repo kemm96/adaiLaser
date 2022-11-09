@@ -24,7 +24,13 @@ const insert = async(data) => {
 	}
 }
 
+const list = async(box, month, year) => {
+	const data = await model.listCitas(box, month, year);
+	return data
+}
+
 module.exports = {
    selectList,
-	insert
+	insert,
+	list,
 };
