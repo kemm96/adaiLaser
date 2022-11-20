@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexContainer } from '../../styles/styles';
 import { Button } from '@mui/material'
 import TratamientosService from '../../services/tratamientosService'
+import { initialEvent } from '../../utils/lists';
+import { CalendarContext } from '../../context/CalendarContext';
 
 /***** Component style *****/
 const Container = styled.div`
@@ -35,6 +37,8 @@ const Tratamiento = styled.div`
 
 const CalendarSideBarComponent = (props) => {
 
+	const { setEvent, setEdit } = useContext(CalendarContext);
+
 	const [tratamientos, setTratamientos] = useState([])
 
 	const get = async() => {
@@ -52,6 +56,8 @@ const CalendarSideBarComponent = (props) => {
 	}
 
 	const handleOpenDialog = () => {
+		setEdit(true)
+		setEvent(initialEvent);
 		props.handleOpen();
 	}
 

@@ -49,6 +49,22 @@ const CalendarService = {
 			)
 		}
 	),
+	getCita: (id) => new Promise(
+		(resolve, reject) => {
+			API.get(`/calendar/${id}`)
+			.then(
+				res => {
+					if (res.data.error) {
+						reject(res)
+					}else{
+						resolve(res.data.body)
+					}
+				}
+			).catch(
+				err => reject(err)
+			)
+		}
+	),
 }
 
 export default CalendarService

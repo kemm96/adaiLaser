@@ -2,7 +2,7 @@ import React, { forwardRef, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DialogBar, DialogFooter, FlexContainer } from '../../styles/styles'
 import { Dialog, Slide, IconButton, TextField, InputLabel, Select, FormControl, MenuItem, Autocomplete, Button } from '@mui/material'
-import { Close, Save } from '@mui/icons-material'
+import { Close, Edit, Save } from '@mui/icons-material'
 import { CalendarContext } from '../../context/CalendarContext'
 import CalendarService from '../../services/calendarService'
 import { getTokenData, validaciones } from '../../utils'
@@ -50,10 +50,9 @@ const transition = forwardRef((props, ref) => {
 
 const DialogEventComponent = (props) => {
 	
-	const { event, render, setRender } = useContext(CalendarContext);
+	const { event, render, setRender, edit, setEdit } = useContext(CalendarContext);
 
 	const [data, setData] = useState(event);
-	const [minutes, setMinutes] = useState('');
 	const [error, setError]= useState(eventError);
 	const [disabledUser, setDisabledUser] = useState(false);
 	const [disabledTime, setDisabledTime] = useState(true);
@@ -63,10 +62,12 @@ const DialogEventComponent = (props) => {
 		box:[],
 		client:[],
 	});
-	const [inputClient, setInputClient] = useState(null);
+	const [inputClient, setInputClient] = useState('');
 	
 	const handleClose = () => {
+		setDisabledTime(true)
 		setData(event);
+		setEdit(false);
 		setInputClient(null)
     	props.handleClose();
   	};
@@ -94,6 +95,9 @@ const DialogEventComponent = (props) => {
 				if(Math.trunc(minutos/10) < 1){
 					minutos = '0' + minutos;
 				}
+				if(hora >= 24){
+					hora = '0' + (hora - 24);
+				}
 				return (hora + ':' + minutos)
 			}
 			return ''
@@ -118,7 +122,6 @@ const DialogEventComponent = (props) => {
 		// actualiza el tiempo2 si es que existen minutos en el tratamiento
 		if(name === 'tratamiento'){
 			const found = selectList.tratamientos.find(element => element.id === value);
-			setMinutes(found.time)
 			setData({
 				...data,
 				[name]: value,
@@ -126,10 +129,11 @@ const DialogEventComponent = (props) => {
 			});
 		}else if(name === 'time1'){
 			console.log(value);
+			const found = selectList.tratamientos.find(element => element.id === data.tratamiento) || '';
 			setData({
 				...data,
 				[name]: value,
-				['time2']: handleHour(value, minutes),
+				['time2']: handleHour(value, found.time || ''),
 			});
 		}else{
 			setData({
@@ -141,7 +145,7 @@ const DialogEventComponent = (props) => {
 
 	// actualización autocomplete del cliente
 	const onChangeClient = (value) => {
-		if(value !== null){
+		if(value !== '' && value !== null){
 			setInputClient(value)
 			setData({
 				...data,
@@ -210,12 +214,17 @@ const DialogEventComponent = (props) => {
 		)
 	}
 
+	const handleEdit = () => {
+		setEdit(!edit)
+	}
+
 	useEffect(() => {
 		get();
 	}, []);
 
 	useEffect(() => {
 		setData(event);
+		setInputClient(selectList.client.find(element => element.id === event.client));
 	}, [event]);
 
 	return (
@@ -237,7 +246,7 @@ const DialogEventComponent = (props) => {
 								<FormControl fullWidth>
 									<InputLabel id={props.name+'-userLabel'}>Kinesióloga</InputLabel>
 									<Select
-										disabled={disabledUser}
+										disabled={disabledUser || !edit}
 										labelId={props.name+'-userLabel'}
 										id={props.name+'-user'}
 										name='user'
@@ -255,8 +264,9 @@ const DialogEventComponent = (props) => {
 							</Inputs>
 							<Inputs>
 								<Autocomplete
+									disabled={data.id !== null}
 									id='client'
-									value={inputClient}
+									value={inputClient || null}
 									options={selectList.client}
 									renderInput={(params) => <TextField {...params} label='Cliente' />}
 									onChange={(e, value) => {
@@ -269,6 +279,7 @@ const DialogEventComponent = (props) => {
 								<FormControl fullWidth>
 									<InputLabel id={props.name+'-tratamientoLabel'}>Tratamiento</InputLabel>
 									<Select
+										disabled={!edit}
 										labelId={props.name+'-tratamientoLabel'}
 										id={props.name+'-tratamiento'}
 										name='tratamiento'
@@ -286,6 +297,7 @@ const DialogEventComponent = (props) => {
 								<FormControl fullWidth>
 									<InputLabel id={props.name+'-boxLabel'}>Box</InputLabel>
 									<Select
+										disabled={(data.id === null && (event.date !== '' && event.date !== null)) || !edit}
 										labelId={props.name+'-boxLabel'}
 										id={props.name+'-box'}
 										name='box'
@@ -303,6 +315,7 @@ const DialogEventComponent = (props) => {
 							</Inputs>
 							<Inputs>
 								<TextField
+									disabled={(data.id === null && (event.date !== '' && event.date !== null)) || !edit}
 									id='date' 
 									name='date'
 									label='Fecha'
@@ -318,10 +331,12 @@ const DialogEventComponent = (props) => {
 							</Inputs>
 							<Inputs>
 								<TextField
+									disabled={!edit}
 									id='time1' 
 									name='time1'
 									label='Desde'
 									type='time'
+									max='20:30'
 									value={data.time1 === null ? '' : data.time1}
 									onChange={onChangeInput}
 									InputLabelProps={{
@@ -343,13 +358,15 @@ const DialogEventComponent = (props) => {
 							</Inputs>
 						</Form>
 						<Footer>
-							{/* {data.id !== null && !edit ? (
-								<Button title='Editar Cliente' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
+							{data.id !== null && !edit ? (
+								<Button title='Editar Cita' onClick={handleEdit} startIcon={<Edit/>}>Editar</Button>
 							): null}
 							{data.id !== null && edit ? (
 								<Button title='Cancelar' onClick={handleEdit} startIcon={<Close/>}>Cancelar</Button>
-							): null} */}							
-							<Button title='Guardar Cliente' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
+							): null}
+							{edit ? (
+								<Button title='Guardar Cita' onClick={handleSend} startIcon={<Save/>}>Guardar</Button>
+							): null}
 						</Footer>
 					</FormContainer>
 				</BodyContainer>

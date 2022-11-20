@@ -5,7 +5,8 @@ import dayjs from 'dayjs'
 import { CalendarContext } from '../../context/CalendarContext'
 import { CircularProgress } from '@mui/material'
 import CalendarService from '../../services/calendarService'
-import { horasWeek } from '../../utils/lists'
+import { horas } from '../../utils/lists'
+import { getEnd, getInit } from '../../utils'
 
 /***** Component style *****/
 const Container = styled.div`
@@ -84,46 +85,18 @@ const	WeekCitas = styled.div`
 `
 /****** ******************** *****/
 
-const CalendarDayComponent = ({ day, column, disabled }) => {
+const CalendarDayComponent = ({ day, column, disabled, handleOpen }) => {
 	
-	const { boxValue, render, selectValue } = useContext(CalendarContext);
+	const { boxValue, render, selectValue, setDay } = useContext(CalendarContext);
 
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const handleClick = (i) => {
 		if(!disabled && !loading && column !== 0){
-			console.log(i);
+			setDay(day)
+			handleOpen();
 		}
-	}
-
-	const getInit = (hora) => {
-		const aux = hora.split(':')
-		const horaFind = horasWeek.find(({ hora }) => hora === aux[0]);
-		let init = 0;
-		let minutes = parseInt(aux[1]) || 0;
-
-		if(minutes >= 30){
-			init = horaFind.id + 1;
-			minutes = minutes - 30;
-		}else{
-			init = horaFind.id;
-		} 
-
-		const respond =  ((init * 3) + (minutes * 0.1));
-
-		return respond
-	}
-
-	const getEnd = (init, end) => {
-		const aux = init.split(':')
-		const aux2 = end.split(':')
-		const minutes1 = (parseInt(aux[0]) * 60) + parseInt(aux[1]);
-		const minutes2 = (parseInt(aux2[0]) * 60) + parseInt(aux2[1]);
-		
-		const respond =  ((minutes2 - minutes1) * 0.1);
-		
-		return respond
 	}
 
 	const get = async() => {
@@ -178,7 +151,7 @@ const CalendarDayComponent = ({ day, column, disabled }) => {
 					) : (
 						<ContainerWeekCitas>
 							<GridHora>
-								{horasWeek.map((e, i) => (
+								{horas.map((e, i) => (
 									<div key={i}/>
 								))}
 							</GridHora>

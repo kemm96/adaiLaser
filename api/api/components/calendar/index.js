@@ -55,9 +55,26 @@ const list = (req, res) => {
    });
 }
 
+const getCita = (req, res) => {
+	controller.getCita(req.params.id)
+   .then((body) => {
+      res.send({
+         error: false,
+         body: body
+      })
+   })
+   .catch((err) => {
+      res.send({
+         error: true,
+         body: err.message,
+      })
+   });
+}
+
 // Routes
 router.get('/list',checkAuth(false), SelectList);
 router.post('/', checkAuth(false), insert);
 router.get('/:box/:date',checkAuth(false), list);
+router.get('/:id',checkAuth(false), getCita);
 
 module.exports = router;

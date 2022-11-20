@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { daysName, horasWeek } from '../../utils/lists'
+import { daysName, horas } from '../../utils/lists'
 import CalendarBarComponent from './CalendarBar'
 import CalendarDayComponent from './CalendarDay'
 
@@ -37,7 +37,7 @@ const HorasContainer = styled.div`
 `
 /****** ******************** *****/
 
-const CalendarWeekComponent = ({ week }) => {
+const CalendarWeekComponent = ({ week,handleOpen }) => {
 
 	return (
 		<Container>
@@ -48,7 +48,7 @@ const CalendarWeekComponent = ({ week }) => {
 					<DayName key={i}>{day}</DayName>
 				))}
 				<HorasContainer>
-					{horasWeek.map((hora, i) => (
+					{horas.map((hora, i) => (
 						<div key={i}>{hora.hora + ':' + hora.minuto}</div>
 					))}
 				</HorasContainer>
@@ -57,6 +57,7 @@ const CalendarWeekComponent = ({ week }) => {
 						key={i} 
 						day={day}
 						column={i === 0 ? i : null}
+						handleOpen={handleOpen}
 					/>			
 				))}
 			</WeekContainer>

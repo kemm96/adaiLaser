@@ -1,6 +1,7 @@
 import jwt_decode from 'jwt-decode'
 import dayjs from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
+import { horas } from './lists';
 
 export const logIn = (token) => {
 	window.localStorage.setItem('access-token', token);
@@ -73,4 +74,34 @@ export const getWeek = (week) => {
 		return aux
 	});
 	return daysMatrix;
+}
+
+export const getInit = (hora) => {
+	const aux = hora.split(':')
+	const horaFind = horas.find(({ hora }) => hora === aux[0]);
+	let init = 0;
+	let minutes = parseInt(aux[1]) || 0;
+	if (horaFind) {
+		if(minutes >= 30){
+			init = horaFind.id + 1;
+			minutes = minutes - 30;
+		}else{
+			init = horaFind.id;
+		}	
+	}
+
+	const respond =  ((init * 3) + (minutes * 0.1));
+
+	return respond
+}
+
+export const getEnd = (init, end) => {
+	const aux = init.split(':')
+	const aux2 = end.split(':')
+	const minutes1 = (parseInt(aux[0]) * 60) + parseInt(aux[1]);
+	const minutes2 = (parseInt(aux2[0]) * 60) + parseInt(aux2[1]);
+	
+	const respond =  ((minutes2 - minutes1) * 0.1);
+	
+	return respond
 }

@@ -1,5 +1,3 @@
-import dayjs from 'dayjs'
-
 export const initialClient = {
 	id:null,
 	name:'',
@@ -59,7 +57,7 @@ export const initialEvent = {
 	client:null,
 	tratamiento:'',
 	box:'',
-	date:dayjs(new Date()).format('YYYY-MM-DD'),
+	date:'',
 	time1:'',
 	time2:'',
 }
@@ -70,10 +68,11 @@ export const eventError = {
 
 export const daysName = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-export const daysNameSideBar = ['D', 'L', 'M', 'X', 'J', 'V', 'S',]
+export const daysNameSideBar = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
 
-export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-export const horasWeek = [
+export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+export const horas = [
 	{id:0,hora:'08', minuto:'00',},
 	{id:1,hora:'08', minuto:'30',},
 	{id:2,hora:'09', minuto:'00',},
@@ -100,4 +99,5 @@ export const horasWeek = [
 	{id:23,hora:'19', minuto:'30'},
 	{id:24,hora:'20', minuto:'00'},
 	{id:25,hora:'20', minuto:'30'},
-]
+	{id:25,hora:'21', minuto:'00'}
+];

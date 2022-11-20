@@ -17,16 +17,22 @@ export const CalendarContext = createContext({
 	setEvent: (i) => {},
 	render:{},
 	setRender: (i) => {},
+	day:{},
+	setDay: (i) => {},
+	edit: {}, 
+	setEdit: (i) => {},
 })
 
 export const CalendarContextWrapper = ({ children }) => {
 	const [ week , setWeek] = useState(0)
 	const [ monthIndex, setMonthIndex] = useState(dayjs().month());
 	const [ year, setYear] = useState(dayjs().year());
-	const [ selectValue , setSelectValue] = useState(0);
+	const [ selectValue , setSelectValue] = useState(1);
 	const [ boxValue , setBoxValue] = useState(1);
 	const [ event, setEvent] = useState(initialEvent);
 	const [ render, setRender] = useState(true);
+	const [ day, setDay] = useState(null);
+	const [edit, setEdit] = useState(true);
 
 	return (
 		<CalendarContext.Provider value={{
@@ -43,7 +49,11 @@ export const CalendarContextWrapper = ({ children }) => {
 			event,
 			setEvent,
 			render,
-			setRender
+			setRender,
+			day,
+			setDay,
+			edit, 
+			setEdit,
 		}}>
 			{children}
 		</CalendarContext.Provider>

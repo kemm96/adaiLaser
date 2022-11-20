@@ -25,7 +25,7 @@ const DayName = styled(FlexContainer)`
 `
 /****** ******************** *****/
 
-const CalendarMonthComponent = ({ month }) => {
+const CalendarMonthComponent = ({ month, handleOpen }) => {
 
 	const handleDisabled = (day, i) => {
 		return (day.format('DD') > 7 && i === 0) ? true : (day.format('DD') < 15 && i > 3) ? true : false
@@ -46,6 +46,7 @@ const CalendarMonthComponent = ({ month }) => {
 								day={day}  
 								column={j}
 								disabled={handleDisabled(day,i)}
+								handleOpen={handleOpen}
 							/>
 						))}
 					</React.Fragment>					

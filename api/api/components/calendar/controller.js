@@ -29,8 +29,14 @@ const list = async(box, date) => {
 	return data
 }
 
+const getCita = async(id) => {
+	const data = await db.get('Citas', id);
+	return data
+}
+
 module.exports = {
    selectList,
 	insert,
 	list,
+	getCita,
 };
