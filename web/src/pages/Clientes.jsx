@@ -17,6 +17,10 @@ const Clientes = () => {
 	
 	const [openDialogClient, setOpenDialogClient] = useState(false);
 	const [openDialogHistorial, setOpenDialogHistorial] = useState(false);
+	const [history, setHistory] = useState({
+		id:0,
+		name:''
+	});
 
 	const handleOpenDialogClient = () => {
 		setOpenDialogClient(true);
@@ -26,8 +30,12 @@ const Clientes = () => {
 		setOpenDialogClient(false);
 	};
 
-	const handleOpenDialogHistorial = (id) => {
+	const handleOpenDialogHistorial = (id, name) => {
 		setOpenDialogHistorial(true);
+		setHistory({
+			id:id,
+			name:name
+		});
 	};
 	
 	const handleCloseDialogHistorial = () => {
@@ -48,6 +56,7 @@ const Clientes = () => {
 				<DialogHistorialComponent
 					open={openDialogHistorial}
 					handleClose={handleCloseDialogHistorial}
+					client={history}
 				/>
 			</Container>
 		</LayoutComponent>

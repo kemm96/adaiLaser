@@ -1,4 +1,5 @@
 const db = require('../../../db');
+const model = require('./model');
 
 const list = async() => {
 	const clientes = await db.list('Clients')
@@ -13,7 +14,17 @@ const insert = async(data) => {
 	}
 }
 
+const history = async(id) => {	
+	if(id === 0 || id === '0'){
+		return []
+	}
+	
+	const response = await model.history(id)
+	return response
+}
+
 module.exports = {
    list,
 	insert,
+	history,
 };

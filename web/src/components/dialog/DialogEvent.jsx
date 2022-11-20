@@ -128,7 +128,6 @@ const DialogEventComponent = (props) => {
 				['time2']: handleHour(data.time1,found.time),
 			});
 		}else if(name === 'time1'){
-			console.log(value);
 			const found = selectList.tratamientos.find(element => element.id === data.tratamiento) || '';
 			setData({
 				...data,
@@ -186,6 +185,7 @@ const DialogEventComponent = (props) => {
 	}
 
 	const handleSend = async() => {
+		console.log(data);
 		for (const i in error){
 			if(error[i]){
 				alert('Arregla los errores antes de guardar')
@@ -193,7 +193,7 @@ const DialogEventComponent = (props) => {
 			}
 		}
 		for (const i in data){
-			if((data[i] === '' || data[i] === null) && i !== 'id'){
+			if((data[i] === '' || data[i] === null) && i !== 'id' && i !== 'comentarios'){
 				alert('Rellena todos los campos antes de guardar')
 				return
 			}

@@ -22,9 +22,24 @@ const list = (req, res) => {
    });
 }
 
-// Internal functions
 const insert = (req, res) => {
 	controller.insert(req.body)
+   .then((body) => {
+      res.send({
+         error: false,
+         body: body
+      })
+   })
+   .catch((err) => {
+      res.send({
+         error: true,
+         body: err.message,
+      })
+   });
+}
+
+const history = (req, res) => {
+	controller.history(req.params.id)
    .then((body) => {
       res.send({
          error: false,
@@ -42,5 +57,6 @@ const insert = (req, res) => {
 // Routes
 router.get('/', checkAuth(false), list);
 router.post('/', checkAuth(false), insert);
+router.get('/history/:id', checkAuth(false), history);
 
 module.exports = router;

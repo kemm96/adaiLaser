@@ -31,8 +31,8 @@ const TablaClientesConponent = (props) => {
 		props.handleOpenClient();
 	};
 
-	const handleOpenHistorial = (id) => {
-		props.handleOpenHistorial(id);
+	const handleOpenHistorial = (id, name) => {
+		props.handleOpenHistorial(id, name);
 	};
 
 	// Obtine el nombre del cliente segun el id
@@ -92,7 +92,7 @@ const TablaClientesConponent = (props) => {
 					/>,
 					<GridActionsCellItem
 						icon={<History/>}
-						onClick={() => handleOpenHistorial(id)}
+						onClick={() => handleOpenHistorial(id, getNombre(id))}
 						label={`Ver Historial de ${getNombre(id)}`}
 						title={`Ver Historial de ${getNombre(id)}`}
 					/>

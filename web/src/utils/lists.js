@@ -4,7 +4,6 @@ export const initialClient = {
 	lastName:'',
 	rut:'',
 	birthday:'',
-	gender:'',
 	mail:'',
 	phone:'',
 	adress:'',
@@ -60,6 +59,7 @@ export const initialEvent = {
 	date:'',
 	time1:'',
 	time2:'',
+	comentarios:'',
 }
 
 export const eventError = {
